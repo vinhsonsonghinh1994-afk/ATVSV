@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kỹ thuật an toàn lao động – ATVSLĐ VSH</title>
+<style>*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Roboto,sans-serif;background:#eef2f7;padding:16px;color:#1e293b}
+.container{max-width:1300px;margin:0 auto;background:white;border-radius:24px;box-shadow:0 8px 24px rgba(0,0,0,.1);overflow:hidden;padding:20px 24px 32px}
+.header{text-align:center;border-bottom:3px solid #2c7da0;margin-bottom:20px;background:#fff9e6;border-radius:16px 16px 0 0;padding:16px 16px 18px}
+.company{font-size:18px;font-weight:800;color:#dc2626;margin-bottom:6px}
+.title{font-size:24px;font-weight:800;color:#1e3a8a;text-transform:uppercase}
+.quiz-controls{background:#f8fafc;padding:14px 18px;border-radius:50px;margin-bottom:20px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.package-buttons{display:flex;gap:10px;flex-wrap:wrap}
+.pkg-btn{background:#e2e8f0;border:none;padding:7px 16px;font-weight:bold;font-size:.9rem;border-radius:40px;cursor:pointer;transition:all .2s;color:#1e293b}
+.pkg-btn.active{background:#2c7da0;color:white}
+.mode-controls{display:flex;align-items:center;gap:16px;flex-wrap:wrap;background:#eef2f7;padding:7px 16px;border-radius:50px}
+.mode-label{display:flex;align-items:center;gap:7px;cursor:pointer;font-weight:500;font-size:14px}
+.mode-label input{width:16px;height:16px;cursor:pointer;accent-color:#2c7da0}
+.start-input{display:flex;align-items:center;gap:7px;font-size:14px}
+.start-input input{width:65px;padding:5px 8px;border-radius:30px;border:1px solid #cbd5e1;text-align:center;font-size:.9rem}
+.apply-btn{background:#2c7da0;color:white;border:none;padding:7px 18px;border-radius:40px;font-weight:bold;cursor:pointer;font-size:14px}
+.apply-btn:hover{background:#1f5e7a}
+.reset-btn{background:#f97316;color:white;border:none;padding:8px 22px;border-radius:40px;font-weight:bold;cursor:pointer;font-size:14px}
+.stats{display:flex;justify-content:space-between;background:#e6f4f1;padding:10px 20px;border-radius:50px;margin-bottom:20px;font-weight:600;flex-wrap:wrap;gap:10px;font-size:14px}
+.questions-area{display:flex;flex-direction:column;gap:22px}
+.question-card{background:white;border-radius:20px;border:1px solid #e2edf2;padding:18px 22px;box-shadow:0 2px 8px rgba(0,0,0,.02)}
+.question-text{font-weight:700;font-size:1rem;margin-bottom:14px;color:#0f3b4c;line-height:1.5}
+.options{display:flex;flex-direction:column;gap:10px;margin-left:8px}
+.option{display:flex;align-items:center;gap:12px;cursor:pointer;padding:5px 10px;border-radius:40px;transition:background .12s}
+.option:hover{background:#f1f9fe}
+.option input{width:16px;height:16px;cursor:pointer;accent-color:#2c7da0}
+.option label{font-size:.93rem;cursor:pointer;flex:1;line-height:1.4}
+.feedback{margin-top:12px;padding:8px 16px;border-radius:50px;font-size:.88rem;font-weight:500;display:inline-block}
+.feedback.correct{background:#d1fae5;color:#065f46;border-left:4px solid #10b981}
+.feedback.wrong{background:#fee2e2;color:#991b1b;border-left:4px solid #ef4444}
+footer{text-align:center;margin-top:32px;font-size:.78rem;color:#5e7c8c;border-top:1px solid #e2edf2;padding-top:16px}
+@media(max-width:700px){.container{padding:12px}.quiz-controls{flex-direction:column;align-items:stretch}}</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div class="company">Công ty Cổ phần Thủy điện Vĩnh Sơn – Sông Hinh</div>
+    <div class="title">Kỹ thuật an toàn lao động</div>
+  </div>
+
+  <div class="quiz-controls">
+    <div class="package-buttons">
+      <button data-limit="10" class="pkg-btn">10 câu</button>
+            <button data-limit="20" class="pkg-btn">20 câu</button>
+            <button data-limit="28" class="pkg-btn">28 câu</button>
+            
+    </div>
+    <div class="mode-controls">
+      <label class="mode-label"><input type="radio" name="orderMode" value="shuffle" checked> XÁO TRỘN</label>
+      <label class="mode-label"><input type="radio" name="orderMode" value="sequential"> THEO THỨ TỰ</label>
+      <div class="start-input">
+        <label>Bắt đầu từ câu:</label>
+        <input type="number" id="startQuestion" min="1" value="1">
+      </div>
+      <button id="applyModeBtn" class="apply-btn">ÁP DỤNG</button>
+      <button id="resetExamBtn" class="reset-btn">LÀM LẠI</button>
+    </div>
+  </div>
+
+  <div class="stats">
+    <span>📋 Đã trả lời: <strong id="answeredCount">0</strong></span>
+    <span>✅ Đúng: <strong id="correctCount">0</strong> &nbsp;|&nbsp; ❌ Sai: <strong id="wrongCount">0</strong></span>
+  </div>
+
+  <div id="questionsContainer" class="questions-area"></div>
+  <footer>⚡ Chọn đáp án → hiển thị kết quả đúng/sai ngay tức thì.</footer>
+</div>
+<script>
+    const EXAM_ID      = 'de4';
+    const EXAM_NAME    = 'Kỹ thuật an toàn lao động';
+    const DEFAULT_LIMIT = 28;
+    const FULL_RAW = [{"text": "An toàn lao động là gì?", "options": ["a. An toàn lao động là giải pháp phòng, chống tác động của các yếu tố nguy hiểm nhằm bảo đảm không xảy ra thương tật, tử vong đối với con người trong quá trình lao động.", "b. An toàn lao động là không xảy ra tai nạn lao động và bệnh nghề nghiệp.", "c. An toàn lao động là giải pháp phòng, chống tác động của yếu tố có hại gây bệnh tật, làm suy giảm sức khỏe cho con người trong quá trình lao động."], "ans": "a"}, {"text": "Yếu tố nguy hiểm là gì?", "options": ["a. Yếu tố nguy hiểm là yếu tố gây mất an toàn, làm tổn thương hoặc gây tử vong cho con người trong quá trình lao động.", "b. Yếu tố nguy hiểm là yếu tố có thể gây ra tai nạn lao động và bệnh nghề nghiệp.", "c. Yếu tố nguy hiểm là yếu tố gây ra cháy, nổ, mất an toàn lao động.", "d. Yếu tố nguy hiểm là yếu tố có hại."], "ans": "a"}, {"text": "Thế nào là tai nạn lao động?", "options": ["a. Tai nạn lao động là tai nạn gây tổn thương cho bất kỳ bộ phận, chức năng nào của cơ thể hoặc gây tử vong cho người lao động, xảy ra trong quá trình lao động, gắn liền với việc thực hiện công việc, nhiệm vụ lao động.", "b. Tai nạn lao động là tai nạn gây tổn thương cho người lao động có tỷ lệ thương tật từ 5 đến 10%.", "c. Tai nạn lao động là tai nạn gây tổn thương cho người lao động trong quá trình lao động sản xuất."], "ans": "a"}, {"text": "Sự cố kỹ thuật gây mất an toàn, vệ sinh lao động là gì?", "options": ["a. Là việc gây ra cháy, nổ, tai nạn lao động.", "b. Là hư hỏng của máy, thiết bị, vật tư, chất vượt quá giới hạn an toàn kỹ thuật cho phép, xảy ra trong quá trình lao động và gây thiệt hại hoặc có nguy cơ gây thiệt hại cho con người, tài sản và môi trường.", "c. Là thiết bị lạc hậu trong quá trình sản xuất gây ra tai nạn lao động.", "d. Cả a,b,c đều sai."], "ans": "b"}, {"text": "Vùng nguy hiểm là gì?", "options": ["a. Phạm vi, khu vực hoặc không gian nơi có mối nguy hiểm hoặc/và chịu tác động của mối nguy hiểm.", "b. Là nơi mà người lao động bị bệnh nghề nghiệp sau quá trình lao động.", "c. Cả a và b."], "ans": "a"}, {"text": "Các yếu tố nguy hiểm gây tai nạn lao động trong sản xuất có thể phân thành mấy nhóm cơ bản?", "options": ["a. 3 nhóm: hóa học, vật lý, cơ học", "b. 4 nhóm: hóa học, cơ học, điện, vật lý", "c. 5 nhóm: cơ học, điện, hóa chất, nổ, nhiệt."], "ans": "c"}, {"text": "Nêu một số yếu tố nguy hiểm có nguy cơ gây tai nạn lao động trong sản xuất?", "options": ["a. Những hóa chất độc; nguồn nhiệt; nguồn điện; nổ vật lý; nổ hoá học; những yếu tố vi khí hậu xấu; vi sinh vật có hại; bức xạ và phóng xạ.", "b. Vật văng bắn; vật rơi, đổ, sập; các bộ phận truyền động và chuyển động; nguồn nhiệt; nguồn điện; nổ.", "c. Những vật văng bắn; vật rơi, đổ, sập; tiếng ồn và rung động; bức xạ và phóng xạ; những yếu tố vi khí hậu xấu.", "d. Vật văng bắn; bức xạ và phóng xạ; vật rơi, đổ, sập; bụi, ồn, hóa chất, những yếu tố vi khí hậu xấu; vi sinh vật có hại."], "ans": "b"}, {"text": "Các nguyên nhân nào sau đây do tổ chức - kỹ thuật không tốt gây tai nạn lao động?", "options": ["a. Tổ chức chỗ làm việc không hợp lý, chật hẹp, thao tác gò bó; mặt bằng sản xuất, đường đi lại, vận chuyển không an toàn.", "b. Bố trí, sắp đặt máy móc, thiết bị, dụng cụ, nguyên vật liệu, thành phẩm sai nguyên tắc an toàn.", "c. Không huấn luyện hoặc huấn luyện ATVSLĐ không đạt yêu cầu và không cung cấp hoặc cung cấp trang bị phương tiện bảo vệ cá nhân cho người lao động không đúng chủng loại, không đảm bảo chất lượng.", "d. Tất cả các nguyên nhân trên."], "ans": "d"}, {"text": "Hệ thống tín hiệu, biển hiệu nhằm mục đích chính là gì?", "options": ["a. Đảm bảo khoảng cách an toàn.", "b. Không cho yếu tố nguy hiểm tác động lên NLĐ.", "c. Báo trước cho người lao động sự cố có thể xảy ra và đưa ra hướng dẫn, quy định.", "d. Không cho tai nạn xảy ra."], "ans": "c"}, {"text": "Các loại tín hiệu, báo hiệu nào sau đây được áp dụng để phòng ngừa tai nạn lao động?", "options": ["a. Ánh sáng, màu sắc, mầu sơn, hình vẽ, bảng chữ.", "b. Âm thanh.", "c. Đồng hồ, dụng cụ đo lường.", "d. Tất cả các loại thiết bị tín hiệu, báo hiệu trên."], "ans": "d"}, {"text": "Theo QCVN 09:2012/BLĐTBXH thời gian kiểm tra định kỳ cho các dụng cụ điện cầm tay là?", "options": ["a. 3 tháng/một lần", "b. 6 tháng/một lần", "c. 12 tháng/một lần", "d. 24 tháng/một lần"], "ans": "b"}, {"text": "Đối với thiết bị điện có trung tính cách ly, trị số điện trở nối đất của thiết bị điện không được lớn hơn?", "options": ["a. 1Ω", "b. 2Ω", "c. 4Ω", "d. 10Ω"], "ans": "c"}, {"text": "Dây nối đất hoặc nối 'không' bảo vệ vào vỏ thiết bị phải thực hiện bằng biện pháp hàn hoặc bắt bằng ốc vít?", "options": ["a. Đúng", "b. Sai", "c. Tùy từng trường hợp"], "ans": "a"}, {"text": "Khi tai nạn điện xảy ra, để cấp cứu người bị nạn cần thực hiện theo các bước sau:", "options": ["a. Tách nạn nhân khỏi nguồn điện, tiến hành sơ cứu và đưa nạn nhân đến cơ sở y tế gần nhất.", "b. Tách nạn nhân khỏi nguồn điện và chở đến bệnh viện.", "c. Giữ nguyên hiện trường và báo cáo cơ quan chức năng.", "d. Báo cáo với người phụ trách và bộ phận y tế."], "ans": "a"}, {"text": "Nguyên tắc cấp cứu bỏng do nhiệt, do hóa chất?", "options": ["a. Bỏng nhiệt thì cần làm mát vết thương. Bỏng hóa chất cần rửa nước nhiều lần để loại bỏ hóa chất. Nếu vết bỏng bị rộp, trầy da thì phải rửa bằng nước sạch, đề phòng nhiễm trùng.", "b. Theo kinh nghiệm dân gian: Bôi lên vùng da bị bỏng nước mắm hoặc kem đánh răng để giảm đau và chuyển nạn nhân về bệnh viện.", "c. Dùng kim sạch chọc các nốt phỏng lớn, sau đó dùng gạc sạch băng nhẹ lên vùng bị bỏng và chuyển nạn nhân về bệnh viện."], "ans": "a"}, {"text": "Để chống bị điện giật khi chạm vào các bộ phận mang điện cần phải:", "options": ["a. Bọc cách điện và che chắn.", "b. Giữ khoảng cách an toàn.", "c. Nối trung tính.", "d. Cả a và b."], "ans": "d"}, {"text": "Thiết bị che chắn an toàn nhằm mục đích chính là:", "options": ["a. Ngăn ngừa sự cố của thiết bị.", "b. Ngăn ngừa được tác động của các yếu tố nguy hiểm tác động lên người lao động.", "c. Báo trước cho người lao động sự cố có thể xảy ra.", "d. Cả a và c."], "ans": "b"}, {"text": "Mục đích của thiết bị và cơ cấu phòng ngừa là gì?", "options": ["a. Tự động loại trừ nguy cơ sự cố hoặc tai nạn một khi đối tượng phòng ngừa vượt quá giới hạn quy định.", "b. Tự động ngắt chuyển động, hoạt động của máy và thiết bị khi một thông số kỹ thuật nào đó vượt quá giới hạn quy định cho phép.", "c. Ngăn chặn tác động xấu do sự cố của quá trình sản xuất gây ra; ngăn chặn, hạn chế sự cố sản xuất.", "d. Báo hiệu yếu tố nguy hiểm, có hại, hướng dẫn thao tác máy, thiết bị."], "ans": "b"}, {"text": "Làm việc ở trên cao, nơi có khả năng xảy ra nguy hiểm ngã cao cần phải:", "options": ["a. Đội mũ bảo hộ lao động đúng quy định.", "b. Không được hút thuốc lá.", "c. Đeo dây an toàn đúng quy định.", "d. Cả a, b, c"], "ans": "d"}, {"text": "Phải trang bị dây an toàn cho công nhân hoặc lưới bảo vệ nếu không làm được sàn thao tác có lan can an toàn khi công nhân làm việc từ độ cao từ bao nhiêu mét trở lên?", "options": ["a. 2 m", "b. 3 m", "c. 4 m", "d. 5 m"], "ans": "a"}, {"text": "Thang tựa phải đặt có độ nghiêng so với mặt đất bao nhiêu độ?", "options": ["a. Trên 30 độ.", "b. Khoảng 45-60 độ.", "c. Khoảng 50 - 80 độ", "d. Khoảng 50 - 85 độ."], "ans": "b"}, {"text": "Nguyên tắc an toàn đối với thiết bị cầm tay?", "options": ["a. Bảo quản và bảo dưỡng thiết bị tốt.", "b. Sử dụng công cụ phù hợp với công việc; sử dụng phương tiện bảo vệ cá nhân đúng cách và phù hợp.", "c. Kiểm tra thiết bị trước khi sử dụng; vận hành thiết bị theo hướng dẫn của nhà sản xuất.", "d. Cả a, b, c"], "ans": "d"}, {"text": "Tách người bị điện giật ra khỏi mạch điện hạ áp, người cứu phải thực hiện?", "options": ["a. Có thể dùng kìm cách điện; búa, rìu cán gỗ... để chặt đứt dây điện", "b. Có thể dùng gậy khô (tre, gỗ...) để gạt dây điện hoặc đẩy nạn nhân ra", "c. Cả a và b."], "ans": "c"}, {"text": "Để đảm bảo an toàn trong sử dụng, sửa chữa điện người lao động phải?", "options": ["a. Sử dụng đầy đủ trang bị PTBVCN.", "b. Chấp hành đúng quy trình an toàn trong sửa chữa, sử dụng điện.", "c. Kiểm tra tình trạng an toàn thiết bị, hệ thống điện trước khi làm việc.", "d. Cả a, b, c."], "ans": "d"}, {"text": "Dây điện không được buộc vắt trực tiếp trên các kết cấu bằng kim loại, các bệ máy thiết bị?", "options": ["a. Đúng", "b. Sai", "c. Tùy từng trường hợp"], "ans": "a"}, {"text": "Dây dẫn điện không được rải xuống sàn nhà xưởng nơi có người, thiết bị thường xuyên qua lại?", "options": ["a. Đúng", "b. Sai", "c. Tùy từng trường hợp"], "ans": "a"}, {"text": "Những công việc có yêu cầu nghiêm ngặt về an toàn lao động, vệ sinh lao động là những công việc?", "options": ["a. Sử dụng máy, thiết bị dễ gây ra tai nạn lao động.", "b. Làm việc trong các điều kiện tiếp xúc với hóa chất, môi trường độc hại.", "c. Cả a và b."], "ans": "c"}, {"text": "Yêu cầu trước khi đưa vào sử dụng các thiết bị có yêu cầu nghiêm ngặt về an toàn lao động?", "options": ["a. Công nhân vận hành thiết bị phải có chứng chỉ về chuyên môn, nắm được nguyên tắc an toàn khi sử dụng và có thẻ an toàn lao động.", "b. Ban hành và niêm yết nội quy an toàn, quy trình vận hành, quy trình xử lý sự cố tại nơi để thiết bị ở vị trí dễ thấy, dễ đọc.", "c. Phải được kiểm định kỹ thuật an toàn với cơ quan có thẩm quyền theo quy định.", "d. Cả a, b và c."], "ans": "d"}];
+
+    function getAnswerIndex(question, ansLetter) {
+        const letters = ['a','b','c','d','e','đ'];
+        let idx = letters.indexOf(ansLetter.toLowerCase());
+        if (idx !== -1 && idx < question.options.length) return idx;
+        return 0;
+    }
+    const FULL_QUESTIONS = FULL_RAW.map((q,idx) => ({
+        id: idx+1,
+        text: `Câu ${idx+1}: ${q.text}`,
+        options: q.options,
+        correct: getAnswerIndex(q, q.ans)
+    }));
+
+    let currentQuestions=[], userAnswers=[], answerStatus=[];
+    let currentLimit=DEFAULT_LIMIT, currentMode='shuffle', currentStart=1;
+
+    const container     = document.getElementById('questionsContainer');
+    const answeredSpan  = document.getElementById('answeredCount');
+    const correctSpan   = document.getElementById('correctCount');
+    const wrongSpan     = document.getElementById('wrongCount');
+    const resetBtn      = document.getElementById('resetExamBtn');
+    const applyBtn      = document.getElementById('applyModeBtn');
+    const pkgBtns       = document.querySelectorAll('.pkg-btn');
+    const shuffleRadio  = document.querySelector('input[value="shuffle"]');
+    const sequentialRadio = document.querySelector('input[value="sequential"]');
+    const startInput    = document.getElementById('startQuestion');
+
+    function shuffleArray(arr){
+        for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}
+        return arr;
+    }
+    function getSequentialQuestions(limit,start){
+        let startIdx=Math.max(1,Math.min(start,FULL_QUESTIONS.length-limit+1));
+        let sel=[];
+        for(let i=0;i<limit;i++){let qi=startIdx-1+i;if(qi<FULL_QUESTIONS.length)sel.push({...FULL_QUESTIONS[qi]});}
+        return sel;
+    }
+    function generateExam(limit,mode,start){
+        if(mode==='shuffle') return shuffleArray([...FULL_QUESTIONS]).slice(0,limit);
+        return getSequentialQuestions(limit,start);
+    }
+    function updateStats(){
+        let answered=userAnswers.filter(a=>a!==null).length;
+        let correct=answerStatus.filter(s=>s==='correct').length;
+        let wrong=answerStatus.filter(s=>s==='wrong').length;
+        answeredSpan.innerText=answered; correctSpan.innerText=correct; wrongSpan.innerText=wrong;
+    }
+    function handleAnswer(idx,selectedOpt){
+        const q=currentQuestions[idx]; if(!q) return;
+        userAnswers[idx]=selectedOpt;
+        answerStatus[idx]=(selectedOpt===q.correct)?'correct':'wrong';
+        renderQuestions(); updateStats();
+    }
+    window.handleAnswerSelect=(qIndex,optVal)=>{
+        if(qIndex>=0&&qIndex<currentQuestions.length) handleAnswer(qIndex,parseInt(optVal));
+    };
+    function renderQuestions(){
+        if(!container) return;
+        if(!currentQuestions.length){container.innerHTML='<div style="padding:40px;text-align:center;">Đang tải...</div>';return;}
+        let html='';
+        for(let i=0;i<currentQuestions.length;i++){
+            const q=currentQuestions[i],userChoice=userAnswers[i],fbStatus=answerStatus[i];
+            const optsHtml=q.options.map((opt,optIdx)=>{
+                const letter=String.fromCharCode(97+optIdx);
+                const isChecked=(userChoice===optIdx);
+                const optText=opt.replace(/^[a-đ]\.\s*/i,'');
+                return `<div class="option" onclick="document.getElementById('q_${i}_opt_${optIdx}').click();">
+                    <input type="radio" name="q_${i}" id="q_${i}_opt_${optIdx}" value="${optIdx}" ${isChecked?'checked':''} onchange="window.handleAnswerSelect(${i},${optIdx})">
+                    <label for="q_${i}_opt_${optIdx}">${letter}. ${optText}</label>
+                </div>`;
+            }).join('');
+            let feedbackHtml='';
+            if(fbStatus==='correct') feedbackHtml=`<div class="feedback correct">✅ Đúng rồi!</div>`;
+            else if(fbStatus==='wrong'){
+                const correctLetter=String.fromCharCode(97+q.correct);
+                feedbackHtml=`<div class="feedback wrong">❌ Sai. Đáp án đúng: <b>${correctLetter.toUpperCase()}</b></div>`;
+            }
+            html+=`<div class="question-card"><div class="question-text">${q.text}</div><div class="options">${optsHtml}</div>${feedbackHtml}</div>`;
+        }
+        container.innerHTML=html;
+    }
+    function loadExam(){
+        let limit=Math.min(currentLimit,FULL_QUESTIONS.length);
+        currentQuestions=generateExam(limit,currentMode,currentStart);
+        userAnswers=new Array(currentQuestions.length).fill(null);
+        answerStatus=new Array(currentQuestions.length).fill(null);
+        renderQuestions(); updateStats();
+    }
+    function changePackage(limit){
+        currentLimit=Math.min(limit,FULL_QUESTIONS.length); loadExam();
+        pkgBtns.forEach(btn=>{
+            const bl=parseInt(btn.getAttribute('data-limit'),10);
+            btn.classList.toggle('active',bl===limit||(limit>=FULL_QUESTIONS.length&&bl>=FULL_QUESTIONS.length));
+        });
+    }
+    function applyModeAndStart(){
+        currentMode=shuffleRadio.checked?'shuffle':'sequential';
+        let ns=parseInt(startInput.value,10); if(isNaN(ns))ns=1;
+        currentStart=Math.max(1,Math.min(ns,FULL_QUESTIONS.length));
+        loadExam();
+    }
+    pkgBtns.forEach(btn=>btn.addEventListener('click',()=>{
+        let lv=parseInt(btn.getAttribute('data-limit'),10);
+        if(lv>FULL_QUESTIONS.length) lv=FULL_QUESTIONS.length;
+        changePackage(lv);
+    }));
+    resetBtn.addEventListener('click',loadExam);
+    applyBtn.addEventListener('click',applyModeAndStart);
+
+    currentLimit=Math.min(DEFAULT_LIMIT,FULL_QUESTIONS.length);
+    loadExam();
+    pkgBtns.forEach(btn=>{
+        let val=parseInt(btn.getAttribute('data-limit'),10);
+        if(val===currentLimit) btn.classList.add('active');
+    });
+
+</script>
+</body>
+</html>

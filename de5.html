@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kỹ thuật vệ sinh lao động – ATVSLĐ VSH</title>
+<style>*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Roboto,sans-serif;background:#eef2f7;padding:16px;color:#1e293b}
+.container{max-width:1300px;margin:0 auto;background:white;border-radius:24px;box-shadow:0 8px 24px rgba(0,0,0,.1);overflow:hidden;padding:20px 24px 32px}
+.header{text-align:center;border-bottom:3px solid #2c7da0;margin-bottom:20px;background:#fff9e6;border-radius:16px 16px 0 0;padding:16px 16px 18px}
+.company{font-size:18px;font-weight:800;color:#dc2626;margin-bottom:6px}
+.title{font-size:24px;font-weight:800;color:#1e3a8a;text-transform:uppercase}
+.quiz-controls{background:#f8fafc;padding:14px 18px;border-radius:50px;margin-bottom:20px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.package-buttons{display:flex;gap:10px;flex-wrap:wrap}
+.pkg-btn{background:#e2e8f0;border:none;padding:7px 16px;font-weight:bold;font-size:.9rem;border-radius:40px;cursor:pointer;transition:all .2s;color:#1e293b}
+.pkg-btn.active{background:#2c7da0;color:white}
+.mode-controls{display:flex;align-items:center;gap:16px;flex-wrap:wrap;background:#eef2f7;padding:7px 16px;border-radius:50px}
+.mode-label{display:flex;align-items:center;gap:7px;cursor:pointer;font-weight:500;font-size:14px}
+.mode-label input{width:16px;height:16px;cursor:pointer;accent-color:#2c7da0}
+.start-input{display:flex;align-items:center;gap:7px;font-size:14px}
+.start-input input{width:65px;padding:5px 8px;border-radius:30px;border:1px solid #cbd5e1;text-align:center;font-size:.9rem}
+.apply-btn{background:#2c7da0;color:white;border:none;padding:7px 18px;border-radius:40px;font-weight:bold;cursor:pointer;font-size:14px}
+.apply-btn:hover{background:#1f5e7a}
+.reset-btn{background:#f97316;color:white;border:none;padding:8px 22px;border-radius:40px;font-weight:bold;cursor:pointer;font-size:14px}
+.stats{display:flex;justify-content:space-between;background:#e6f4f1;padding:10px 20px;border-radius:50px;margin-bottom:20px;font-weight:600;flex-wrap:wrap;gap:10px;font-size:14px}
+.questions-area{display:flex;flex-direction:column;gap:22px}
+.question-card{background:white;border-radius:20px;border:1px solid #e2edf2;padding:18px 22px;box-shadow:0 2px 8px rgba(0,0,0,.02)}
+.question-text{font-weight:700;font-size:1rem;margin-bottom:14px;color:#0f3b4c;line-height:1.5}
+.options{display:flex;flex-direction:column;gap:10px;margin-left:8px}
+.option{display:flex;align-items:center;gap:12px;cursor:pointer;padding:5px 10px;border-radius:40px;transition:background .12s}
+.option:hover{background:#f1f9fe}
+.option input{width:16px;height:16px;cursor:pointer;accent-color:#2c7da0}
+.option label{font-size:.93rem;cursor:pointer;flex:1;line-height:1.4}
+.feedback{margin-top:12px;padding:8px 16px;border-radius:50px;font-size:.88rem;font-weight:500;display:inline-block}
+.feedback.correct{background:#d1fae5;color:#065f46;border-left:4px solid #10b981}
+.feedback.wrong{background:#fee2e2;color:#991b1b;border-left:4px solid #ef4444}
+footer{text-align:center;margin-top:32px;font-size:.78rem;color:#5e7c8c;border-top:1px solid #e2edf2;padding-top:16px}
+@media(max-width:700px){.container{padding:12px}.quiz-controls{flex-direction:column;align-items:stretch}}</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div class="company">Công ty Cổ phần Thủy điện Vĩnh Sơn – Sông Hinh</div>
+    <div class="title">Kỹ thuật vệ sinh lao động</div>
+  </div>
+
+  <div class="quiz-controls">
+    <div class="package-buttons">
+      <button data-limit="10" class="pkg-btn">10 câu</button>
+            <button data-limit="20" class="pkg-btn">20 câu</button>
+            <button data-limit="28" class="pkg-btn">28 câu</button>
+            
+    </div>
+    <div class="mode-controls">
+      <label class="mode-label"><input type="radio" name="orderMode" value="shuffle" checked> XÁO TRỘN</label>
+      <label class="mode-label"><input type="radio" name="orderMode" value="sequential"> THEO THỨ TỰ</label>
+      <div class="start-input">
+        <label>Bắt đầu từ câu:</label>
+        <input type="number" id="startQuestion" min="1" value="1">
+      </div>
+      <button id="applyModeBtn" class="apply-btn">ÁP DỤNG</button>
+      <button id="resetExamBtn" class="reset-btn">LÀM LẠI</button>
+    </div>
+  </div>
+
+  <div class="stats">
+    <span>📋 Đã trả lời: <strong id="answeredCount">0</strong></span>
+    <span>✅ Đúng: <strong id="correctCount">0</strong> &nbsp;|&nbsp; ❌ Sai: <strong id="wrongCount">0</strong></span>
+  </div>
+
+  <div id="questionsContainer" class="questions-area"></div>
+  <footer>⚡ Chọn đáp án → hiển thị kết quả đúng/sai ngay tức thì.</footer>
+</div>
+<script>
+    const EXAM_ID      = 'de5';
+    const EXAM_NAME    = 'Kỹ thuật vệ sinh lao động';
+    const DEFAULT_LIMIT = 28;
+    const FULL_RAW = [{"text": "Vệ sinh lao động là gì?", "options": ["a. Vệ sinh lao động là giải pháp phòng, chống tác động của các yếu tố nguy hiểm nhằm bảo đảm không xảy ra thương tật, tử vong đối với con người trong quá trình lao động.", "b. Vệ sinh lao động là giải pháp an toàn nhất trong quá trình lao động.", "c. Vệ sinh lao động là giải pháp phòng, chống tác động của yếu tố có hại gây bệnh tật, làm suy giảm sức khỏe cho con người trong quá trình lao động."], "ans": "c"}, {"text": "Yếu tố có hại là gì?", "options": ["a. Yếu tố có hại là yếu tố gây mất an toàn, làm tổn thương hoặc gây tử vong cho con người trong quá trình lao động.", "b. Yếu tố có hại là yếu tố gây bệnh tật, làm suy giảm sức khỏe con người trong quá trình lao động.", "c. Yếu tố có hại là yếu tố tác động làm người lao động bị bệnh nghề nghiệp sau quá trình lao động."], "ans": "b"}, {"text": "Bệnh nghề nghiệp là gì?", "options": ["a. Là bệnh phát sinh do điều kiện lao động có hại của nghề nghiệp tác động đối với người lao động.", "b. Là sự suy giảm sức khỏe do các yếu tố độc hại trong môi trường lao động.", "c. Là một hiện tượng bệnh lý do các yếu tố có hại, yếu tố nguy hiểm trong sản xuất gây ra."], "ans": "a"}, {"text": "Quan trắc môi trường lao động là gì?", "options": ["a. Kiểm tra, đo đạc và theo dõi thường xuyên mang tính định kì thông qua các chỉ tiêu về tính chất vật lý và hóa học của thành phần môi trường.", "b. Đo đạc, đánh giá các chỉ số vật lý, hóa học trong không khí.", "c. Thu thập, phân tích, đánh giá số liệu đo lường các yếu tố trong môi trường lao động tại nơi làm việc để có biện pháp giảm thiểu tác hại đối với sức khỏe, phòng chống bệnh nghề nghiệp."], "ans": "c"}, {"text": "Một số yếu tố có hại liên quan đến quá trình sản xuất là?", "options": ["a. Tiếng ồn và rung động.", "b. Bụi và các hóa chất độc hại trong sản xuất.", "c. Điều kiện vi khí hậu trong sản xuất không đảm bảo như: nhiệt độ, độ ẩm, bức xạ nhiệt,...", "d. Cả a, b và c"], "ans": "d"}, {"text": "Những yếu tố có hại nào dưới đây có nguy cơ gây bệnh nghề nghiệp trong lao động, sản xuất?", "options": ["a. Các yếu tố vì khí hậu, ánh sáng, tiếng ồn, rung động không đảm bảo tiêu chuẩn vệ sinh; các loại bụi.", "b. Bức xạ và phóng xạ; các hóa chất độc; vi sinh vật có hại; các yếu tố về cường độ lao động, tư thế lao động không hợp lý.", "c. Cả a và b."], "ans": "c"}, {"text": "Các yếu tố nào sau đây là yếu tố có hại có thể gây bệnh nghề nghiệp cho người lao động trong quá trình sản xuất?", "options": ["a. Bức xạ và phóng xạ.", "b. Tiếng ồn và nguồn nhiệt.", "c. Tiếng ồn và độ rung.", "d. Cả a và c"], "ans": "c"}, {"text": "Người lao động làm các nghề, công việc nào sau đây có thể bị bệnh bụi phổi silic?", "options": ["a. Khai thác, chế biến quặng và đá có chứa Silic tự do.", "b. Luyện kim, đúc có tiếp xúc với bụi cát; đánh bóng, mài nhẵn bằng cát.", "c. Chế tạo, thủy tinh, đồ sành sứ, đồ gốm, gạch chịu lửa.", "d. Cả a, b, c."], "ans": "d"}, {"text": "Người lao động làm các nghề, công việc nào sau đây có thể bị bệnh bụi phổi bông?", "options": ["a. Trồng, thu hoạch, chế biến bông, đay, lanh gai.", "b. Sản xuất sợi, chỉ, dệt vải, may mặc.", "c. Cả a, b"], "ans": "c"}, {"text": "Người lao động làm các nghề, công việc nào sau đây có thể bị bệnh bụi phổi than?", "options": ["a. Khai thác, chế biến than.", "b. Sử dụng than trong các lò nung, lò luyện, lò hơi, sản xuất điện cực than.", "c. Khai thác graphit.", "d. Cả a, b, c."], "ans": "d"}, {"text": "Người lao động làm các nghề, công việc nào sau đây có thể bị bệnh điếc do tiếng ồn?", "options": ["a. Làm việc tại sân bay.", "b. Khai khoáng, mỏ, luyện cán thép, cơ khí, xây dựng, dệt.", "c. Bộ đội tăng, thiết giáp, pháo binh.", "d. Cả a, b, c."], "ans": "d"}, {"text": "Người lao động làm các nghề, công việc nào sau đây có thể bị bệnh bụi phổi amiăng?", "options": ["a. Khai thác, chế biến quặng hoặc đá có chứa amiăng; chải sợi, kéo sợi và dệt vải amiăng; làm cách nhiệt bằng amiăng.", "b. Sản xuất, xử lý tấm lợp amiăng - ximăng, các gioăng bằng amiăng và cao su; má phanh bằng amiăng; bìa các-tông và giấy có amiăng.", "c. Sản xuất phân lân, thợ sửa chữa ô tô, xe máy.", "d. Cả a, b, c."], "ans": "d"}, {"text": "Hãy nêu một số biện pháp tổ chức lao động đảm bảo ATVSLĐ?", "options": ["a. Bố trí mặt bằng nhà xưởng, đường đi lại và vận chuyển; sắp xếp nguyên vật liệu, bán thành phẩm và thành phẩm bảo đảm an toàn.", "b. Bố trí không gian làm việc rộng rãi, tư thế thao tác thoải mái.", "c. Huấn luyện ATVSLĐ cho người lao động.", "d. Cả a, b và c."], "ans": "d"}, {"text": "Theo QCVN 24:2016/BYT, mức tiếp xúc cho phép với tiếng ồn của người lao động tại nơi làm việc bình thường trong 8 giờ tại các cơ sở sản xuất không được vượt quá bao nhiêu decibel (dBA)?", "options": ["a. 80dBA", "b. 85dBA", "c. 90dB", "d. 95dB"], "ans": "b"}, {"text": "Tác hại của tiếng ồn đối với người lao động trong sản xuất là:", "options": ["a. Gây đau đầu và ù tai, giảm sự tập trung, giảm năng suất lao động, gây rối loạn nhịp tim, ảnh hưởng đến bệnh cao huyết áp, gây điếc nghề nghiệp.", "b. Tăng nguy cơ mắc các bệnh mạn tính như về xương khớp, hô hấp và tiêu hoá.", "c. Gây nhiễm độc, làm giảm khả năng miễn dịch, gây ung thư và một số bệnh mạn tính khác.", "d. Tất cả các tác hại trên."], "ans": "a"}, {"text": "Biện pháp nào dưới đây giúp làm giảm tác hại của tiếng ồn tại nơi làm việc?", "options": ["a. Thay đổi thiết bị công nghệ và sử dụng các biện pháp kỹ thuật giảm ồn.", "b. Dùng phương tiện bảo vệ cá nhân chống ồn.", "c. Bố trí hợp lý thời gian làm việc ở nơi có nguồn ồn.", "d. Cả a, b, c."], "ans": "d"}, {"text": "Theo quy định, người lao động làm việc trong điều kiện có yếu tố nặng nhọc, độc hại, nguy hiểm thì được:", "options": ["a. Giảm thời giờ làm việc.", "b. Khám sức khỏe ít nhất 6 tháng/1 lần.", "c. Bồi dưỡng bằng hiện vật nếu có yếu tố độc hại vượt tiêu chuẩn cho phép.", "d. Cả a, b, c."], "ans": "d"}, {"text": "Khi cấp cứu người bị say nắng, say nóng; biện pháp đầu tiên cần phải thực hiện là?", "options": ["a. Chườm bằng nước mát để nhiệt độ giảm từ từ.", "b. Đưa nạn nhân vào chỗ râm mát hoặc ra khỏi môi trường nóng.", "c. Nới lỏng quần áo hoặc cởi hết quần áo ngoài, Quạt cho thoáng mát.", "d. Cả a,b,c."], "ans": "b"}, {"text": "Việc đầu tiên khi tiến hành sơ cứu ban đầu do bị bỏng nhiệt, ta nên thực hiện biện pháp nào?", "options": ["a. Dùng kem đánh răng bôi vào vùng vị bỏng.", "b. Ngâm rửa hoặc tưới rửa phần da bị bỏng bằng nước mát.", "c. Băng kín vùng bị bỏng.", "d. Tất cả các biện pháp trên."], "ans": "b"}, {"text": "Khi cấp cứu người bị bỏng do hóa chất, cần làm theo trình tự nào sau đây?", "options": ["a. Cởi bỏ quần áo dính hóa chất, lau và rửa sạch vết thương dưới vòi nước sạch, nhanh chóng vận chuyển nạn nhân ra khỏi hiện trường.", "b. Nhanh chóng vận chuyển nạn nhân ra khỏi hiện trường, cởi bỏ quần áo dính hóa chất, lau và rửa sạch vết thương dưới vòi nước sạch.", "c. Cởi bỏ quần áo dính hóa chất, lau và rửa sạch vết thương.", "d. Nhanh chóng vận chuyển nạn nhân ra khỏi hiện trường, cởi bỏ quần áo dính hóa chất."], "ans": "b"}, {"text": "Khi cần vào hầm chứa, thùng khoang kín để làm việc phải?", "options": ["a. Sử dụng khẩu trang lọc bụi, sử dụng mặt nạ phòng độc.", "b. Yêu cầu 1 người cộng tác, thông khí hầm chứa mang đầy đủ bảo hộ lao động và mặt nạ lọc độc.", "c. Yêu cầu 1 người cộng tác mang đầy đủ bảo hộ lao động và mặt nạ phòng độc.", "d. Yêu cầu 1 người cộng tác, thông khí hầm chứa, mang đầy đủ phương tiện bảo vệ cá nhân theo quy định và mặt nạ cấp khí sạch."], "ans": "d"}, {"text": "Khi làm việc trong không gian hạn chế, có thể tiềm ẩn các yếu tố nguy hiểm, có hại nào?", "options": ["a. Hóa chất, khí độc hại", "b. Tiếng ồn, nhiệt, bức xạ", "c. Tư thế làm việc gò bó", "d. Cả a, b, c"], "ans": "d"}, {"text": "Hóa chất xâm nhập vào cơ thể qua đường nào?", "options": ["a. Hô hấp", "b. Tiêu hóa", "c. Qua da", "d. Cả a, b, c"], "ans": "d"}, {"text": "Môi trường lao động lạnh thấp hơn tiêu chuẩn cho phép gây tác hại gì tới cơ thể?", "options": ["a. Da bị xanh; làm giảm nhịp tim, nhịp thở.", "b. Gây co thắt mạch, làm giảm khả năng vận động, đau cơ, viêm cơ, thấp khớp, viêm thần kinh ngoại biên.", "c. Giảm sức đề kháng, giảm miễn dịch, gây viêm đường hô hấp trên.", "d. Cả a, b, c"], "ans": "d"}, {"text": "Môi trường lao động có nhiệt độ cao vượt tiêu chuẩn cho phép gây tác hại gì tới người lao động?", "options": ["a. Mất nước, mất khoáng", "b. Chóng mặt, nhức đầu", "c. Giảm chú ý, mất tập trung", "d. Cả a, b, c"], "ans": "d"}, {"text": "Tác hại của rung toàn thân đối với sức khỏe người lao động là gì?", "options": ["a. Gây tổn thương cơ bắp.", "b. Làm tổn thương hệ thần kinh, nội tạng.", "c. Ảnh hưởng đến thị giác và tiền đình.", "d. Cả a, b, c"], "ans": "d"}, {"text": "Để phòng chống tác hại nghề nghiệp, có thể áp dụng các giải pháp nào sau đây?", "options": ["a. Cơ khí hóa, tự động hóa các khâu độc hại, thay thế các chất độc hại bằng các chất không độc hại.", "b. Thông gió, chống nóng, hút bụi, cách ly hoặc che chắn nguồn ồn, rung động, bức xạ.", "c. Sử dụng phương tiện bảo vệ cá nhân.", "d. Cả a, b, c"], "ans": "d"}, {"text": "Tác hại của hóa chất đối với sức khỏe người lao động?", "options": ["a. Tổn thương mắt và da: mờ mắt, hỏng mắt, xạm da, nốt dầu.", "b. Ảnh hưởng đến phổi, phế quản, tim mạch, tiêu hóa, thần kinh, di truyền, thành phần máu.", "c. Gây ung thư.", "d. Cả a, b, c."], "ans": "d"}];
+
+    function getAnswerIndex(question, ansLetter) {
+        const letters = ['a','b','c','d','e','đ'];
+        let idx = letters.indexOf(ansLetter.toLowerCase());
+        if (idx !== -1 && idx < question.options.length) return idx;
+        return 0;
+    }
+    const FULL_QUESTIONS = FULL_RAW.map((q,idx) => ({
+        id: idx+1,
+        text: `Câu ${idx+1}: ${q.text}`,
+        options: q.options,
+        correct: getAnswerIndex(q, q.ans)
+    }));
+
+    let currentQuestions=[], userAnswers=[], answerStatus=[];
+    let currentLimit=DEFAULT_LIMIT, currentMode='shuffle', currentStart=1;
+
+    const container     = document.getElementById('questionsContainer');
+    const answeredSpan  = document.getElementById('answeredCount');
+    const correctSpan   = document.getElementById('correctCount');
+    const wrongSpan     = document.getElementById('wrongCount');
+    const resetBtn      = document.getElementById('resetExamBtn');
+    const applyBtn      = document.getElementById('applyModeBtn');
+    const pkgBtns       = document.querySelectorAll('.pkg-btn');
+    const shuffleRadio  = document.querySelector('input[value="shuffle"]');
+    const sequentialRadio = document.querySelector('input[value="sequential"]');
+    const startInput    = document.getElementById('startQuestion');
+
+    function shuffleArray(arr){
+        for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}
+        return arr;
+    }
+    function getSequentialQuestions(limit,start){
+        let startIdx=Math.max(1,Math.min(start,FULL_QUESTIONS.length-limit+1));
+        let sel=[];
+        for(let i=0;i<limit;i++){let qi=startIdx-1+i;if(qi<FULL_QUESTIONS.length)sel.push({...FULL_QUESTIONS[qi]});}
+        return sel;
+    }
+    function generateExam(limit,mode,start){
+        if(mode==='shuffle') return shuffleArray([...FULL_QUESTIONS]).slice(0,limit);
+        return getSequentialQuestions(limit,start);
+    }
+    function updateStats(){
+        let answered=userAnswers.filter(a=>a!==null).length;
+        let correct=answerStatus.filter(s=>s==='correct').length;
+        let wrong=answerStatus.filter(s=>s==='wrong').length;
+        answeredSpan.innerText=answered; correctSpan.innerText=correct; wrongSpan.innerText=wrong;
+    }
+    function handleAnswer(idx,selectedOpt){
+        const q=currentQuestions[idx]; if(!q) return;
+        userAnswers[idx]=selectedOpt;
+        answerStatus[idx]=(selectedOpt===q.correct)?'correct':'wrong';
+        renderQuestions(); updateStats();
+    }
+    window.handleAnswerSelect=(qIndex,optVal)=>{
+        if(qIndex>=0&&qIndex<currentQuestions.length) handleAnswer(qIndex,parseInt(optVal));
+    };
+    function renderQuestions(){
+        if(!container) return;
+        if(!currentQuestions.length){container.innerHTML='<div style="padding:40px;text-align:center;">Đang tải...</div>';return;}
+        let html='';
+        for(let i=0;i<currentQuestions.length;i++){
+            const q=currentQuestions[i],userChoice=userAnswers[i],fbStatus=answerStatus[i];
+            const optsHtml=q.options.map((opt,optIdx)=>{
+                const letter=String.fromCharCode(97+optIdx);
+                const isChecked=(userChoice===optIdx);
+                const optText=opt.replace(/^[a-đ]\.\s*/i,'');
+                return `<div class="option" onclick="document.getElementById('q_${i}_opt_${optIdx}').click();">
+                    <input type="radio" name="q_${i}" id="q_${i}_opt_${optIdx}" value="${optIdx}" ${isChecked?'checked':''} onchange="window.handleAnswerSelect(${i},${optIdx})">
+                    <label for="q_${i}_opt_${optIdx}">${letter}. ${optText}</label>
+                </div>`;
+            }).join('');
+            let feedbackHtml='';
+            if(fbStatus==='correct') feedbackHtml=`<div class="feedback correct">✅ Đúng rồi!</div>`;
+            else if(fbStatus==='wrong'){
+                const correctLetter=String.fromCharCode(97+q.correct);
+                feedbackHtml=`<div class="feedback wrong">❌ Sai. Đáp án đúng: <b>${correctLetter.toUpperCase()}</b></div>`;
+            }
+            html+=`<div class="question-card"><div class="question-text">${q.text}</div><div class="options">${optsHtml}</div>${feedbackHtml}</div>`;
+        }
+        container.innerHTML=html;
+    }
+    function loadExam(){
+        let limit=Math.min(currentLimit,FULL_QUESTIONS.length);
+        currentQuestions=generateExam(limit,currentMode,currentStart);
+        userAnswers=new Array(currentQuestions.length).fill(null);
+        answerStatus=new Array(currentQuestions.length).fill(null);
+        renderQuestions(); updateStats();
+    }
+    function changePackage(limit){
+        currentLimit=Math.min(limit,FULL_QUESTIONS.length); loadExam();
+        pkgBtns.forEach(btn=>{
+            const bl=parseInt(btn.getAttribute('data-limit'),10);
+            btn.classList.toggle('active',bl===limit||(limit>=FULL_QUESTIONS.length&&bl>=FULL_QUESTIONS.length));
+        });
+    }
+    function applyModeAndStart(){
+        currentMode=shuffleRadio.checked?'shuffle':'sequential';
+        let ns=parseInt(startInput.value,10); if(isNaN(ns))ns=1;
+        currentStart=Math.max(1,Math.min(ns,FULL_QUESTIONS.length));
+        loadExam();
+    }
+    pkgBtns.forEach(btn=>btn.addEventListener('click',()=>{
+        let lv=parseInt(btn.getAttribute('data-limit'),10);
+        if(lv>FULL_QUESTIONS.length) lv=FULL_QUESTIONS.length;
+        changePackage(lv);
+    }));
+    resetBtn.addEventListener('click',loadExam);
+    applyBtn.addEventListener('click',applyModeAndStart);
+
+    currentLimit=Math.min(DEFAULT_LIMIT,FULL_QUESTIONS.length);
+    loadExam();
+    pkgBtns.forEach(btn=>{
+        let val=parseInt(btn.getAttribute('data-limit'),10);
+        if(val===currentLimit) btn.classList.add('active');
+    });
+
+</script>
+</body>
+</html>

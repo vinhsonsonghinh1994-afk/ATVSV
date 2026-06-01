@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>An toàn vệ sinh viên – ATVSLĐ VSH</title>
+<style>*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Roboto,sans-serif;background:#eef2f7;padding:16px;color:#1e293b}
+.container{max-width:1300px;margin:0 auto;background:white;border-radius:24px;box-shadow:0 8px 24px rgba(0,0,0,.1);overflow:hidden;padding:20px 24px 32px}
+.header{text-align:center;border-bottom:3px solid #2c7da0;margin-bottom:20px;background:#fff9e6;border-radius:16px 16px 0 0;padding:16px 16px 18px}
+.company{font-size:18px;font-weight:800;color:#dc2626;margin-bottom:6px}
+.title{font-size:24px;font-weight:800;color:#1e3a8a;text-transform:uppercase}
+.quiz-controls{background:#f8fafc;padding:14px 18px;border-radius:50px;margin-bottom:20px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.package-buttons{display:flex;gap:10px;flex-wrap:wrap}
+.pkg-btn{background:#e2e8f0;border:none;padding:7px 16px;font-weight:bold;font-size:.9rem;border-radius:40px;cursor:pointer;transition:all .2s;color:#1e293b}
+.pkg-btn.active{background:#2c7da0;color:white}
+.mode-controls{display:flex;align-items:center;gap:16px;flex-wrap:wrap;background:#eef2f7;padding:7px 16px;border-radius:50px}
+.mode-label{display:flex;align-items:center;gap:7px;cursor:pointer;font-weight:500;font-size:14px}
+.mode-label input{width:16px;height:16px;cursor:pointer;accent-color:#2c7da0}
+.start-input{display:flex;align-items:center;gap:7px;font-size:14px}
+.start-input input{width:65px;padding:5px 8px;border-radius:30px;border:1px solid #cbd5e1;text-align:center;font-size:.9rem}
+.apply-btn{background:#2c7da0;color:white;border:none;padding:7px 18px;border-radius:40px;font-weight:bold;cursor:pointer;font-size:14px}
+.apply-btn:hover{background:#1f5e7a}
+.reset-btn{background:#f97316;color:white;border:none;padding:8px 22px;border-radius:40px;font-weight:bold;cursor:pointer;font-size:14px}
+.stats{display:flex;justify-content:space-between;background:#e6f4f1;padding:10px 20px;border-radius:50px;margin-bottom:20px;font-weight:600;flex-wrap:wrap;gap:10px;font-size:14px}
+.questions-area{display:flex;flex-direction:column;gap:22px}
+.question-card{background:white;border-radius:20px;border:1px solid #e2edf2;padding:18px 22px;box-shadow:0 2px 8px rgba(0,0,0,.02)}
+.question-text{font-weight:700;font-size:1rem;margin-bottom:14px;color:#0f3b4c;line-height:1.5}
+.options{display:flex;flex-direction:column;gap:10px;margin-left:8px}
+.option{display:flex;align-items:center;gap:12px;cursor:pointer;padding:5px 10px;border-radius:40px;transition:background .12s}
+.option:hover{background:#f1f9fe}
+.option input{width:16px;height:16px;cursor:pointer;accent-color:#2c7da0}
+.option label{font-size:.93rem;cursor:pointer;flex:1;line-height:1.4}
+.feedback{margin-top:12px;padding:8px 16px;border-radius:50px;font-size:.88rem;font-weight:500;display:inline-block}
+.feedback.correct{background:#d1fae5;color:#065f46;border-left:4px solid #10b981}
+.feedback.wrong{background:#fee2e2;color:#991b1b;border-left:4px solid #ef4444}
+footer{text-align:center;margin-top:32px;font-size:.78rem;color:#5e7c8c;border-top:1px solid #e2edf2;padding-top:16px}
+@media(max-width:700px){.container{padding:12px}.quiz-controls{flex-direction:column;align-items:stretch}}</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div class="company">Công ty Cổ phần Thủy điện Vĩnh Sơn – Sông Hinh</div>
+    <div class="title">An toàn vệ sinh viên</div>
+  </div>
+
+  <div class="quiz-controls">
+    <div class="package-buttons">
+      <button data-limit="10" class="pkg-btn">10 câu</button>
+            <button data-limit="20" class="pkg-btn">20 câu</button>
+            <button data-limit="30" class="pkg-btn">30 câu</button>
+            
+    </div>
+    <div class="mode-controls">
+      <label class="mode-label"><input type="radio" name="orderMode" value="shuffle" checked> XÁO TRỘN</label>
+      <label class="mode-label"><input type="radio" name="orderMode" value="sequential"> THEO THỨ TỰ</label>
+      <div class="start-input">
+        <label>Bắt đầu từ câu:</label>
+        <input type="number" id="startQuestion" min="1" value="1">
+      </div>
+      <button id="applyModeBtn" class="apply-btn">ÁP DỤNG</button>
+      <button id="resetExamBtn" class="reset-btn">LÀM LẠI</button>
+    </div>
+  </div>
+
+  <div class="stats">
+    <span>📋 Đã trả lời: <strong id="answeredCount">0</strong></span>
+    <span>✅ Đúng: <strong id="correctCount">0</strong> &nbsp;|&nbsp; ❌ Sai: <strong id="wrongCount">0</strong></span>
+  </div>
+
+  <div id="questionsContainer" class="questions-area"></div>
+  <footer>⚡ Chọn đáp án → hiển thị kết quả đúng/sai ngay tức thì.</footer>
+</div>
+<script>
+    const EXAM_ID      = 'de3';
+    const EXAM_NAME    = 'An toàn vệ sinh viên';
+    const DEFAULT_LIMIT = 30;
+    const FULL_RAW = [{"text": "Luật an toàn vệ sinh lao động 2015 quy định an toàn vệ sinh viên phải có những tiêu chuẩn nào sau đây?", "options": ["a. Người có kiến thức đầy đủ về an toàn vệ sinh lao động, được chủ doanh nghiệp tín nhiệm.", "b. Người có thâm niên công tác từ 5 năm trở lên và phải có kiến thức về an toàn vệ sinh lao động, nhiệt tình với công việc.", "c. Là người lao động có trình độ chuyên môn cao, nhiệt tình, gương mẫu và có kiến thức đầy đủ về an toàn vệ sinh lao động.", "d. Là người lao động trực tiếp sản xuất, am hiểu chuyên môn, kỹ thuật an toàn vệ sinh lao động, tự nguyện, gương mẫu trong việc chấp hành các quy định về an toàn vệ sinh lao động và được người lao động trong tổ bầu ra."], "ans": "d"}, {"text": "Luật an toàn vệ sinh lao động 2015 quy định mỗi tổ sản xuất trong các cơ sở sản xuất, kinh doanh phải có ít nhất bao nhiêu an toàn vệ sinh viên kiêm nhiệm trong giờ làm việc?", "options": ["a. 01 An toàn vệ sinh viên.", "b. 02 An toàn vệ sinh viên.", "c. 03 An toàn vệ sinh viên."], "ans": "a"}, {"text": "Luật an toàn vệ sinh lao động 2015, khi ra quyết định thành lập mạng lưới an toàn vệ sinh viên người sử dụng lao động có phải lấy ý kiến Ban Chấp hành công đoàn cơ sở không?", "options": ["a. Có.", "b. Không.", "c. Nếu thấy cần thiết."], "ans": "a"}, {"text": "Luật an toàn vệ sinh lao động 2015 quy định An toàn vệ sinh viên hoạt động dưới sự quản lý và hướng dẫn của ai?", "options": ["a. Người sử dụng lao động.", "b. Ban chấp hành công đoàn cơ sở.", "c. Hội đồng an toàn, vệ sinh lao động cơ sở.", "d. Người sử dụng lao động và BCH công đoàn cơ sở."], "ans": "b"}, {"text": "Luật an toàn vệ sinh lao động 2015, quy định An toàn vệ sinh viên có quyền gì sau đây về an toàn, vệ sinh lao động?", "options": ["a. Được học tập, bồi dưỡng nâng cao trình độ chuyên môn, nghiệp vụ, phương pháp hoạt động.", "b. Được cung cấp thông tin đầy đủ về biện pháp bảo đảm an toàn, vệ sinh lao động tại nơi làm việc.", "c. Được yêu cầu người lao động trong tổ ngừng làm việc nếu thấy có nguy cơ trực tiếp gây sự cố, tai nạn lao động.", "d. Tất cả các quyền trên."], "ans": "d"}, {"text": "An toàn vệ sinh viên không có quyền nào sau đây về an toàn, vệ sinh lao động?", "options": ["a. Được dành một phần thời gian làm việc để thực hiện các nhiệm vụ của an toàn, vệ sinh viên.", "b. Được hưởng phụ cấp trách nhiệm.", "c. Được trả lương cho thời gian thực hiện nhiệm vụ của an toàn, vệ sinh viên.", "d. Được yêu cầu công đoàn cơ sở trang bị phương tiện bảo vệ cá nhân cho người lao động."], "ans": "d"}, {"text": "Theo Luật an toàn vệ sinh lao động 2015 quy định An toàn vệ sinh viên có bao nhiêu nghĩa vụ?", "options": ["a. Có 3 nghĩa vụ.", "b. Có 4 nghĩa vụ.", "c. Có 5 nghĩa vụ.", "d. Có 6 nghĩa vụ."], "ans": "c"}, {"text": "Theo Luật an toàn vệ sinh lao động 2015 quy định An toàn vệ sinh viên có bao nhiêu quyền?", "options": ["a. Có 3 quyền.", "b. Có 4 quyền.", "c. Có 5 quyền.", "d. Có 6 quyền."], "ans": "b"}, {"text": "Theo Luật an toàn vệ sinh lao động 2015 quy định An toàn vệ sinh viên có nghĩa vụ nào sau đây?", "options": ["a. Báo cáo với tổ chức công đoàn hoặc thanh tra lao động khi phát hiện vi phạm về an toàn, vệ sinh lao động tại nơi làm việc.", "b. Kiến nghị với tổ trưởng hoặc cấp trên thực hiện đầy đủ các chế độ bảo hộ lao động, biện pháp bảo đảm an toàn, vệ sinh lao động.", "c. Tham gia xây dựng kế hoạch an toàn vệ sinh lao động hàng năm.", "d. Tất cả các nghĩa vụ trên."], "ans": "d"}, {"text": "Nhiệm vụ nào không phải là nhiệm vụ của An toàn vệ sinh viên?", "options": ["a. Tổ chức kiểm tra định kỳ về công tác an toàn vệ sinh lao động tại doanh nghiệp.", "b. Đôn đốc, nhắc nhở người lao động trong tổ, đội chấp hành các quy tắc về an toàn vệ sinh lao động.", "c. Hướng dẫn người lao động sử dụng phương tiện bảo vệ cá nhân."], "ans": "a"}, {"text": "Ai ban hành Quyết định thành lập và Quy chế hoạt động của mạng lưới An toàn vệ sinh viên?", "options": ["a. Ban chấp hành công đoàn cơ sở.", "b. Ban chấp hành công đoàn cơ sở thống nhất với người sử dụng lao động.", "c. Người sử dụng lao động thống nhất ý kiến với Ban chấp hành công đoàn cơ sở (nếu cơ sở sản xuất, kinh doanh đã thành lập Ban chấp hành công đoàn cơ sở)."], "ans": "c"}, {"text": "Luật an toàn vệ sinh lao động 2015 quy định mức phụ cấp trách nhiệm hàng tháng cho an toàn vệ sinh viên như thế nào?", "options": ["a. Do người sử dụng lao động và Ban chấp hành công đoàn cơ sở thống nhất thỏa thuận và được ghi trong quy chế hoạt động của mạng lưới an toàn vệ sinh viên.", "b. Mức tối thiểu phải bằng 10% tiền lương cở sở.", "c. Mức tối thiểu phải bằng 10% tiền lương tối thiểu vùng.", "d. Mức tương đương với phụ cấp của tổ trưởng tổ sản xuất."], "ans": "a"}, {"text": "Phụ cấp trách nhiệm cho an toàn vệ sinh viên do ai chi trả?", "options": ["a. Do Công đoàn cơ sở chi trả.", "b. Do người sử dụng lao động chi trả.", "c. Do người sử dụng lao động và công đoàn cơ sở cùng chi trả."], "ans": "b"}, {"text": "Nghị định 44/2016/NĐ-CP của Chính phủ ngày 15/5/2016 quy định An toàn vệ sinh viên thuộc đối tượng huấn luyện nhóm nào?", "options": ["a. Nhóm 1.", "b. Nhóm 2.", "c. Nhóm 5.", "d. Nhóm 6."], "ans": "d"}, {"text": "Nghị định 44/2016/NĐ-CP của Chính phủ ngày 15/5/2016 quy định thời gian huấn luyện lần đầu cho an toàn, vệ sinh viên (ngoài nội dung đã huấn luyện về an toàn, vệ sinh lao động) được quy định như thế nào?", "options": ["a. Ít nhất là 4 giờ.", "b. Ít nhất là 8 giờ.", "c. Ít nhất là 16 giờ.", "d. Ít nhất là 24 giờ."], "ans": "a"}, {"text": "Phương pháp hoạt động của An toàn vệ sinh viên là?", "options": ["a. Hàng ngày bám sát, nắm chắc tình hình an toàn, vệ sinh lao động của máy, thiết bị. Phát hiện và xử lý kịp thời các vi phạm về an toàn, vệ sinh lao động.", "b. Kết hợp biện pháp vận động, thuyết phục, ngăn chặn kịp thời các hiện tượng làm bừa, làm ẩu.", "c. Gương mẫu chấp hành các yêu cầu về an toàn, vệ sinh lao động để làm gương cho tập thể.", "d. Tất cả các phương pháp trên."], "ans": "d"}, {"text": "Nghị định 44/2016/NĐ-CP của Chính phủ ngày 15/5/2016 quy định An toàn vệ sinh viên tham gia lớp huấn luyện về An toàn vệ sinh lao động và tham gia lớp bổ sung về kỹ năng, phương pháp hoạt động của an toàn vệ sinh viên sau khi kiểm tra, sát hạch đạt yêu cầu thì được cấp?", "options": ["a. Giấy chứng nhận huấn luyện.", "b. Thẻ an toàn.", "c. Danh sách huấn luyện.", "d. Cả 3 đáp án trên."], "ans": "a"}, {"text": "Hoạt động của Mạng lưới an toàn vệ sinh viên nhằm:", "options": ["a. Giúp Ban Chấp hành công đoàn cơ sở thực hiện tốt công tác an toàn vệ sinh lao động.", "b. Giúp người sử dụng lao động thực hiện tốt công tác an toàn vệ sinh lao động.", "c. Đẩy mạnh phong trào \"Xanh - Sạch - Đẹp, Bảo đảm an toàn vệ sinh lao động\" tại doanh nghiệp.", "d. Cả 3 câu a,b,c đều đúng."], "ans": "d"}, {"text": "Nội dung sinh hoạt định kỳ của mạng lưới An toàn vệ sinh viên?", "options": ["a. Trao đổi, báo cáo các ý kiến, kiến nghị, đề xuất của người lao động trong tổ về tình hình công tác an toàn vệ sinh lao động trong tại doanh nghiệp.", "b. Thông tin về các vụ tai nạn lao động, các sự cố xảy ra trong doanh nghiệp.", "c. Trao đổi, đề xuất các biện pháp bảo đảm an toàn vệ sinh lao động trong doanh nghiệp.", "d. Cả 3 nội dung trên."], "ans": "d"}, {"text": "Hội thi An toàn vệ sinh viên giỏi ở cơ sở nhằm?", "options": ["a. Nâng cao nhận thức về an toàn vệ sinh lao động cho An toàn vệ sinh viên", "b. Đẩy mạnh hoạt động tuyên truyền về an toàn vệ sinh lao động.", "c. Biểu dương, khen thưởng kịp thời.", "d. Tất cả các nội dung trên."], "ans": "d"}, {"text": "An toàn vệ sinh viên được quy định trong Điều nào của Luật An toàn, vệ sinh lao động năm 2015?", "options": ["a. Điều 73 Luật An toàn, vệ sinh lao động năm 2015.", "b. Điều 74 Luật An toàn, vệ sinh lao động năm 2015.", "c. Điều 75 Luật An toàn, vệ sinh lao động năm 2015."], "ans": "b"}, {"text": "Nội dung hoạt động hàng ngày trước ca làm việc của mạng lưới An toàn vệ sinh viên?", "options": ["a. Kiểm tra điều kiện môi trường làm việc.", "b. Nhắc nhở người lao động trong tổ sử dụng đầy đủ phương tiện bảo vệ cá nhân.", "c. Cả 2 nội dung trên."], "ans": "c"}, {"text": "An toàn, vệ sinh viên có phải được huấn luyện những nội dung thuộc nhóm 3 không?", "options": ["a. Không phải huấn luyện.", "b. Bắt buộc phải được huấn luyện", "c. Tùy theo từng trường hợp.", "d. Có phải huấn luyện, đối với trường hợp an toàn vệ sinh viên làm công việc có yêu cầu nghiêm ngặt về an toàn, vệ sinh lao động."], "ans": "d"}, {"text": "Tham gia với người sử dụng lao động xây dựng kế hoạch an toàn, vệ sinh lao động; tham gia hướng dẫn biện pháp làm việc an toàn đối với người lao động mới đến làm việc ở tổ là quyền, trách nhiệm của cơ quan/bộ phận nào?", "options": ["a. Bộ phận y tế.", "b. Tổ chức công đoàn.", "c. An toàn, vệ sinh viên.", "d. Cả 3 đáp án trên đều sai."], "ans": "c"}, {"text": "Giám sát việc thực hiện tiêu chuẩn, quy chuẩn, quy trình, nội quy an toàn, vệ sinh lao động, phát hiện những thiếu sót, vi phạm về an toàn, vệ sinh lao động, những trường hợp mất an toàn, vệ sinh của máy, thiết bị, vật tư, chất và nơi làm việc là quyền, trách nhiệm của cơ quan/bộ phận nào?", "options": ["a. Bộ phận y tế.", "b. An toàn, vệ sinh viên.", "c. Công đoàn cơ sở.", "d. Cả 3 đáp án trên đều đúng."], "ans": "b"}, {"text": "Yêu cầu người lao động trong tổ ngừng làm việc để thực hiện các biện pháp bảo đảm an toàn, vệ sinh lao động, nếu thấy có nguy cơ trực tiếp gây sự cố, tai nạn lao động và chịu trách nhiệm về quyết định đó là quyền, trách nhiệm của cơ quan/bộ phận nào?", "options": ["a. Bộ phận y tế.", "b. An toàn, vệ sinh viên.", "c. Tổ chức Công đoàn.", "d. Hội đồng an toàn vệ sinh lao động cơ sở."], "ans": "b"}, {"text": "Ai có nghĩa vụ chính trong việc xây dựng, ban hành và tổ chức thực hiện nội quy, quy trình bảo đảm an toàn, vệ sinh lao động?", "options": ["a. Ban Chấp hành công đoàn cơ sở.", "b. Tổ trưởng tổ sản xuất.", "c. Cán bộ An toàn, vệ sinh viên.", "d. Người sử dụng lao động."], "ans": "d"}, {"text": "An toàn vệ sinh viên được dành một phần thời gian làm việc để thực hiện các nhiệm vụ của an toàn vệ sinh viên nhưng vẫn được trả lương cho thời gian thực hiện nhiệm vụ, như vậy đúng hay sai?", "options": ["a. Đúng", "b. Sai"], "ans": "a"}, {"text": "An toàn vệ sinh viên phối hợp với người làm công tác an toàn vệ sinh lao động, người làm công tác y tế tại cơ sở để thực hiện tốt công tác an toàn vệ sinh lao động tại cơ sở, như vậy đúng hay sai?", "options": ["a. Sai", "b. Đúng"], "ans": "b"}, {"text": "Mạng lưới An toàn vệ sinh viên của doanh nghiệp sinh hoạt định kỳ ít nhất?", "options": ["a. 1 tháng 1 lần.", "b. 2 tháng 1 lần.", "c. 3 tháng 1 lần."], "ans": "a"}];
+
+    function getAnswerIndex(question, ansLetter) {
+        const letters = ['a','b','c','d','e','đ'];
+        let idx = letters.indexOf(ansLetter.toLowerCase());
+        if (idx !== -1 && idx < question.options.length) return idx;
+        return 0;
+    }
+    const FULL_QUESTIONS = FULL_RAW.map((q,idx) => ({
+        id: idx+1,
+        text: `Câu ${idx+1}: ${q.text}`,
+        options: q.options,
+        correct: getAnswerIndex(q, q.ans)
+    }));
+
+    let currentQuestions=[], userAnswers=[], answerStatus=[];
+    let currentLimit=DEFAULT_LIMIT, currentMode='shuffle', currentStart=1;
+
+    const container     = document.getElementById('questionsContainer');
+    const answeredSpan  = document.getElementById('answeredCount');
+    const correctSpan   = document.getElementById('correctCount');
+    const wrongSpan     = document.getElementById('wrongCount');
+    const resetBtn      = document.getElementById('resetExamBtn');
+    const applyBtn      = document.getElementById('applyModeBtn');
+    const pkgBtns       = document.querySelectorAll('.pkg-btn');
+    const shuffleRadio  = document.querySelector('input[value="shuffle"]');
+    const sequentialRadio = document.querySelector('input[value="sequential"]');
+    const startInput    = document.getElementById('startQuestion');
+
+    function shuffleArray(arr){
+        for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}
+        return arr;
+    }
+    function getSequentialQuestions(limit,start){
+        let startIdx=Math.max(1,Math.min(start,FULL_QUESTIONS.length-limit+1));
+        let sel=[];
+        for(let i=0;i<limit;i++){let qi=startIdx-1+i;if(qi<FULL_QUESTIONS.length)sel.push({...FULL_QUESTIONS[qi]});}
+        return sel;
+    }
+    function generateExam(limit,mode,start){
+        if(mode==='shuffle') return shuffleArray([...FULL_QUESTIONS]).slice(0,limit);
+        return getSequentialQuestions(limit,start);
+    }
+    function updateStats(){
+        let answered=userAnswers.filter(a=>a!==null).length;
+        let correct=answerStatus.filter(s=>s==='correct').length;
+        let wrong=answerStatus.filter(s=>s==='wrong').length;
+        answeredSpan.innerText=answered; correctSpan.innerText=correct; wrongSpan.innerText=wrong;
+    }
+    function handleAnswer(idx,selectedOpt){
+        const q=currentQuestions[idx]; if(!q) return;
+        userAnswers[idx]=selectedOpt;
+        answerStatus[idx]=(selectedOpt===q.correct)?'correct':'wrong';
+        renderQuestions(); updateStats();
+    }
+    window.handleAnswerSelect=(qIndex,optVal)=>{
+        if(qIndex>=0&&qIndex<currentQuestions.length) handleAnswer(qIndex,parseInt(optVal));
+    };
+    function renderQuestions(){
+        if(!container) return;
+        if(!currentQuestions.length){container.innerHTML='<div style="padding:40px;text-align:center;">Đang tải...</div>';return;}
+        let html='';
+        for(let i=0;i<currentQuestions.length;i++){
+            const q=currentQuestions[i],userChoice=userAnswers[i],fbStatus=answerStatus[i];
+            const optsHtml=q.options.map((opt,optIdx)=>{
+                const letter=String.fromCharCode(97+optIdx);
+                const isChecked=(userChoice===optIdx);
+                const optText=opt.replace(/^[a-đ]\.\s*/i,'');
+                return `<div class="option" onclick="document.getElementById('q_${i}_opt_${optIdx}').click();">
+                    <input type="radio" name="q_${i}" id="q_${i}_opt_${optIdx}" value="${optIdx}" ${isChecked?'checked':''} onchange="window.handleAnswerSelect(${i},${optIdx})">
+                    <label for="q_${i}_opt_${optIdx}">${letter}. ${optText}</label>
+                </div>`;
+            }).join('');
+            let feedbackHtml='';
+            if(fbStatus==='correct') feedbackHtml=`<div class="feedback correct">✅ Đúng rồi!</div>`;
+            else if(fbStatus==='wrong'){
+                const correctLetter=String.fromCharCode(97+q.correct);
+                feedbackHtml=`<div class="feedback wrong">❌ Sai. Đáp án đúng: <b>${correctLetter.toUpperCase()}</b></div>`;
+            }
+            html+=`<div class="question-card"><div class="question-text">${q.text}</div><div class="options">${optsHtml}</div>${feedbackHtml}</div>`;
+        }
+        container.innerHTML=html;
+    }
+    function loadExam(){
+        let limit=Math.min(currentLimit,FULL_QUESTIONS.length);
+        currentQuestions=generateExam(limit,currentMode,currentStart);
+        userAnswers=new Array(currentQuestions.length).fill(null);
+        answerStatus=new Array(currentQuestions.length).fill(null);
+        renderQuestions(); updateStats();
+    }
+    function changePackage(limit){
+        currentLimit=Math.min(limit,FULL_QUESTIONS.length); loadExam();
+        pkgBtns.forEach(btn=>{
+            const bl=parseInt(btn.getAttribute('data-limit'),10);
+            btn.classList.toggle('active',bl===limit||(limit>=FULL_QUESTIONS.length&&bl>=FULL_QUESTIONS.length));
+        });
+    }
+    function applyModeAndStart(){
+        currentMode=shuffleRadio.checked?'shuffle':'sequential';
+        let ns=parseInt(startInput.value,10); if(isNaN(ns))ns=1;
+        currentStart=Math.max(1,Math.min(ns,FULL_QUESTIONS.length));
+        loadExam();
+    }
+    pkgBtns.forEach(btn=>btn.addEventListener('click',()=>{
+        let lv=parseInt(btn.getAttribute('data-limit'),10);
+        if(lv>FULL_QUESTIONS.length) lv=FULL_QUESTIONS.length;
+        changePackage(lv);
+    }));
+    resetBtn.addEventListener('click',loadExam);
+    applyBtn.addEventListener('click',applyModeAndStart);
+
+    currentLimit=Math.min(DEFAULT_LIMIT,FULL_QUESTIONS.length);
+    loadExam();
+    pkgBtns.forEach(btn=>{
+        let val=parseInt(btn.getAttribute('data-limit'),10);
+        if(val===currentLimit) btn.classList.add('active');
+    });
+
+</script>
+</body>
+</html>

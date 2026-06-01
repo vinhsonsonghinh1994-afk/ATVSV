@@ -1,0 +1,66 @@
+====================================================
+HƯỚNG DẪN CÀI ĐẶT SUPABASE CHO HỆ THỐNG ATVSLĐ VSH
+====================================================
+
+── BƯỚC 1: Tạo bảng exam_candidates (danh sách thí sinh) ──
+
+Vào Supabase → SQL Editor → chạy:
+
+CREATE TABLE exam_candidates (
+  id bigint generated always as identity primary key,
+  full_name text not null,
+  password text not null,
+  is_active boolean default true,
+  created_at timestamptz default now()
+);
+
+ALTER TABLE exam_candidates ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "allow select" ON exam_candidates
+  FOR SELECT USING (true);
+
+── BƯỚC 2: Thêm thí sinh ──
+
+Vào Supabase → Table Editor → exam_candidates → Insert row
+Điền: full_name = "Nguyễn Văn A", password = "12345", is_active = true
+
+Hoặc chạy SQL:
+INSERT INTO exam_candidates (full_name, password, is_active) VALUES
+  ('Nguyễn Văn A', '123456', true),
+  ('Trần Thị B',   '123456', true),
+  ('Lê Văn C',     '123456', true);
+
+── BƯỚC 3: Cấu trúc thư mục trên GitHub ──
+
+/
+├── index.html
+├── de1.html … de8.html
+├── de8_kythi.html
+├── supabase.js
+└── tailieu/
+    ├── atgt.pdf       (An toàn giao thông)
+    ├── pccc.pdf       (Phòng cháy chữa cháy)
+    ├── atvsv.pdf      (An toàn vệ sinh viên)
+    ├── ktatld.pdf     (Kỹ thuật an toàn lao động)
+    ├── ktvsld.pdf     (Kỹ thuật vệ sinh lao động)
+    ├── vbqc.pdf       (Văn bản – Quy chế – Hướng dẫn)
+    └── pl.pdf         (Pháp luật ATVSLĐ)
+
+── BƯỚC 4: Upload PDF lên GitHub ──
+
+1. Vào repo ATVSV trên GitHub
+2. Click "Add file" → "Upload files"
+3. Vào thư mục tailieu/ (tạo bằng cách kéo file vào)
+4. Upload 7 file PDF, đặt tên đúng như trên
+5. Commit changes
+
+── QUẢN LÝ THÍ SINH ──
+
+Khóa thí sinh (không cho đăng nhập):
+UPDATE exam_candidates SET is_active = false WHERE full_name = 'Nguyễn Văn A';
+
+Đổi mật khẩu:
+UPDATE exam_candidates SET password = 'matkhaumoi' WHERE full_name = 'Nguyễn Văn A';
+
+Xem kết quả thi:
+SELECT * FROM exam_results WHERE exam_id = 'kythi' ORDER BY percent DESC;

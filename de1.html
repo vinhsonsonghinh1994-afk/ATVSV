@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>An toàn giao thông – ATVSLĐ VSH</title>
+<style>*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Roboto,sans-serif;background:#eef2f7;padding:16px;color:#1e293b}
+.container{max-width:1300px;margin:0 auto;background:white;border-radius:24px;box-shadow:0 8px 24px rgba(0,0,0,.1);overflow:hidden;padding:20px 24px 32px}
+.header{text-align:center;border-bottom:3px solid #2c7da0;margin-bottom:20px;background:#fff9e6;border-radius:16px 16px 0 0;padding:16px 16px 18px}
+.company{font-size:18px;font-weight:800;color:#dc2626;margin-bottom:6px}
+.title{font-size:24px;font-weight:800;color:#1e3a8a;text-transform:uppercase}
+.quiz-controls{background:#f8fafc;padding:14px 18px;border-radius:50px;margin-bottom:20px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.package-buttons{display:flex;gap:10px;flex-wrap:wrap}
+.pkg-btn{background:#e2e8f0;border:none;padding:7px 16px;font-weight:bold;font-size:.9rem;border-radius:40px;cursor:pointer;transition:all .2s;color:#1e293b}
+.pkg-btn.active{background:#2c7da0;color:white}
+.mode-controls{display:flex;align-items:center;gap:16px;flex-wrap:wrap;background:#eef2f7;padding:7px 16px;border-radius:50px}
+.mode-label{display:flex;align-items:center;gap:7px;cursor:pointer;font-weight:500;font-size:14px}
+.mode-label input{width:16px;height:16px;cursor:pointer;accent-color:#2c7da0}
+.start-input{display:flex;align-items:center;gap:7px;font-size:14px}
+.start-input input{width:65px;padding:5px 8px;border-radius:30px;border:1px solid #cbd5e1;text-align:center;font-size:.9rem}
+.apply-btn{background:#2c7da0;color:white;border:none;padding:7px 18px;border-radius:40px;font-weight:bold;cursor:pointer;font-size:14px}
+.apply-btn:hover{background:#1f5e7a}
+.reset-btn{background:#f97316;color:white;border:none;padding:8px 22px;border-radius:40px;font-weight:bold;cursor:pointer;font-size:14px}
+.stats{display:flex;justify-content:space-between;background:#e6f4f1;padding:10px 20px;border-radius:50px;margin-bottom:20px;font-weight:600;flex-wrap:wrap;gap:10px;font-size:14px}
+.questions-area{display:flex;flex-direction:column;gap:22px}
+.question-card{background:white;border-radius:20px;border:1px solid #e2edf2;padding:18px 22px;box-shadow:0 2px 8px rgba(0,0,0,.02)}
+.question-text{font-weight:700;font-size:1rem;margin-bottom:14px;color:#0f3b4c;line-height:1.5}
+.options{display:flex;flex-direction:column;gap:10px;margin-left:8px}
+.option{display:flex;align-items:center;gap:12px;cursor:pointer;padding:5px 10px;border-radius:40px;transition:background .12s}
+.option:hover{background:#f1f9fe}
+.option input{width:16px;height:16px;cursor:pointer;accent-color:#2c7da0}
+.option label{font-size:.93rem;cursor:pointer;flex:1;line-height:1.4}
+.feedback{margin-top:12px;padding:8px 16px;border-radius:50px;font-size:.88rem;font-weight:500;display:inline-block}
+.feedback.correct{background:#d1fae5;color:#065f46;border-left:4px solid #10b981}
+.feedback.wrong{background:#fee2e2;color:#991b1b;border-left:4px solid #ef4444}
+footer{text-align:center;margin-top:32px;font-size:.78rem;color:#5e7c8c;border-top:1px solid #e2edf2;padding-top:16px}
+@media(max-width:700px){.container{padding:12px}.quiz-controls{flex-direction:column;align-items:stretch}}</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div class="company">Công ty Cổ phần Thủy điện Vĩnh Sơn – Sông Hinh</div>
+    <div class="title">An toàn giao thông</div>
+  </div>
+
+  <div class="quiz-controls">
+    <div class="package-buttons">
+      <button data-limit="10" class="pkg-btn">10 câu</button>
+            <button data-limit="20" class="pkg-btn">20 câu</button>
+            <button data-limit="30" class="pkg-btn">30 câu</button>
+            <button data-limit="38" class="pkg-btn">38 câu</button>
+            
+    </div>
+    <div class="mode-controls">
+      <label class="mode-label"><input type="radio" name="orderMode" value="shuffle" checked> XÁO TRỘN</label>
+      <label class="mode-label"><input type="radio" name="orderMode" value="sequential"> THEO THỨ TỰ</label>
+      <div class="start-input">
+        <label>Bắt đầu từ câu:</label>
+        <input type="number" id="startQuestion" min="1" value="1">
+      </div>
+      <button id="applyModeBtn" class="apply-btn">ÁP DỤNG</button>
+      <button id="resetExamBtn" class="reset-btn">LÀM LẠI</button>
+    </div>
+  </div>
+
+  <div class="stats">
+    <span>📋 Đã trả lời: <strong id="answeredCount">0</strong></span>
+    <span>✅ Đúng: <strong id="correctCount">0</strong> &nbsp;|&nbsp; ❌ Sai: <strong id="wrongCount">0</strong></span>
+  </div>
+
+  <div id="questionsContainer" class="questions-area"></div>
+  <footer>⚡ Chọn đáp án → hiển thị kết quả đúng/sai ngay tức thì.</footer>
+</div>
+<script>
+    const EXAM_ID      = 'de1';
+    const EXAM_NAME    = 'An toàn giao thông';
+    const DEFAULT_LIMIT = 38;
+    const FULL_RAW = [{"text": "Trong một tình huống trên đường bộ có các chủ thể sau: (1) Người đang điều khiển xe mô tô. (2) Người ngồi sau xe mô tô. (3) Người đi bộ qua đường. (4) Người dắt trâu đi sát mép đường. (5) Người đứng bán hàng trong phạm vi lề đường nhưng không tham gia di chuyển hay điều khiển, dẫn dắt bất kỳ đối tượng nào. Căn cứ theo khái niệm pháp lý về 'người tham gia giao thông đường bộ', nhận định nào sau đây là đúng nhất?", "options": ["a. Chỉ các chủ thể (1), (2), (3) là người tham gia giao thông đường bộ, vì (4) không phải là người điều khiển phương tiện còn (5) chỉ đứng tại chỗ.", "b. Các chủ thể (1), (2), (3), (4) đều là người tham gia giao thông đường bộ; riêng (5) không thuộc trường hợp này.", "c. Các chủ thể (1), (3), (4), (5) đều là người tham gia giao thông đường bộ vì đều đang có mặt trên đường bộ.", "d. Chỉ các chủ thể (1), (3), (4) là người tham gia giao thông đường bộ; người ngồi sau xe mô tô không được coi là người tham gia giao thông."], "ans": "b"}, {"text": "Theo quy định của pháp luật về giao thông đường bộ, khái niệm 'người điều khiển phương tiện tham gia giao thông đường bộ' phải được hiểu đúng theo phạm vi các loại phương tiện được luật định. Trong các phương án sau, đâu là phương án đầy đủ và chính xác nhất về mặt pháp lý?", "options": ["a. Bao gồm người điều khiển xe cơ giới và người điều khiển xe thô sơ, vì đây là hai nhóm phương tiện phổ biến tham gia giao thông.", "b. Bao gồm người điều khiển xe cơ giới, người điều khiển xe thô sơ và người điều khiển xe máy chuyên dùng.", "c. Bao gồm người điều khiển xe cơ giới, xe thô sơ và người dẫn dắt súc vật trên đường bộ.", "d. Bao gồm người điều khiển mọi loại phương tiện có động cơ hoặc không có động cơ tham gia giao thông đường bộ."], "ans": "b"}, {"text": "Theo quy định của pháp luật về giao thông đường bộ, phương án nào xác định đúng và đầy đủ nhất về 'Người điều khiển giao thông'?", "options": ["a. Là người điều khiển phương tiện tham gia giao thông, bao gồm người lái xe cơ giới, xe thô sơ và xe máy chuyên dùng.", "b. Là lực lượng Cảnh sát giao thông thực hiện nhiệm vụ tuần tra, kiểm soát và xử lý vi phạm trên đường bộ.", "c. Là Cảnh sát giao thông và người được giao nhiệm vụ hướng dẫn, điều khiển giao thông trên đường bộ.", "d. Là người có thẩm quyền tham gia điều hành hoặc hỗ trợ giao thông khi có yêu cầu của cơ quan chức năng."], "ans": "c"}, {"text": "Theo quy định của pháp luật về giao thông đường bộ, nghĩa vụ của người tham gia giao thông nhằm bảo đảm an toàn giao thông phải được hiểu theo cả yêu cầu tuân thủ quy tắc và trách nhiệm đối với bản thân và người khác. Trong các phương án sau, đâu là phương án đúng, đầy đủ và phù hợp nhất với quy định pháp lý?", "options": ["a. Người tham gia giao thông phải nghiêm chỉnh chấp hành quy tắc giao thông đường bộ và có trách nhiệm giữ gìn an toàn cho mình và cho người khác.", "b. Người tham gia giao thông chỉ cần chấp hành đúng quy tắc giao thông đường bộ, các yếu tố khác thuộc về ý thức cá nhân.", "c. Người tham gia giao thông phải bảo đảm an toàn cho bản thân, còn việc bảo đảm an toàn cho người khác là trách nhiệm của cơ quan chức năng.", "d. Người tham gia giao thông phải tuân thủ quy tắc giao thông và tích cực hỗ trợ người khác tham gia giao thông khi cần thiết."], "ans": "a"}, {"text": "Theo quy định của pháp luật, phương án nào xác định đúng và đầy đủ nhất về chủ thể chịu trách nhiệm bảo đảm trật tự, an toàn giao thông đường bộ?", "options": ["a. Là trách nhiệm của các cơ quan quản lý nhà nước về giao thông vận tải và lực lượng Cảnh sát giao thông.", "b. Là trách nhiệm của cơ quan, tổ chức và cá nhân có liên quan đến hoạt động giao thông đường bộ.", "c. Là trách nhiệm chủ yếu của lực lượng Cảnh sát giao thông và các cơ quan chức năng có thẩm quyền.", "d. Là trách nhiệm của toàn xã hội, trong đó cơ quan nhà nước giữ vai trò chủ đạo."], "ans": "b"}, {"text": "Theo quy định của pháp luật, phương án nào phản ánh đúng và đầy đủ nhất yêu cầu trong xử lý hành vi vi phạm trật tự, an toàn giao thông đường bộ?", "options": ["a. Mọi hành vi vi phạm phải được xử lý nghiêm minh nhằm bảo đảm tính răn đe và phòng ngừa chung.", "b. Mọi hành vi vi phạm phải được phát hiện, ngăn chặn kịp thời và xử lý theo quy định của pháp luật.", "c. Mọi hành vi vi phạm phải được xử lý theo quy định của pháp luật và bảo đảm tính công bằng, minh bạch.", "d. Mọi hành vi vi phạm phải được phát hiện kịp thời, xử lý nghiêm minh và đúng quy định của pháp luật."], "ans": "b"}, {"text": "Theo quy định của pháp luật, người tham gia giao thông phải tuân thủ những yêu cầu nào để bảo đảm đi đúng quy tắc giao thông đường bộ?", "options": ["a. Đi bên phải theo chiều đi của mình và đi đúng làn đường, phần đường quy định.", "b. Đi đúng làn đường, phần đường quy định và chấp hành báo hiệu đường bộ.", "c. Đi bên phải theo chiều đi của mình, đi đúng làn đường, phần đường quy định và chấp hành báo hiệu đường bộ cùng các quy tắc giao thông đường bộ khác.", "d. Chỉ cần chấp hành báo hiệu đường bộ và tuân thủ hướng dẫn của người điều khiển giao thông."], "ans": "c"}, {"text": "Khi gặp tín hiệu đèn màu vàng tại nút giao, người điều khiển phương tiện phải xử lý như thế nào là đúng?", "options": ["a. Luôn phải dừng lại trước vạch dừng trong mọi trường hợp.", "b. Phải dừng trước vạch dừng; nếu đã đi qua vạch dừng thì được tiếp tục, kể cả khi đèn vàng nhấp nháy.", "c. Phải dừng trước vạch dừng; nếu đã đi trên hoặc qua vạch dừng thì được đi tiếp; nếu đèn vàng nhấp nháy thì được đi nhưng phải giảm tốc độ và nhường đường khi cần thiết.", "d. Được phép đi tiếp trong mọi trường hợp khi đèn vàng để tránh ùn tắc giao thông."], "ans": "c"}, {"text": "Khi gặp tín hiệu đèn vàng, trong trường hợp nào dưới đây người điều khiển phương tiện được phép đi tiếp?", "options": ["a. Khi còn cách vạch dừng một khoảng ngắn và có thể phanh gấp kịp thời.", "b. Khi đã đi một phần bánh xe lên vạch dừng hoặc đã vượt qua vạch dừng.", "c. Khi phía sau có nhiều xe đang đi nhanh, để tránh va chạm.", "d. Khi đèn vàng vừa chuyển từ xanh sang, dù chưa tới vạch dừng."], "ans": "b"}, {"text": "Khi tín hiệu đèn vàng nhấp nháy tại nơi giao nhau, người điều khiển phương tiện phải xử lý như thế nào?", "options": ["a. Dừng lại trước vạch dừng giống như đèn đỏ.", "b. Được đi nhanh qua để tránh cản trở giao thông.", "c. Được đi nhưng phải quan sát, giảm tốc độ và nhường đường khi cần thiết.", "d. Chỉ được đi khi không có người đi bộ qua đường."], "ans": "c"}, {"text": "Trên đường có nhiều làn xe cùng chiều, người điều khiển phương tiện được phép chuyển làn hợp lệ khi nào?", "options": ["a. Khi bảo đảm khoảng cách an toàn phía trước và phía sau, có thể chuyển trực tiếp sang làn cách một làn nếu không gây nguy hiểm.", "b. Khi có tín hiệu báo trước và bảo đảm an toàn với xe phía trước, phía sau; việc chuyển nhiều làn cùng lúc được phép nếu không có xe hai bên.", "c. Khi chuyển tại nơi cho phép, có tín hiệu báo trước, quan sát bảo đảm an toàn với xe phía trước, phía sau và hai bên, mỗi lần chỉ chuyển sang một làn liền kề.", "d. Khi đường thông thoáng và có tín hiệu báo trước, có thể linh hoạt chuyển làn tùy tình huống thực tế."], "ans": "c"}, {"text": "Phát biểu nào sau đây đúng nhất về nguyên tắc chuyển làn trên đường nhiều làn cùng chiều?", "options": ["a. Chỉ cần bảo đảm khoảng cách an toàn với xe phía trước và phía sau là đủ điều kiện để chuyển làn.", "b. Người điều khiển phương tiện phải đi đúng một làn, chỉ được chuyển làn ở nơi cho phép, mỗi lần chỉ sang làn liền kề và phải có tín hiệu báo trước.", "c. Có thể chuyển làn liên tiếp nhiều lần nếu mỗi lần đều có tín hiệu báo trước và không gây cản trở giao thông.", "d. Việc chuyển làn phụ thuộc chủ yếu vào tốc độ và mật độ giao thông, không bắt buộc phải xét phương tiện hai bên nếu đã quan sát phía trước."], "ans": "b"}, {"text": "Người lái xe khi tham gia giao thông đường bộ được coi là tuân thủ đúng quy định về tốc độ và khoảng cách an toàn trong trường hợp nào sau đây?", "options": ["a. Giữ đúng tốc độ tối đa cho phép và bảo đảm khoảng cách an toàn với xe phía trước, không cần xét các yếu tố môi trường xung quanh.", "b. Giữ khoảng cách an toàn tối thiểu với xe phía trước cùng làn, đồng thời điều chỉnh tốc độ phù hợp với điều kiện cầu, đường, mật độ giao thông và các yếu tố ảnh hưởng khác.", "c. Chỉ cần giữ khoảng cách an toàn với xe phía trước, còn tốc độ có thể linh hoạt miễn không vượt quá quy định.", "d. Điều chỉnh tốc độ phù hợp điều kiện giao thông là đủ, không bắt buộc duy trì khoảng cách tối thiểu nếu mật độ xe thấp."], "ans": "b"}, {"text": "Theo quy định tại Điều 17 Nghị định 67/2023/NĐ-CP, trường hợp nào sau đây thuộc phạm vi được Quỹ Bảo hiểm xe cơ giới xem xét chi hỗ trợ nhân đạo đối với nạn nhân tai nạn giao thông?", "options": ["a. Không xác định được xe gây tai nạn hoặc xe gây tai nạn không tham gia bảo hiểm trách nhiệm dân sự bắt buộc, trừ trường hợp người bị thiệt hại có hành vi cố ý gây tai nạn.", "b. Tai nạn giao thông thuộc trường hợp loại trừ trách nhiệm bảo hiểm hoặc ngoài phạm vi bảo hiểm, bao gồm cả trường hợp người bị thiệt hại có lỗi cố ý.", "c. Chỉ hỗ trợ trong trường hợp không xác định được xe gây tai nạn; các trường hợp xe không tham gia bảo hiểm hoặc ngoài phạm vi bảo hiểm không thuộc diện hỗ trợ.", "d. Bao gồm các trường hợp: không xác định được xe gây tai nạn; xe không tham gia bảo hiểm; tai nạn ngoài phạm vi bảo hiểm hoặc thuộc trường hợp loại trừ trách nhiệm bảo hiểm, trừ trường hợp người bị thiệt hại cố ý gây thiệt hại."], "ans": "d"}, {"text": "Theo Điều 12 Nghị định số 67/2023/NĐ-CP ngày 06/9/2023 của Chính phủ, khi đã xác định vụ tai nạn thuộc phạm vi bồi thường thiệt hại, doanh nghiệp bảo hiểm phải thực hiện tạm ứng bồi thường đối với thiệt hại về sức khỏe, tính mạng theo phương án nào dưới đây?", "options": ["a. Tạm ứng 70% mức bồi thường bảo hiểm ước tính theo quy định cho một người trong một vụ tai nạn đối với trường hợp tử vong, và 50% mức bồi thường bảo hiểm ước tính theo quy định cho một người trong một vụ tai nạn đối với trường hợp tổn thương bộ phận.", "b. Tạm ứng 50% mức bồi thường bảo hiểm ước tính đối với trường hợp tử vong, và 70% mức bồi thường bảo hiểm ước tính đối với trường hợp tổn thương bộ phận, vì thiệt hại chưa được xác định cuối cùng.", "c. Tạm ứng 70% trong mọi trường hợp thiệt hại về sức khỏe, tính mạng nếu đã xác định vụ tai nạn thuộc phạm vi bồi thường; mức 50% chỉ áp dụng khi chưa xác định được xe gây tai nạn.", "d. Tạm ứng theo nguyên tắc thỏa thuận giữa doanh nghiệp bảo hiểm và người bị thiệt hại; trường hợp không thỏa thuận được thì áp dụng mức 50% cho tử vong và 70% cho tổn thương bộ phận."], "ans": "a"}, {"text": "Theo quy định tại Điều 17 Nghị định số 67/2023/NĐ-CP ngày 6/9/2023 của Chính phủ, mức chi hỗ trợ nhân đạo cho nạn nhân trong các vụ tai nạn giao thông thuộc đối tượng được chi hỗ trợ nhân đạo của Quỹ Bảo hiểm xe cơ giới là bao nhiêu?", "options": ["a. 30% giới hạn trách nhiệm bảo hiểm đối với trường hợp tử vong hoặc tổn thương từ 81% trở lên; 10% đối với trường hợp tổn thương từ 31% đến dưới 81%.", "b. 50% giới hạn trách nhiệm bảo hiểm đối với trường hợp tử vong hoặc tổn thương từ 81% trở lên; 20% đối với trường hợp tổn thương từ 31% đến dưới 81%.", "c. 30% mức trách nhiệm bảo hiểm đối với trường hợp tử vong; 10% mức trách nhiệm bảo hiểm đối với mọi trường hợp tổn thương từ 31% trở lên.", "d. 30% giới hạn trách nhiệm bảo hiểm đối với trường hợp tử vong; 10% đối với trường hợp tổn thương từ 51% đến dưới 81%."], "ans": "a"}, {"text": "Theo quy định tại Nghị định số 67/2023/NĐ-CP ngày 6/9/2023 của Chính phủ, giới hạn trách nhiệm bảo hiểm đối với thiệt hại về sức khỏe, tính mạng do xe cơ giới gây ra cho một người trong một vụ tai nạn là bao nhiêu?", "options": ["a. Phương án 1: 100 triệu đồng cho một người trong một vụ tai nạn.", "b. Phương án 2: 150 triệu đồng cho một người trong một vụ tai nạn.", "c. Phương án 3: 200 triệu đồng cho một người trong một vụ tai nạn."], "ans": "b"}, {"text": "Theo Nghị định 67/2023/NĐ-CP, đối tượng nào không được coi là 'người thứ ba' trong bảo hiểm bắt buộc trách nhiệm dân sự của chủ xe cơ giới?", "options": ["a. Những người không có quan hệ sở hữu với phương tiện nhưng có mặt trên xe tại thời điểm xảy ra tai nạn, bao gồm cả hành khách hợp pháp.", "b. Chủ sở hữu phương tiện trong mọi trường hợp, không phụ thuộc vào việc đã chuyển giao quyền chiếm hữu, sử dụng phương tiện hay chưa.", "c. Những người gắn trực tiếp với việc vận hành hoặc hiện diện trên xe, đồng thời bao gồm cả chủ sở hữu phương tiện trong trường hợp chưa chuyển giao quyền chiếm hữu, sử dụng.", "d. Chỉ bao gồm người điều khiển phương tiện và không mở rộng đến các đối tượng khác có liên quan đến phương tiện tại thời điểm xảy ra tai nạn."], "ans": "c"}, {"text": "Theo Nghị định số 67/2023/NĐ-CP, thời hạn bảo hiểm bắt buộc trách nhiệm dân sự của chủ xe cơ giới được quy định như thế nào?", "options": ["a. Thời hạn bảo hiểm là 01 năm, tuy nhiên trong một số trường hợp đặc biệt có thể kéo dài đến 03 năm theo thỏa thuận giữa chủ xe và doanh nghiệp bảo hiểm.", "b. Thời hạn bảo hiểm tối thiểu là 01 năm và tối đa là 03 năm, trừ trường hợp xe cơ giới tham gia giao thông có tính chất tạm thời thì có thể dưới 01 năm.", "c. Thời hạn bảo hiểm dao động từ 06 tháng đến 03 năm tùy theo loại xe và mục đích sử dụng, trong đó xe đăng ký tạm thời được phép mua bảo hiểm dưới 01 năm.", "d. Thời hạn bảo hiểm thông thường là 01 năm, nhưng đối với xe cơ giới mới hoặc xe có niên hạn sử dụng dưới 01 năm thì thời hạn bảo hiểm sẽ không vượt quá thời hạn sử dụng còn lại của xe."], "ans": "b"}, {"text": "Anh P là chủ một xe ô tô cá nhân. Tháng 10/2026, anh P đăng ký cho xe tham gia một sự kiện trưng bày và chỉ lưu thông trong thời gian ngắn (khoảng 20 ngày), sau đó xe tiếp tục để trong kho, không sử dụng thường xuyên. Khi mua bảo hiểm bắt buộc trách nhiệm dân sự của chủ xe cơ giới, anh P hỏi doanh nghiệp bảo hiểm về thời hạn bảo hiểm. Theo Nghị định số 67/2023/NĐ-CP, doanh nghiệp bảo hiểm tư vấn phương án nào là đúng quy định?", "options": ["a. Bảo hiểm bắt buộc trách nhiệm dân sự chỉ được cấp với thời hạn đúng 01 năm, không có ngoại lệ.", "b. Bảo hiểm bắt buộc trách nhiệm dân sự có thời hạn tối thiểu 06 tháng, tối đa 03 năm; trường hợp xe chạy ngắn hạn thì có thể mua 06 tháng.", "c. Bảo hiểm bắt buộc trách nhiệm dân sự có thời hạn thông thường từ 01 năm đến 03 năm; riêng trường hợp xe tham gia giao thông mang tính tạm thời, ngắn hạn thì có thể cấp thời hạn dưới 01 năm.", "d. Bảo hiểm bắt buộc trách nhiệm dân sự được cấp theo thời hạn do chủ xe yêu cầu, miễn là không vượt quá 05 năm."], "ans": "c"}, {"text": "Tại đường nội bộ trong nhà máy nhiệt điện, lái xe tải chở vật tư va chạm với công nhân bảo trì đang di chuyển qua khu vực giao cắt. Sau va chạm, lái xe rời khỏi hiện trường 20 phút để 'báo quản đốc', không phối hợp lập biên bản ngay. Qua kiểm tra, lái xe có giấy phép hạng B2 nhưng đang điều khiển xe tải thuộc hạng yêu cầu GPLX hạng C. Theo quy định về bảo hiểm bắt buộc trách nhiệm dân sự chủ xe cơ giới, doanh nghiệp bảo hiểm không có trách nhiệm bồi thường trong trường hợp nào?", "options": ["a. Chỉ khi người lái xe cố ý gây tai nạn mới bị loại trừ trách nhiệm bảo hiểm.", "b. Người lái xe rời hiện trường để báo cáo quản lý nên không được xem là bỏ chạy, vẫn được bồi thường đầy đủ.", "c. Người lái xe sử dụng GPLX không phù hợp với loại xe điều khiển là trường hợp loại trừ trách nhiệm bảo hiểm.", "d. Vì tai nạn xảy ra trong phạm vi nội bộ nhà máy nên không áp dụng bảo hiểm bắt buộc TNDS chủ xe cơ giới."], "ans": "c"}, {"text": "Tại khu vực bãi than của nhà máy nhiệt điện, xe ben nội bộ va chạm với công nhân. Sau tai nạn, lái xe rời hiện trường để tránh bị kỷ luật nhưng quay lại sau 1 giờ, chủ động đưa nạn nhân đi cấp cứu và phối hợp giải quyết. Lái xe có GPLX hợp lệ. Theo Nghị định 67/2023/NĐ-CP, trường hợp này:", "options": ["a. Do đã rời hiện trường nên thuộc trường hợp loại trừ trách nhiệm bảo hiểm.", "b. Không thuộc trường hợp loại trừ nếu người lái xe đã thực hiện trách nhiệm dân sự của chủ xe cơ giới.", "c. Chỉ cần quay lại hiện trường là đủ điều kiện để được bồi thường.", "d. Tai nạn nội bộ nên không thuộc phạm vi bảo hiểm bắt buộc."], "ans": "b"}, {"text": "Trong quá trình sửa chữa tại nhà máy thủy điện, một nhân viên dùng xe nâng di chuyển vật tư trên đường nội bộ và gây va chạm làm bị thương đồng nghiệp. Nhân viên này có GPLX hạng B2 nhưng không có chứng chỉ vận hành xe nâng theo quy định. Theo Nghị định 67/2023/NĐ-CP, doanh nghiệp bảo hiểm xử lý hồ sơ bồi thường bảo hiểm bắt buộc trách nhiệm dân sự như thế nào?", "options": ["a. Bồi thường bình thường vì tai nạn xảy ra trong phạm vi nội bộ nhà máy.", "b. Loại trừ trách nhiệm bảo hiểm do người điều khiển không có chứng chỉ chuyên môn phù hợp theo quy định.", "c. Bồi thường 50% giá trị thiệt hại do lỗi hỗn hợp.", "d. Chỉ từ chối bồi thường nếu người lái xe có nồng độ cồn vượt mức quy định."], "ans": "b"}, {"text": "Theo quy định tại Nghị định số 67/2023/NĐ-CP của Chính phủ về bảo hiểm bắt buộc trách nhiệm dân sự của chủ xe cơ giới, doanh nghiệp bảo hiểm có trách nhiệm bồi thường đối với thiệt hại nào dưới đây?", "options": ["a. Thiệt hại ngoài hợp đồng về sức khỏe, tính mạng, tài sản của người thứ ba do xe cơ giới tham gia giao thông gây ra; trừ trường hợp thiệt hại phát sinh trong quan hệ hợp đồng vận chuyển giữa chủ xe và người bị thiệt hại.", "b. Thiệt hại về sức khỏe, tính mạng của hành khách theo hợp đồng vận chuyển hành khách do xe cơ giới gây ra; không bao gồm thiệt hại về hành lý, tài sản mang theo của hành khách nếu không có thỏa thuận riêng.", "c. Chỉ bồi thường thiệt hại về sức khỏe, tính mạng; không bồi thường thiệt hại về tài sản vì tài sản không thuộc phạm vi bảo hiểm bắt buộc.", "d. Bồi thường cả thiệt hại ngoài hợp đồng đối với người thứ ba và thiệt hại về sức khỏe, tính mạng của hành khách trên xe do xe cơ giới tham gia giao thông gây ra."], "ans": "d"}, {"text": "Người điều khiển xe môtô, ô tô, máy kéo trên đường mà trong máu hoặc hơi thở có nồng độ cồn có bị nghiêm cấm không?", "options": ["a. Bị nghiêm cấm.", "b. Không bị nghiêm cấm.", "c. Không bị nghiêm cấm, nếu nồng độ cồn trong máu ở mức nhẹ, có thể điều khiển phương tiện tham gia giao thông."], "ans": "a"}, {"text": "Ngay sau khi uống rượu, bia có được phép lái xe mô tô, ô tô, máy kéo hay không?", "options": ["a. Không được phép.", "b. Chỉ được lái ở tốc độ chậm và quãng đường ngắn.", "c. Chỉ được lái nếu trong cơ thể có nồng độ cồn thấp."], "ans": "a"}, {"text": "Khi điều khiển xe mô tô hai bánh, xe mô tô ba bánh, xe gắn máy, những hành vi nào không được phép?", "options": ["a. Phương án 1: Buông cả hai tay; sử dụng xe để kéo, đẩy xe khác, vật khác; sử dụng chân chống của xe quệt xuống đường khi xe đang chạy.", "b. Phương án 2: Buông một tay; sử dụng xe để chở người hoặc hàng hoá; để chân chạm xuống đất khi khởi hành.", "c. Phương án 3: Đội mũ bảo hiểm; chạy xe đúng tốc độ quy định và chấp hành đúng quy tắc giao thông đường bộ.", "d. Phương án 4: Chở người ngồi sau dưới 16 tuổi."], "ans": "a"}, {"text": "Hành vi giao xe cơ giới cho người không đủ điều kiện để điều khiển xe tham gia giao thông đường bộ (Ví dụ: Giao xe mô tô, xe gắn máy cho học sinh chưa đủ tuổi được phép điều khiển xe, chưa có Giấy phép lái xe theo quy định...) sẽ bị xử phạt như thế nào?", "options": ["a. Phương án 1: Không bị xử phạt.", "b. Phương án 2: Bị phạt tiền theo quy định của pháp luật.", "c. Phương án 3: Bị phạt tiền theo quy định của pháp luật. Trong trường hợp xảy ra tai nạn giao thông, người giao xe có thể bị truy cứu trách nhiệm hình sự."], "ans": "c"}, {"text": "Khi đang lái xe mô tô và ô tô, nếu có nhu cầu sử dụng điện thoại để nhắn tin hoặc gọi điện, người lái xe phải thực hiện như thế nào?", "options": ["a. Phương án 1: Giảm tốc độ để đảm bảo an toàn với xe phía trước và sử dụng điện thoại để liên lạc.", "b. Phương án 2: Giảm tốc độ để dừng xe ở nơi cho phép dừng xe sau đó sử dụng điện thoại để liên lạc.", "c. Phương án 3: Tăng tốc độ để cách xa xe phía sau và sử dụng điện thoại để liên lạc."], "ans": "b"}, {"text": "Theo Chỉ thị số 10/CT-TTg ngày 19/4/2023 của Thủ tướng Chính phủ, nhận định nào dưới đây phản ánh đầy đủ và chính xác nhất yêu cầu về xử lý vi phạm và trách nhiệm của các chủ thể liên quan trong công tác bảo đảm trật tự, an toàn giao thông đường bộ?", "options": ["a. Mọi hành vi vi phạm pháp luật về giao thông đều phải bị xử lý nghiêm; đồng thời nghiêm cấm mọi hành vi can thiệp trái quy định vào quá trình xử lý vi phạm; việc thông báo vi phạm của cán bộ, đảng viên về cơ quan, đơn vị là bắt buộc trong mọi trường hợp, không phụ thuộc tính chất, mức độ vi phạm.", "b. Việc xử lý vi phạm giao thông phải bảo đảm nghiêm minh, không có ngoại lệ; cán bộ, đảng viên vi phạm phải được thông báo về cơ quan, đơn vị để xử lý theo quy định; đồng thời cương quyết khởi tố, điều tra các vụ tai nạn giao thông có dấu hiệu tội phạm và hành vi chống người thi hành công vụ theo đúng quy định pháp luật.", "c. Tất cả các hành vi vi phạm giao thông, bao gồm cả vi phạm hành chính thông thường, đều phải được xem xét khởi tố để bảo đảm tính răn đe; trường hợp không đủ yếu tố cấu thành tội phạm mới chuyển sang xử lý hành chính.", "d. Việc xử lý vi phạm giao thông phải phân loại theo mức độ nguy hiểm; chỉ những hành vi vi phạm nghiêm trọng hoặc liên quan cán bộ, đảng viên mới phải xử lý nghiêm, các trường hợp khác có thể áp dụng linh hoạt để bảo đảm tính nhân văn."], "ans": "b"}, {"text": "Theo Chỉ thị số 11/CT-TTg ngày 21/4/2025 của Thủ tướng Chính phủ, nội dung nào dưới đây phản ánh đúng nhất các yếu tố tác động đến việc chấp hành pháp luật của người tham gia giao thông và định hướng xử lý của cơ quan nhà nước?", "options": ["a. Trong quá trình triển khai Luật Trật tự, an toàn giao thông đường bộ, dù có xuất hiện dư luận trái chiều hoặc thông tin sai sự thật về một số quy định mới, các cơ quan có thẩm quyền vẫn phải kiên trì thực hiện mục tiêu kéo giảm thiệt hại về tính mạng, sức khỏe; đồng thời đẩy mạnh tuyên truyền có chiều sâu để tác động mạnh đến tâm lý, ý thức, thói quen của người tham gia giao thông, từng bước hình thành thói quen chấp hành pháp luật trong nhân dân.", "b. Khi xuất hiện phản ứng xã hội đối với một số quy định mới như thời gian lái xe liên tục, cấp đổi giấy phép lái xe, trừ điểm giấy phép lái xe và tăng mức xử phạt, các địa phương có thể tạm thời giãn tiến độ thực hiện để chờ đồng thuận xã hội rộng rãi, nhằm tránh tạo áp lực tâm lý đối với người dân.", "c. Để tạo chuyển biến về ý thức chấp hành, Chỉ thị yêu cầu ưu tiên tuyên truyền, giáo dục thay cho xử phạt; cơ chế trừ điểm, phục hồi điểm giấy phép lái xe chỉ mang tính hỗ trợ quản lý, không phải công cụ nâng cao nhận thức pháp luật của người dân.", "d. Chỉ thị xác định nguyên nhân chính làm giảm hiệu quả chấp hành pháp luật là do hạ tầng giao thông chưa đồng bộ; vì vậy trọng tâm chủ yếu là đầu tư trung tâm điều hành giao thông thông minh và camera giám sát, còn yếu tố tâm lý, thói quen và dư luận xã hội không phải đối tượng tác động trực tiếp của công tác tuyên truyền."], "ans": "a"}, {"text": "Người lái xe không được vượt xe khác trong trường hợp nào dưới đây?", "options": ["a. Trên cầu hẹp có một làn đường; nơi đường giao nhau; nơi đường bộ giao nhau cùng mức với đường sắt; khi gặp xe ưu tiên", "b. Trên cầu có từ 02 làn đường trở lên; nơi đường bộ giao nhau không cùng mức với đường sắt; khi xe phía trước không phát tín hiệu xin vượt.", "c. Trên đường có từ hai làn xe cơ giới cùng chiều trở lên được phân biệt bằng vạch kẻ đường."], "ans": "a"}, {"text": "Thông điệp nào dưới đây được nêu trong Hướng dẫn số 109-HD/BTGTW ngày 17/7/2023 của Ban Tuyên giáo Trung ương 'Đẩy mạnh tuyên truyền, triển khai thực hiện Chỉ thị số 23-CT/TW ngày 25/5/2023 của Ban Bí thư về tăng cường sự lãnh đạo của Đảng đối với công tác bảo đảm trật tự, an toàn giao thông trong tình hình mới'?", "options": ["a. Phương án 1: An toàn giao thông là hạnh phúc của mọi nhà; Thượng tôn pháp luật để xây dựng văn hóa giao thông; Đã uống rượu, bia - Không lái xe.", "b. Phương án 2: Hãy tuân thủ tốc độ - Nhanh một giây, chậm cả đời; Luôn đội mũ bảo hiểm đạt chuẩn khi đi mô tô, xe máy; Đội mũ cho con - Trọn tình cha mẹ.", "c. Phương án 3: Đi đúng làn đường, an toàn, thông suốt; Tham gia giao thông xanh, sạch, an toàn; Đi xe buýt - Ít nguy cơ.", "d. Phương án 4: Tất cả các thông điệp trên."], "ans": "a"}, {"text": "Người lái xe không được lùi xe ở những khu vực nào dưới đây?", "options": ["a. Ở khu vực cho phép đỗ xe.", "b. Ở đường một chiều, khu vực cấm dừng, trên phần đường dành cho người đi bộ qua đường.", "c. Ở nơi đường bộ giao nhau, đường bộ giao nhau cùng mức với đường sắt, nơi tầm nhìn bị che khuất, trong hầm đường bộ, trên đường cao tốc.", "d. Cả phương án b và phương án c đều đúng."], "ans": "d"}, {"text": "Theo Chỉ thị số 10/CT-TTg ngày 19/4/2023 của Thủ tướng Chính phủ về tăng cường công tác bảo đảm trật tự, an toàn giao thông đường bộ trong tình hình mới, mục tiêu nào dưới đây phản ánh đầy đủ và chính xác nhất định hướng tổng quát của Chỉ thị?", "options": ["a. Thiết lập trật tự, kỷ cương trong chấp hành pháp luật về giao thông chủ yếu đối với người tham gia giao thông; lực lượng thực thi pháp luật được ưu tiên cơ chế linh hoạt để bảo đảm hiệu quả quản lý thực tiễn.", "b. Xây dựng ý thức tự giác, ứng xử văn minh, chuẩn mực của người dân khi tham gia giao thông; đồng thời từng bước hình thành văn hóa giao thông trong Nhân dân, nhưng chưa đặt trọng tâm vào việc giảm ùn tắc giao thông do điều kiện hạ tầng còn hạn chế.", "c. Giảm thiểu tai nạn giao thông, bảo đảm an ninh, an toàn sức khỏe, tính mạng, tài sản của Nhân dân; khắc phục ùn tắc giao thông, nhưng không coi đây là mục tiêu gắn với xây dựng trật tự, kỷ cương trong thực thi pháp luật.", "d. Thiết lập trật tự, kỷ cương trong chấp hành pháp luật về giao thông của cả người tham gia giao thông và lực lượng thực thi pháp luật; xây dựng ý thức tự giác, ứng xử văn minh, chuẩn mực, hình thành văn hóa giao thông trong Nhân dân; giảm thiểu tai nạn giao thông, bảo đảm an ninh, an toàn sức khỏe, tính mạng, tài sản của Nhân dân và khắc phục ùn tắc giao thông."], "ans": "d"}, {"text": "Phương tiện có tốc độ thấp hơn phải đi như thế nào trên đường có nhiều làn xe cùng chiều?", "options": ["a. Đi về phía bên trái.", "b. Đi về phía bên phải.", "c. Đi ở giữa."], "ans": "b"}, {"text": "Chỉ thị số 23-CT/TW, ngày 25/5/2023 của Ban Bí thư về tăng cường sự lãnh đạo của Đảng đối với công tác bảo đảm trật tự, an toàn giao thông trong tình hình mới đề ra mấy nhiệm vụ và giải pháp trọng tâm?", "options": ["a. Phương án 1: 5", "b. Phương án 2: 6", "c. Phương án 3: 7"], "ans": "b"}, {"text": "Theo quy định của Luật Trật tự, an toàn giao thông đường bộ 2024, người lái xe có được phép vượt xe khác trong trường hợp nào dưới đây?", "options": ["a. Trên đoạn đường vòng nhưng người lái xe quan sát thấy không có xe đi ngược chiều và có đủ khoảng cách an toàn để vượt.", "b. Tại khu vực gần đỉnh dốc nhưng người lái xe xác định tầm nhìn phía trước vẫn đủ để thực hiện vượt an toàn.", "c. Trên đoạn đường có tầm nhìn hạn chế hoặc tại đường vòng, đầu dốc, dù người lái xe cho rằng có thể bảo đảm an toàn khi vượt.", "d. Trong trường hợp khẩn cấp nhằm tránh ùn tắc giao thông hoặc để xử lý tình huống phát sinh."], "ans": "a"}];
+
+    function getAnswerIndex(question, ansLetter) {
+        const letters = ['a','b','c','d','e','đ'];
+        let idx = letters.indexOf(ansLetter.toLowerCase());
+        if (idx !== -1 && idx < question.options.length) return idx;
+        return 0;
+    }
+    const FULL_QUESTIONS = FULL_RAW.map((q,idx) => ({
+        id: idx+1,
+        text: `Câu ${idx+1}: ${q.text}`,
+        options: q.options,
+        correct: getAnswerIndex(q, q.ans)
+    }));
+
+    let currentQuestions=[], userAnswers=[], answerStatus=[];
+    let currentLimit=DEFAULT_LIMIT, currentMode='shuffle', currentStart=1;
+
+    const container     = document.getElementById('questionsContainer');
+    const answeredSpan  = document.getElementById('answeredCount');
+    const correctSpan   = document.getElementById('correctCount');
+    const wrongSpan     = document.getElementById('wrongCount');
+    const resetBtn      = document.getElementById('resetExamBtn');
+    const applyBtn      = document.getElementById('applyModeBtn');
+    const pkgBtns       = document.querySelectorAll('.pkg-btn');
+    const shuffleRadio  = document.querySelector('input[value="shuffle"]');
+    const sequentialRadio = document.querySelector('input[value="sequential"]');
+    const startInput    = document.getElementById('startQuestion');
+
+    function shuffleArray(arr){
+        for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}
+        return arr;
+    }
+    function getSequentialQuestions(limit,start){
+        let startIdx=Math.max(1,Math.min(start,FULL_QUESTIONS.length-limit+1));
+        let sel=[];
+        for(let i=0;i<limit;i++){let qi=startIdx-1+i;if(qi<FULL_QUESTIONS.length)sel.push({...FULL_QUESTIONS[qi]});}
+        return sel;
+    }
+    function generateExam(limit,mode,start){
+        if(mode==='shuffle') return shuffleArray([...FULL_QUESTIONS]).slice(0,limit);
+        return getSequentialQuestions(limit,start);
+    }
+    function updateStats(){
+        let answered=userAnswers.filter(a=>a!==null).length;
+        let correct=answerStatus.filter(s=>s==='correct').length;
+        let wrong=answerStatus.filter(s=>s==='wrong').length;
+        answeredSpan.innerText=answered; correctSpan.innerText=correct; wrongSpan.innerText=wrong;
+    }
+    function handleAnswer(idx,selectedOpt){
+        const q=currentQuestions[idx]; if(!q) return;
+        userAnswers[idx]=selectedOpt;
+        answerStatus[idx]=(selectedOpt===q.correct)?'correct':'wrong';
+        renderQuestions(); updateStats();
+    }
+    window.handleAnswerSelect=(qIndex,optVal)=>{
+        if(qIndex>=0&&qIndex<currentQuestions.length) handleAnswer(qIndex,parseInt(optVal));
+    };
+    function renderQuestions(){
+        if(!container) return;
+        if(!currentQuestions.length){container.innerHTML='<div style="padding:40px;text-align:center;">Đang tải...</div>';return;}
+        let html='';
+        for(let i=0;i<currentQuestions.length;i++){
+            const q=currentQuestions[i],userChoice=userAnswers[i],fbStatus=answerStatus[i];
+            const optsHtml=q.options.map((opt,optIdx)=>{
+                const letter=String.fromCharCode(97+optIdx);
+                const isChecked=(userChoice===optIdx);
+                const optText=opt.replace(/^[a-đ]\.\s*/i,'');
+                return `<div class="option" onclick="document.getElementById('q_${i}_opt_${optIdx}').click();">
+                    <input type="radio" name="q_${i}" id="q_${i}_opt_${optIdx}" value="${optIdx}" ${isChecked?'checked':''} onchange="window.handleAnswerSelect(${i},${optIdx})">
+                    <label for="q_${i}_opt_${optIdx}">${letter}. ${optText}</label>
+                </div>`;
+            }).join('');
+            let feedbackHtml='';
+            if(fbStatus==='correct') feedbackHtml=`<div class="feedback correct">✅ Đúng rồi!</div>`;
+            else if(fbStatus==='wrong'){
+                const correctLetter=String.fromCharCode(97+q.correct);
+                feedbackHtml=`<div class="feedback wrong">❌ Sai. Đáp án đúng: <b>${correctLetter.toUpperCase()}</b></div>`;
+            }
+            html+=`<div class="question-card"><div class="question-text">${q.text}</div><div class="options">${optsHtml}</div>${feedbackHtml}</div>`;
+        }
+        container.innerHTML=html;
+    }
+    function loadExam(){
+        let limit=Math.min(currentLimit,FULL_QUESTIONS.length);
+        currentQuestions=generateExam(limit,currentMode,currentStart);
+        userAnswers=new Array(currentQuestions.length).fill(null);
+        answerStatus=new Array(currentQuestions.length).fill(null);
+        renderQuestions(); updateStats();
+    }
+    function changePackage(limit){
+        currentLimit=Math.min(limit,FULL_QUESTIONS.length); loadExam();
+        pkgBtns.forEach(btn=>{
+            const bl=parseInt(btn.getAttribute('data-limit'),10);
+            btn.classList.toggle('active',bl===limit||(limit>=FULL_QUESTIONS.length&&bl>=FULL_QUESTIONS.length));
+        });
+    }
+    function applyModeAndStart(){
+        currentMode=shuffleRadio.checked?'shuffle':'sequential';
+        let ns=parseInt(startInput.value,10); if(isNaN(ns))ns=1;
+        currentStart=Math.max(1,Math.min(ns,FULL_QUESTIONS.length));
+        loadExam();
+    }
+    pkgBtns.forEach(btn=>btn.addEventListener('click',()=>{
+        let lv=parseInt(btn.getAttribute('data-limit'),10);
+        if(lv>FULL_QUESTIONS.length) lv=FULL_QUESTIONS.length;
+        changePackage(lv);
+    }));
+    resetBtn.addEventListener('click',loadExam);
+    applyBtn.addEventListener('click',applyModeAndStart);
+
+    currentLimit=Math.min(DEFAULT_LIMIT,FULL_QUESTIONS.length);
+    loadExam();
+    pkgBtns.forEach(btn=>{
+        let val=parseInt(btn.getAttribute('data-limit'),10);
+        if(val===currentLimit) btn.classList.add('active');
+    });
+
+</script>
+</body>
+</html>

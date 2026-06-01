@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hệ thống luyện thi ATVSLĐ – VSH</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Roboto,sans-serif;background:#eef2f7;color:#1e293b;min-height:100vh;display:flex;flex-direction:column}
+.site-header{background:linear-gradient(135deg,#fffde7,#fff9c4);border-bottom:4px solid #f0c000;box-shadow:0 3px 12px rgba(0,0,0,.1);position:sticky;top:0;z-index:999}
+.header-top{text-align:center;padding:12px 20px 8px;position:relative}
+.h-company{font-size:16px;font-weight:900;color:#dc2626;text-transform:uppercase;letter-spacing:.3px}
+.h-title{font-size:22px;font-weight:900;color:#1e3a8a;text-transform:uppercase;margin:3px 0}
+.mobile-menu-btn{display:none;position:absolute;right:16px;top:50%;transform:translateY(-50%);background:none;border:2px solid #1e3a8a;color:#1e3a8a;font-size:18px;padding:6px 10px;cursor:pointer;border-radius:8px}
+nav{background:#1e3a8a;display:flex;justify-content:center}
+.nav-item{position:relative}
+.nav-tab{display:flex;align-items:center;gap:7px;padding:13px 36px;color:white;font-size:15px;font-weight:800;cursor:pointer;text-transform:uppercase;letter-spacing:.5px;transition:.2s;border:none;background:none;white-space:nowrap}
+.nav-tab:hover,.nav-item:hover>.nav-tab,.nav-tab.active{background:#f0c000;color:#1e3a8a}
+.nav-arrow{font-size:10px;transition:transform .2s}
+.nav-item:hover .nav-arrow{transform:rotate(180deg)}
+.dropdown{position:absolute;top:100%;left:0;min-width:250px;background:#fff;border-radius:0 0 14px 14px;box-shadow:0 8px 24px rgba(0,0,0,.15);opacity:0;visibility:hidden;transform:translateY(-6px);transition:.18s;z-index:1000}
+.nav-item:hover .dropdown{opacity:1;visibility:visible;transform:translateY(0)}
+.dd-item{display:block;padding:11px 20px;font-size:14px;font-weight:600;color:#1e3a8a;cursor:pointer;border-bottom:1px solid #f1f5f9;transition:.15s;user-select:none}
+.dd-item:last-child{border-bottom:none;border-radius:0 0 14px 14px}
+.dd-item:hover{background:#eff6ff;padding-left:26px}
+.dd-item.active{background:#eff6ff;font-weight:800;border-left:3px solid #f0c000}
+.content-wrap{flex:1}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+.iframe-container,.pdf-container,.exam-container{width:100%;height:calc(100vh - 155px)}
+.iframe-container iframe,.pdf-container iframe,.exam-container iframe{width:100%;height:100%;border:none;display:block}
+.pdf-placeholder{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#525659;color:#fff;gap:14px;text-align:center;padding:40px}
+.pdf-placeholder .icon{font-size:60px}
+.pdf-placeholder h3{font-size:18px;font-weight:700}
+.pdf-placeholder p{font-size:13px;opacity:.7;max-width:380px}
+.welcome-panel{height:calc(100vh - 155px);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#94a3b8;gap:14px;padding:40px}
+.welcome-panel .icon{font-size:64px}
+.welcome-panel h2{color:#1e3a8a;font-size:20px;font-weight:800}
+.welcome-panel p{font-size:14px;max-width:360px;line-height:1.6}
+.mobile-nav{display:none;flex-direction:column;background:#1e3a8a;border-top:2px solid #f0c000}
+.mobile-section-title{padding:10px 20px;font-size:13px;font-weight:800;color:#f0c000;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid rgba(255,255,255,.1)}
+.mobile-dd-item{display:block;padding:10px 20px 10px 28px;font-size:14px;color:rgba(255,255,255,.85);cursor:pointer;border-bottom:1px solid rgba(255,255,255,.05)}
+.mobile-dd-item:hover,.mobile-dd-item.active{background:rgba(240,192,0,.15);color:#f0c000}
+@media(max-width:768px){
+  nav{display:none}
+  .mobile-menu-btn{display:block}
+  .mobile-nav.open{display:flex}
+  .iframe-container,.pdf-container,.exam-container,.welcome-panel{height:calc(100vh - 120px)}
+  .h-company{font-size:13px}
+  .h-title{font-size:16px}
+}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="header-top">
+    <div class="h-company">Công ty Cổ phần Thủy điện Vĩnh Sơn – Sông Hinh</div>
+    <div class="h-title">Hệ thống luyện thi ATVSLĐ</div>
+    <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+  </div>
+
+  <nav>
+    <div class="nav-item">
+      <button class="nav-tab" id="tab-tailieu">📄 Tài liệu <span class="nav-arrow">▾</span></button>
+      <div class="dropdown">
+        <div class="dd-item" onclick="showSub('tailieu','tl-atgt')">An toàn giao thông</div>
+        <div class="dd-item" onclick="showSub('tailieu','tl-pccc')">Phòng cháy chữa cháy</div>
+        <div class="dd-item" onclick="showSub('tailieu','tl-atvsv')">An toàn vệ sinh viên</div>
+        <div class="dd-item" onclick="showSub('tailieu','tl-ktatld')">Kỹ thuật an toàn lao động</div>
+        <div class="dd-item" onclick="showSub('tailieu','tl-ktvsld')">Kỹ thuật vệ sinh lao động</div>
+        <div class="dd-item" onclick="showSub('tailieu','tl-vbqc')">Văn bản – Quy chế – Hướng dẫn</div>
+        <div class="dd-item" onclick="showSub('tailieu','tl-pl')">Pháp luật ATVSLĐ</div>
+      </div>
+    </div>
+    <div class="nav-item">
+      <button class="nav-tab" id="tab-luyenthi">📝 Luyện thi <span class="nav-arrow">▾</span></button>
+      <div class="dropdown">
+        <div class="dd-item" onclick="showSub('luyenthi','lt-de1')">An toàn giao thông</div>
+        <div class="dd-item" onclick="showSub('luyenthi','lt-de2')">Phòng cháy chữa cháy</div>
+        <div class="dd-item" onclick="showSub('luyenthi','lt-de3')">An toàn vệ sinh viên</div>
+        <div class="dd-item" onclick="showSub('luyenthi','lt-de4')">Kỹ thuật an toàn lao động</div>
+        <div class="dd-item" onclick="showSub('luyenthi','lt-de5')">Kỹ thuật vệ sinh lao động</div>
+        <div class="dd-item" onclick="showSub('luyenthi','lt-de6')">Văn bản – Quy chế – Hướng dẫn</div>
+        <div class="dd-item" onclick="showSub('luyenthi','lt-de7')">Pháp luật ATVSLĐ</div>
+        <div class="dd-item" onclick="showSub('luyenthi','lt-de8')">Luyện thi tổng hợp các chủ đề</div>
+      </div>
+    </div>
+    <div class="nav-item">
+      <button class="nav-tab" id="tab-kythi" onclick="showSub('kythi','kt-main')">🏆 Kỳ thi</button>
+    </div>
+  </nav>
+
+  <div class="mobile-nav" id="mobileNav">
+    <div class="mobile-section-title">📄 Tài liệu</div>
+    <div class="mobile-dd-item" onclick="showSub('tailieu','tl-atgt');closeMobileMenu()">An toàn giao thông</div>
+    <div class="mobile-dd-item" onclick="showSub('tailieu','tl-pccc');closeMobileMenu()">Phòng cháy chữa cháy</div>
+    <div class="mobile-dd-item" onclick="showSub('tailieu','tl-atvsv');closeMobileMenu()">An toàn vệ sinh viên</div>
+    <div class="mobile-dd-item" onclick="showSub('tailieu','tl-ktatld');closeMobileMenu()">Kỹ thuật an toàn lao động</div>
+    <div class="mobile-dd-item" onclick="showSub('tailieu','tl-ktvsld');closeMobileMenu()">Kỹ thuật vệ sinh lao động</div>
+    <div class="mobile-dd-item" onclick="showSub('tailieu','tl-vbqc');closeMobileMenu()">Văn bản – Quy chế – Hướng dẫn</div>
+    <div class="mobile-dd-item" onclick="showSub('tailieu','tl-pl');closeMobileMenu()">Pháp luật ATVSLĐ</div>
+    <div class="mobile-section-title">📝 Luyện thi</div>
+    <div class="mobile-dd-item" onclick="showSub('luyenthi','lt-de1');closeMobileMenu()">An toàn giao thông</div>
+    <div class="mobile-dd-item" onclick="showSub('luyenthi','lt-de2');closeMobileMenu()">Phòng cháy chữa cháy</div>
+    <div class="mobile-dd-item" onclick="showSub('luyenthi','lt-de3');closeMobileMenu()">An toàn vệ sinh viên</div>
+    <div class="mobile-dd-item" onclick="showSub('luyenthi','lt-de4');closeMobileMenu()">Kỹ thuật an toàn lao động</div>
+    <div class="mobile-dd-item" onclick="showSub('luyenthi','lt-de5');closeMobileMenu()">Kỹ thuật vệ sinh lao động</div>
+    <div class="mobile-dd-item" onclick="showSub('luyenthi','lt-de6');closeMobileMenu()">Văn bản – Quy chế – Hướng dẫn</div>
+    <div class="mobile-dd-item" onclick="showSub('luyenthi','lt-de7');closeMobileMenu()">Pháp luật ATVSLĐ</div>
+    <div class="mobile-dd-item" onclick="showSub('luyenthi','lt-de8');closeMobileMenu()">Luyện thi tổng hợp các chủ đề</div>
+    <div class="mobile-section-title">🏆 Kỳ thi</div>
+    <div class="mobile-dd-item" onclick="showSub('kythi','kt-main');closeMobileMenu()">Vào kỳ thi chính thức</div>
+  </div>
+</header>
+
+<div class="content-wrap">
+
+  <!-- TÀI LIỆU -->
+  <div class="tab-panel" id="panel-tailieu">
+    <div id="sub-tl-welcome" class="welcome-panel">
+      <div class="icon">📚</div>
+      <h2>Chọn chủ đề tài liệu</h2>
+      <p>Di chuột vào <b>Tài liệu</b> trên thanh điều hướng và chọn chủ đề để xem nội dung ôn tập.</p>
+    </div>
+    <div id="sub-tl-atgt" class="pdf-container" style="display:none">
+      <iframe src="tailieu/atgt.pdf#toolbar=1&navpanes=0" title="An toàn giao thông">
+        <div class="pdf-placeholder"><div class="icon">📄</div><h3>An toàn giao thông</h3><p><a href="tailieu/atgt.pdf" style="color:#f0c000" download>Nhấn để tải tài liệu về xem</a></p></div>
+      </iframe>
+    </div>
+    <div id="sub-tl-pccc" class="pdf-container" style="display:none">
+      <iframe src="tailieu/pccc.pdf#toolbar=1&navpanes=0" title="Phòng cháy chữa cháy"></iframe>
+    </div>
+    <div id="sub-tl-atvsv" class="pdf-container" style="display:none">
+      <iframe src="tailieu/atvsv.pdf#toolbar=1&navpanes=0" title="An toàn vệ sinh viên"></iframe>
+    </div>
+    <div id="sub-tl-ktatld" class="pdf-container" style="display:none">
+      <iframe src="tailieu/ktatld.pdf#toolbar=1&navpanes=0" title="Kỹ thuật an toàn lao động"></iframe>
+    </div>
+    <div id="sub-tl-ktvsld" class="pdf-container" style="display:none">
+      <iframe src="tailieu/ktvsld.pdf#toolbar=1&navpanes=0" title="Kỹ thuật vệ sinh lao động"></iframe>
+    </div>
+    <div id="sub-tl-vbqc" class="pdf-container" style="display:none">
+      <iframe src="tailieu/vbqc.pdf#toolbar=1&navpanes=0" title="Văn bản – Quy chế – Hướng dẫn"></iframe>
+    </div>
+    <div id="sub-tl-pl" class="pdf-container" style="display:none">
+      <iframe src="tailieu/pl.pdf#toolbar=1&navpanes=0" title="Pháp luật ATVSLĐ"></iframe>
+    </div>
+  </div>
+
+  <!-- LUYỆN THI -->
+  <div class="tab-panel" id="panel-luyenthi">
+    <div id="sub-lt-welcome" class="welcome-panel">
+      <div class="icon">📝</div>
+      <h2>Chọn đề luyện thi</h2>
+      <p>Di chuột vào <b>Luyện thi</b> trên thanh điều hướng và chọn chủ đề để bắt đầu luyện tập.</p>
+    </div>
+    <div id="sub-lt-de1" class="iframe-container" style="display:none"><iframe src="de1.html" title="An toàn giao thông"></iframe></div>
+    <div id="sub-lt-de2" class="iframe-container" style="display:none"><iframe src="de2.html" title="Phòng cháy chữa cháy"></iframe></div>
+    <div id="sub-lt-de3" class="iframe-container" style="display:none"><iframe src="de3.html" title="An toàn vệ sinh viên"></iframe></div>
+    <div id="sub-lt-de4" class="iframe-container" style="display:none"><iframe src="de4.html" title="Kỹ thuật an toàn lao động"></iframe></div>
+    <div id="sub-lt-de5" class="iframe-container" style="display:none"><iframe src="de5.html" title="Kỹ thuật vệ sinh lao động"></iframe></div>
+    <div id="sub-lt-de6" class="iframe-container" style="display:none"><iframe src="de6.html" title="Văn bản Quy chế"></iframe></div>
+    <div id="sub-lt-de7" class="iframe-container" style="display:none"><iframe src="de7.html" title="Pháp luật ATVSLĐ"></iframe></div>
+    <div id="sub-lt-de8" class="iframe-container" style="display:none"><iframe src="de8.html" title="Luyện thi tổng hợp"></iframe></div>
+  </div>
+
+  <!-- KỲ THI -->
+  <div class="tab-panel" id="panel-kythi">
+    <div id="sub-kt-main" class="exam-container">
+      <iframe src="de8_kythi.html" title="Kỳ thi chính thức ATVSLĐ"></iframe>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const TABS = ['tailieu','luyenthi','kythi'];
+const SUBS = {
+  tailieu:  ['tl-welcome','tl-atgt','tl-pccc','tl-atvsv','tl-ktatld','tl-ktvsld','tl-vbqc','tl-pl'],
+  luyenthi: ['lt-welcome','lt-de1','lt-de2','lt-de3','lt-de4','lt-de5','lt-de6','lt-de7','lt-de8'],
+  kythi:    ['kt-main']
+};
+
+function showSub(tab, sub) {
+  // Activate correct panel
+  TABS.forEach(t => {
+    document.getElementById('panel-'+t).classList.toggle('active', t===tab);
+    const navTab = document.getElementById('tab-'+t);
+    if(navTab) navTab.classList.toggle('active', t===tab);
+  });
+  // Hide all subs in panel
+  SUBS[tab].forEach(s => {
+    const el = document.getElementById('sub-'+s);
+    if(el) el.style.display = 'none';
+  });
+  // Show target sub
+  const target = document.getElementById('sub-'+sub);
+  if(target) target.style.display = '';
+  // Highlight dropdown item
+  document.querySelectorAll('.dd-item, .mobile-dd-item').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll(`[onclick*="'${sub}'"]`).forEach(el => el.classList.add('active'));
+}
+function toggleMobileMenu() {
+  document.getElementById('mobileNav').classList.toggle('open');
+}
+function closeMobileMenu() {
+  document.getElementById('mobileNav').classList.remove('open');
+}
+// Default: show kỳ thi
+showSub('kythi','kt-main');
+</script>
+</body>
+</html>

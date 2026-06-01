@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Văn bản – Quy chế – Hướng dẫn – ATVSLĐ VSH</title>
+<style>*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Roboto,sans-serif;background:#eef2f7;padding:16px;color:#1e293b}
+.container{max-width:1300px;margin:0 auto;background:white;border-radius:24px;box-shadow:0 8px 24px rgba(0,0,0,.1);overflow:hidden;padding:20px 24px 32px}
+.header{text-align:center;border-bottom:3px solid #2c7da0;margin-bottom:20px;background:#fff9e6;border-radius:16px 16px 0 0;padding:16px 16px 18px}
+.company{font-size:18px;font-weight:800;color:#dc2626;margin-bottom:6px}
+.title{font-size:24px;font-weight:800;color:#1e3a8a;text-transform:uppercase}
+.quiz-controls{background:#f8fafc;padding:14px 18px;border-radius:50px;margin-bottom:20px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.package-buttons{display:flex;gap:10px;flex-wrap:wrap}
+.pkg-btn{background:#e2e8f0;border:none;padding:7px 16px;font-weight:bold;font-size:.9rem;border-radius:40px;cursor:pointer;transition:all .2s;color:#1e293b}
+.pkg-btn.active{background:#2c7da0;color:white}
+.mode-controls{display:flex;align-items:center;gap:16px;flex-wrap:wrap;background:#eef2f7;padding:7px 16px;border-radius:50px}
+.mode-label{display:flex;align-items:center;gap:7px;cursor:pointer;font-weight:500;font-size:14px}
+.mode-label input{width:16px;height:16px;cursor:pointer;accent-color:#2c7da0}
+.start-input{display:flex;align-items:center;gap:7px;font-size:14px}
+.start-input input{width:65px;padding:5px 8px;border-radius:30px;border:1px solid #cbd5e1;text-align:center;font-size:.9rem}
+.apply-btn{background:#2c7da0;color:white;border:none;padding:7px 18px;border-radius:40px;font-weight:bold;cursor:pointer;font-size:14px}
+.apply-btn:hover{background:#1f5e7a}
+.reset-btn{background:#f97316;color:white;border:none;padding:8px 22px;border-radius:40px;font-weight:bold;cursor:pointer;font-size:14px}
+.stats{display:flex;justify-content:space-between;background:#e6f4f1;padding:10px 20px;border-radius:50px;margin-bottom:20px;font-weight:600;flex-wrap:wrap;gap:10px;font-size:14px}
+.questions-area{display:flex;flex-direction:column;gap:22px}
+.question-card{background:white;border-radius:20px;border:1px solid #e2edf2;padding:18px 22px;box-shadow:0 2px 8px rgba(0,0,0,.02)}
+.question-text{font-weight:700;font-size:1rem;margin-bottom:14px;color:#0f3b4c;line-height:1.5}
+.options{display:flex;flex-direction:column;gap:10px;margin-left:8px}
+.option{display:flex;align-items:center;gap:12px;cursor:pointer;padding:5px 10px;border-radius:40px;transition:background .12s}
+.option:hover{background:#f1f9fe}
+.option input{width:16px;height:16px;cursor:pointer;accent-color:#2c7da0}
+.option label{font-size:.93rem;cursor:pointer;flex:1;line-height:1.4}
+.feedback{margin-top:12px;padding:8px 16px;border-radius:50px;font-size:.88rem;font-weight:500;display:inline-block}
+.feedback.correct{background:#d1fae5;color:#065f46;border-left:4px solid #10b981}
+.feedback.wrong{background:#fee2e2;color:#991b1b;border-left:4px solid #ef4444}
+footer{text-align:center;margin-top:32px;font-size:.78rem;color:#5e7c8c;border-top:1px solid #e2edf2;padding-top:16px}
+@media(max-width:700px){.container{padding:12px}.quiz-controls{flex-direction:column;align-items:stretch}}</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div class="company">Công ty Cổ phần Thủy điện Vĩnh Sơn – Sông Hinh</div>
+    <div class="title">Văn bản – Quy chế – Hướng dẫn</div>
+  </div>
+
+  <div class="quiz-controls">
+    <div class="package-buttons">
+      <button data-limit="10" class="pkg-btn">10 câu</button>
+            <button data-limit="20" class="pkg-btn">20 câu</button>
+            <button data-limit="23" class="pkg-btn">23 câu</button>
+            
+    </div>
+    <div class="mode-controls">
+      <label class="mode-label"><input type="radio" name="orderMode" value="shuffle" checked> XÁO TRỘN</label>
+      <label class="mode-label"><input type="radio" name="orderMode" value="sequential"> THEO THỨ TỰ</label>
+      <div class="start-input">
+        <label>Bắt đầu từ câu:</label>
+        <input type="number" id="startQuestion" min="1" value="1">
+      </div>
+      <button id="applyModeBtn" class="apply-btn">ÁP DỤNG</button>
+      <button id="resetExamBtn" class="reset-btn">LÀM LẠI</button>
+    </div>
+  </div>
+
+  <div class="stats">
+    <span>📋 Đã trả lời: <strong id="answeredCount">0</strong></span>
+    <span>✅ Đúng: <strong id="correctCount">0</strong> &nbsp;|&nbsp; ❌ Sai: <strong id="wrongCount">0</strong></span>
+  </div>
+
+  <div id="questionsContainer" class="questions-area"></div>
+  <footer>⚡ Chọn đáp án → hiển thị kết quả đúng/sai ngay tức thì.</footer>
+</div>
+<script>
+    const EXAM_ID      = 'de6';
+    const EXAM_NAME    = 'Văn bản – Quy chế – Hướng dẫn';
+    const DEFAULT_LIMIT = 23;
+    const FULL_RAW = [{"text": "Mục tiêu của phong trào 'Xanh - Sạch - Đẹp, Bảo đảm an toàn vệ sinh lao động' là gì?", "options": ["a. Cơ quan, đơn vị ngày càng xanh, sạch và đẹp.", "b. Đảm bảo cho điều kiện và môi trường khu vực sản xuất được cải thiện hơn, bớt ô nhiễm.", "c. Nâng cao văn hóa an toàn trong sản xuất, giúp cho người lao động càng thêm yêu mến, gắn bó với đơn vị cơ sở, phấn khởi nâng cao năng suất lao động, chất lượng sản phẩm và hiệu quả công tác.", "d. Tất cả các mục tiêu trên."], "ans": "d"}, {"text": "Nội dung nào được bổ sung trong Chỉ thị số 04/CT-TLĐ ngày 03/3/2017 của Đoàn Chủ tịch Tổng Liên đoàn về việc tiếp tục đẩy mạnh phong trào 'Xanh - Sạch - Đẹp, Bảo đảm an toàn vệ sinh lao động' trong tình hình mới?", "options": ["a. Tuyên truyền và giáo dục cho công nhân lao động thấy được sự cần thiết phải làm cho môi trường xanh, sạch, đẹp, đảm bảo ATVSLĐ.", "b. Xây dựng văn hóa an toàn lao động tại nơi làm việc; bảo đảm ATVSLĐ gắn với bảo vệ môi trường, thúc đẩy việc thực hiện Tăng trưởng xanh, thích ứng với biến đổi khí hậu.", "c. Vận động mọi người giữ gìn an toàn, vệ sinh lao động, làm cho nơi làm việc, nhà xưởng phong quang, gọn sạch.", "d. Thực hiện thường xuyên chế độ kiểm tra an toàn, vệ sinh lao động."], "ans": "b"}, {"text": "Chủ đề Tháng hành động về ATVSLĐ năm 2026 là:", "options": ["a. Thúc đẩy công tác huấn luyện an toàn, vệ sinh lao động để phòng ngừa các tai nạn lao động và bệnh nghề nghiệp.", "b. Đổi mới quản lý và chủ động phòng ngừa và kiểm soát các yếu tố nguy hiểm, có hại tại nơi làm việc để hạn chế tai nạn lao động, bệnh nghề nghiệp và nâng cao hiệu quả công tác an toàn, vệ sinh lao động trong kỷ nguyên số.", "c. Đẩy mạnh cải thiện điều kiện lao động và kiểm soát các nguy cơ rủi ro về an toàn; nâng cao hiệu quả công tác an toàn, vệ sinh lao động trong kỷ nguyên số.", "d. Đổi mới quản lý và nâng cao hiệu quả công tác an toàn, vệ sinh lao động trong kỷ nguyên số."], "ans": "d"}, {"text": "Kế hoạch số 11562/KH-BNV của Bộ Nội vụ ngày 04/12/2025 triển khai Tháng hành động về An toàn, vệ sinh lao động năm 2026 có bao nhiêu Khẩu hiệu?", "options": ["a. 10", "b. 13", "c. 15", "d. 17"], "ans": "c"}, {"text": "Kế hoạch số 11562/KH-BNV triển khai Tháng hành động về ATVSLĐ năm 2026 nội dung 'Đổi mới' gì?", "options": ["a. Đổi mới quản lý ATVSLĐ trong kỷ nguyên số, Đổi mới toàn diện công tác ATVSLĐ trong kỷ nguyên số.", "b. Đổi mới quản lý ATVSLĐ trong kỷ nguyên số, Đổi mới trong công tác Huấn luyện, nâng cao kỹ năng làm việc an toàn để bảo đảm an toàn, sức khỏe của mỗi người lao động.", "c. Đổi mới quản lý, chủ động phòng ngừa và kiểm soát các yếu tố nguy hiểm, có hại tại nơi làm việc để hạn chế tai nạn lao động, bệnh nghề nghiệp và nâng cao hiệu quả công tác an toàn, vệ sinh lao động trong kỷ nguyên số.", "d. Đối mới sáng tạo đẩy mạnh cải thiện điều kiện lao động và kiểm soát các nguy cơ rủi ro về an toàn; nâng cao hiệu quả công tác an toàn, vệ sinh lao động trong kỷ nguyên số."], "ans": "c"}, {"text": "Kế hoạch số 11562/KH-BNV triển khai tháng hành động về ATVSLĐ năm 2026 nội dung 'Chủ động' gì?", "options": ["a. Chủ động trong công tác An toàn để sản xuất - Sản xuất, Chủ động phòng ngừa, đánh giá, kiểm soát các nguy cơ rủi ro về ATVSLĐ.", "b. Chủ động để an toàn - An toàn để phát triển, Chủ động phòng ngừa, đánh giá, kiểm soát các nguy cơ rủi ro về ATVSLĐ.", "c. Chủ động phòng ngừa, đánh giá, kiểm soát các nguy cơ rủi ro về ATVSLĐ, Chủ động là trách nhiệm doanh nghiệp - An toàn cho người lao động - Phát triển bền vững cho tương lai.", "d. Chủ động để đổi mới sáng tạo đẩy mạnh cải thiện điều kiện lao động và kiểm soát các nguy cơ rủi ro về an toàn; nâng cao hiệu quả công tác an toàn, vệ sinh lao động trong kỷ nguyên số."], "ans": "b"}, {"text": "Kế hoạch số 11562/KH-BNV triển khai tháng hành động về ATVSLĐ năm 2026 nội dung 'An toàn' gì?", "options": ["a. An toàn để sản xuất - Sản xuất phải đảm bảo an toàn, Sản xuất phải đảm bảo An toàn.", "b. An toàn lao động là hạnh phúc gia đình, đánh giá, An toàn để sản xuất.", "c. An toàn để sản xuất - Sản xuất phải đảm bảo an toàn, An toàn lao động là hạnh phúc gia đình.", "d. An toàn cho người lao động - Phát triển bền vững cho tương lai, An toàn lao động là hạnh phúc gia đình."], "ans": "c"}, {"text": "Tháng hành động về ATVSLĐ tổ chức vào tháng nào hàng năm?", "options": ["a. Tháng 3", "b. Tháng 4", "c. Tháng 5", "d. Tháng 6"], "ans": "c"}, {"text": "Tháng hành động về ATVSLĐ bắt đầu tổ chức từ năm nào?", "options": ["a. Năm 2015", "b. Năm 2016", "c. Năm 2017", "d. Năm 2018"], "ans": "c"}, {"text": "Đối tượng tập thể được xét tặng Bằng khen chuyên đề 'Xanh - Sạch - Đẹp, Bảo đảm ATVSLĐ' của Tổng Liên đoàn hàng năm là:", "options": ["a. Công đoàn cơ sở.", "b. Công đoàn cấp trên trực tiếp cơ sở.", "c. Liên đoàn Lao động tỉnh, thành phố trực thuộc trung ương.", "d. Công đoàn ngành Trung ương, Công đoàn Tổng Công ty trực thuộc TLĐ."], "ans": "a"}, {"text": "Để tổ chức cho người lao động tham gia hoạt động cải thiện điều kiện lao động, xây dựng văn hóa an toàn lao động tại nơi làm việc, người sử dụng lao động phải phối hợp với ai?", "options": ["a. Ban Chấp hành Công đoàn cơ sở.", "b. Hội đồng an toàn vệ sinh lao động cơ sở.", "c. Người làm công tác an toàn vệ sinh lao động.", "d. Mạng lưới an toàn vệ sinh viên."], "ans": "a"}, {"text": "Đối thoại với người sử dụng lao động để giải quyết các vấn đề liên quan đến quyền, nghĩa vụ của người lao động, người sử dụng lao động về an toàn, vệ sinh lao động là quyền và trách nhiệm của ai?", "options": ["a. Bộ phận y tế.", "b. Công đoàn cơ sở.", "c. Bộ phận an toàn, vệ sinh lao động.", "d. Mạng lưới an toàn, vệ sinh viên."], "ans": "b"}, {"text": "Khi phát hiện nơi làm việc có nguy cơ gây nguy hiểm đến sức khỏe, tính mạng của người lao động thì CĐCS thực hiện ngay việc gì sau đây?", "options": ["a. Yêu cầu người có trách nhiệm thực hiện ngay biện pháp bảo đảm ATVSLĐ, kể cả trường hợp phải tạm ngừng hoạt động nếu cần thiết.", "b. Báo với công đoàn cấp trên trực tiếp.", "c. Báo với Ủy ban nhân dân cấp xã/tỉnh."], "ans": "a"}, {"text": "Theo Hướng dẫn số 747/HD-CĐĐVN ngày 15/11/2024 của Công đoàn Điện lực Việt Nam, những điều kiện, tiêu chuẩn nào đủ điều kiện xét tặng Bằng khen thưởng chuyên đề 'Xanh - Sạch - Đẹp, Bảo đảm ATVSLĐ' hàng năm của Tổng Liên đoàn đối với CĐCS?", "options": ["a. Là Công đoàn cơ sở tiêu biểu nhất.", "b. Trong 02 năm liên tục không xảy ra TNLĐ chết người, TNLĐ nặng, sự cố kỹ thuật, cháy nổ nghiêm trọng, không tăng BNN.", "c. Hai năm liên tục hoàn thành tốt nhiệm vụ trở lên, trong đó có ít nhất 01 năm xuất sắc.", "d. Một trong hai năm liền kề đã được tặng Bằng khen toàn diện hoặc chuyên đề.", "e. Cả 04 tiêu chí trên."], "ans": "e"}, {"text": "Theo Hướng dẫn 747/HD-CĐĐVN, điều kiện xét tặng Bằng khen chuyên đề đối với cá nhân?", "options": ["a. Có thành tích tiêu biểu nhất.", "b. Hai năm liên tục hoàn thành tốt nhiệm vụ, trong đó có 01 năm xuất sắc hoặc Chiến sĩ thi đua cơ sở, có 01 sáng kiến được công nhận.", "c. Một trong hai năm liền kề đã được tặng Bằng khen toàn diện hoặc chuyên đề.", "d. Cả 03 tiêu chí trên."], "ans": "d"}, {"text": "Trong các chỉ tiêu dưới đây, chỉ tiêu nào thuộc chỉ tiêu của Nghị quyết 10c/NQ-BCH ngày 12/01/2017?", "options": ["a. 100% doanh nghiệp nhà nước, đơn vị sự nghiệp công và 50% trở lên số doanh nghiệp ngoài nhà nước hưởng ứng phong trào.", "b. 100% các vụ TNLĐ nặng và chết người được báo cáo, điều tra và có đại diện công đoàn tham gia.", "c. Tất cả các chỉ tiêu trên."], "ans": "c"}, {"text": "Người sử dụng lao động có thể sử dụng người lao động cao tuổi làm nghề, công việc nặng nhọc, độc hại, nguy hiểm không quá bao nhiêu năm?", "options": ["a. 5 năm", "b. 6 năm", "c. 7 năm"], "ans": "a"}, {"text": "Chỉ thị số 01/CT-TLĐ ngày 19/11/2012 quy định các Liên đoàn Lao động tỉnh, thành phố; Công đoàn ngành Trung ương, Công đoàn Tổng Công ty tổng hợp tình hình TNLĐ định kỳ báo cáo về Tổng Liên đoàn?", "options": ["a. Hàng tháng", "b. 3 tháng, cả năm", "c. 6 tháng, cả năm", "d. Cả 4 phương án trên"], "ans": "c"}, {"text": "Chương trình Quốc gia về ATVSLĐ giai đoạn 2021-2025 đề ra mục tiêu đến năm 2025 có bao nhiêu phần trăm số người làm công tác y tế cơ sở được huấn luyện về ATVSLĐ?", "options": ["a. Trên 70%", "b. Trên 75%", "c. Trên 80%"], "ans": "c"}, {"text": "Tại Chỉ thị Liên tịch 3395/CTLT-GENCO3-CĐ, thời gian định kỳ cấp Tổng Công ty tổ chức tổng kết, đánh giá kết quả hoạt động của mạng lưới ATVSV?", "options": ["a. 6 tháng/01 lần", "b. 01 năm/01 lần", "c. 05 năm/02 lần"], "ans": "c"}, {"text": "Tại Chỉ thị Liên tịch 3395/CTLT-GENCO3-CĐ, thời gian định kỳ cấp Công đoàn cơ sở tổ chức tổng kết, đánh giá kết quả hoạt động của mạng lưới ATVSV?", "options": ["a. 6 tháng/01 lần", "b. 01 năm/01 lần", "c. 02 năm/ 01 lần"], "ans": "b"}, {"text": "Theo Thỏa ước lao động tập thể số 4369/TU-GENCO3-CĐGENCO3, những đối tượng nào sau đây được khám sức khỏe, khám chuyên khoa, chuyên sâu ít nhất 6 tháng 01 lần?", "options": ["a. NLĐ làm công việc nặng nhọc, độc hại", "b. NLĐ khuyết tật", "c. NLĐ từ đủ 60 tuổi đối với nam, 55 tuổi đối với nữ", "d. Cả 03 đối tượng trên"], "ans": "d"}, {"text": "Theo Bộ Luật lao động số 45/2019-QH14 những đối tượng nào phải bảo đảm an toàn, vệ sinh tại nơi làm việc?", "options": ["a. Người sử dụng lao động", "b. Người lao động", "c. Cả 02 đối tượng trên."], "ans": "c"}];
+
+    function getAnswerIndex(question, ansLetter) {
+        const letters = ['a','b','c','d','e','đ'];
+        let idx = letters.indexOf(ansLetter.toLowerCase());
+        if (idx !== -1 && idx < question.options.length) return idx;
+        return 0;
+    }
+    const FULL_QUESTIONS = FULL_RAW.map((q,idx) => ({
+        id: idx+1,
+        text: `Câu ${idx+1}: ${q.text}`,
+        options: q.options,
+        correct: getAnswerIndex(q, q.ans)
+    }));
+
+    let currentQuestions=[], userAnswers=[], answerStatus=[];
+    let currentLimit=DEFAULT_LIMIT, currentMode='shuffle', currentStart=1;
+
+    const container     = document.getElementById('questionsContainer');
+    const answeredSpan  = document.getElementById('answeredCount');
+    const correctSpan   = document.getElementById('correctCount');
+    const wrongSpan     = document.getElementById('wrongCount');
+    const resetBtn      = document.getElementById('resetExamBtn');
+    const applyBtn      = document.getElementById('applyModeBtn');
+    const pkgBtns       = document.querySelectorAll('.pkg-btn');
+    const shuffleRadio  = document.querySelector('input[value="shuffle"]');
+    const sequentialRadio = document.querySelector('input[value="sequential"]');
+    const startInput    = document.getElementById('startQuestion');
+
+    function shuffleArray(arr){
+        for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}
+        return arr;
+    }
+    function getSequentialQuestions(limit,start){
+        let startIdx=Math.max(1,Math.min(start,FULL_QUESTIONS.length-limit+1));
+        let sel=[];
+        for(let i=0;i<limit;i++){let qi=startIdx-1+i;if(qi<FULL_QUESTIONS.length)sel.push({...FULL_QUESTIONS[qi]});}
+        return sel;
+    }
+    function generateExam(limit,mode,start){
+        if(mode==='shuffle') return shuffleArray([...FULL_QUESTIONS]).slice(0,limit);
+        return getSequentialQuestions(limit,start);
+    }
+    function updateStats(){
+        let answered=userAnswers.filter(a=>a!==null).length;
+        let correct=answerStatus.filter(s=>s==='correct').length;
+        let wrong=answerStatus.filter(s=>s==='wrong').length;
+        answeredSpan.innerText=answered; correctSpan.innerText=correct; wrongSpan.innerText=wrong;
+    }
+    function handleAnswer(idx,selectedOpt){
+        const q=currentQuestions[idx]; if(!q) return;
+        userAnswers[idx]=selectedOpt;
+        answerStatus[idx]=(selectedOpt===q.correct)?'correct':'wrong';
+        renderQuestions(); updateStats();
+    }
+    window.handleAnswerSelect=(qIndex,optVal)=>{
+        if(qIndex>=0&&qIndex<currentQuestions.length) handleAnswer(qIndex,parseInt(optVal));
+    };
+    function renderQuestions(){
+        if(!container) return;
+        if(!currentQuestions.length){container.innerHTML='<div style="padding:40px;text-align:center;">Đang tải...</div>';return;}
+        let html='';
+        for(let i=0;i<currentQuestions.length;i++){
+            const q=currentQuestions[i],userChoice=userAnswers[i],fbStatus=answerStatus[i];
+            const optsHtml=q.options.map((opt,optIdx)=>{
+                const letter=String.fromCharCode(97+optIdx);
+                const isChecked=(userChoice===optIdx);
+                const optText=opt.replace(/^[a-đ]\.\s*/i,'');
+                return `<div class="option" onclick="document.getElementById('q_${i}_opt_${optIdx}').click();">
+                    <input type="radio" name="q_${i}" id="q_${i}_opt_${optIdx}" value="${optIdx}" ${isChecked?'checked':''} onchange="window.handleAnswerSelect(${i},${optIdx})">
+                    <label for="q_${i}_opt_${optIdx}">${letter}. ${optText}</label>
+                </div>`;
+            }).join('');
+            let feedbackHtml='';
+            if(fbStatus==='correct') feedbackHtml=`<div class="feedback correct">✅ Đúng rồi!</div>`;
+            else if(fbStatus==='wrong'){
+                const correctLetter=String.fromCharCode(97+q.correct);
+                feedbackHtml=`<div class="feedback wrong">❌ Sai. Đáp án đúng: <b>${correctLetter.toUpperCase()}</b></div>`;
+            }
+            html+=`<div class="question-card"><div class="question-text">${q.text}</div><div class="options">${optsHtml}</div>${feedbackHtml}</div>`;
+        }
+        container.innerHTML=html;
+    }
+    function loadExam(){
+        let limit=Math.min(currentLimit,FULL_QUESTIONS.length);
+        currentQuestions=generateExam(limit,currentMode,currentStart);
+        userAnswers=new Array(currentQuestions.length).fill(null);
+        answerStatus=new Array(currentQuestions.length).fill(null);
+        renderQuestions(); updateStats();
+    }
+    function changePackage(limit){
+        currentLimit=Math.min(limit,FULL_QUESTIONS.length); loadExam();
+        pkgBtns.forEach(btn=>{
+            const bl=parseInt(btn.getAttribute('data-limit'),10);
+            btn.classList.toggle('active',bl===limit||(limit>=FULL_QUESTIONS.length&&bl>=FULL_QUESTIONS.length));
+        });
+    }
+    function applyModeAndStart(){
+        currentMode=shuffleRadio.checked?'shuffle':'sequential';
+        let ns=parseInt(startInput.value,10); if(isNaN(ns))ns=1;
+        currentStart=Math.max(1,Math.min(ns,FULL_QUESTIONS.length));
+        loadExam();
+    }
+    pkgBtns.forEach(btn=>btn.addEventListener('click',()=>{
+        let lv=parseInt(btn.getAttribute('data-limit'),10);
+        if(lv>FULL_QUESTIONS.length) lv=FULL_QUESTIONS.length;
+        changePackage(lv);
+    }));
+    resetBtn.addEventListener('click',loadExam);
+    applyBtn.addEventListener('click',applyModeAndStart);
+
+    currentLimit=Math.min(DEFAULT_LIMIT,FULL_QUESTIONS.length);
+    loadExam();
+    pkgBtns.forEach(btn=>{
+        let val=parseInt(btn.getAttribute('data-limit'),10);
+        if(val===currentLimit) btn.classList.add('active');
+    });
+
+</script>
+</body>
+</html>
