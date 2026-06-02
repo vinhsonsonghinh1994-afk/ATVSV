@@ -594,6 +594,10 @@ const SUBS = {
 };
 
 function showSub(tab, sub) {
+  // Nếu vào tab quantri mà chưa đăng nhập → về màn hình login
+  if(tab === 'quantri' && sub !== 'qt-login' && !adminLoggedIn) {
+    sub = 'qt-login';
+  }
   // Activate correct panel
   TABS.forEach(t => {
     document.getElementById('panel-'+t).classList.toggle('active', t===tab);
@@ -645,28 +649,16 @@ async function qtAdminLogin() {
     return;
   }
   adminLoggedIn = true;
-  qtSaveSession();
+  sessionStorage.setItem('vsh_admin', '1');
   err.textContent = '';
-  qtResetIdleTimer();
+  adminStartIdle();
   qtSwitchAdmin('thisinh');
   qtLoadCandidates();
 }
 
 function qtAdminLogout() {
   if(!confirm('Bạn có chắc muốn đăng xuất khỏi trang quản trị?')) return;
-  adminLoggedIn = false;
-  qtClearSession();
-  clearTimeout(adminIdleTimer);
-  clearInterval(adminCountdownTimer);
-  document.getElementById('qt-admin-u').value = '';
-  document.getElementById('qt-admin-p').value = '';
-  document.getElementById('qt-admin-err').textContent = '';
-  const subs = SUBS['quantri'];
-  subs.forEach(s => {
-    const el = document.getElementById('sub-'+s);
-    if(el) el.style.display = 'none';
-  });
-  document.getElementById('sub-qt-login').style.display = '';
+  adminForceLogout('');
 }
 
 function qtSwitchAdmin(panel) {
@@ -956,77 +948,109 @@ function qtExportPDF() {
 // ════════════════════════════════════════════
 // ADMIN SESSION MANAGEMENT — tự động đăng xuất
 // ════════════════════════════════════════════
-const ADMIN_TIMEOUT_MS  = 10 * 60 * 1000; // 10 phút không thao tác
-const ADMIN_WARNING_SEC = 60;              // cảnh báo trước 60 giây
-let adminIdleTimer      = null;
-let adminCountdownTimer = null;
-let adminCountdownSec   = ADMIN_WARNING_SEC;
+const IDLE_MINUTES   = 10;                        // timeout 10 phút
+const WARN_SECONDS   = 60;                        // cảnh báo 60 giây trước
+const IDLE_MS        = IDLE_MINUTES * 60 * 1000;  // 600,000 ms
+const WARN_MS        = WARN_SECONDS * 1000;        // 60,000 ms
 
-function qtSaveSession()    { sessionStorage.setItem('vsh_admin_logged','1'); }
-function qtClearSession()   { sessionStorage.removeItem('vsh_admin_logged'); }
+let _idleTimer     = null;  // setTimeout — bắt đầu đếm ngược cảnh báo
+let _warnTimer     = null;  // setInterval — đếm 60 giây
+let _warnSec       = WARN_SECONDS;
 
-function qtResetIdleTimer() {
-  if(!adminLoggedIn) return;
-  clearTimeout(adminIdleTimer);
-  const warn = document.getElementById('qt-session-warning');
-  if(warn && warn.style.display !== 'none') {
-    warn.style.display = 'none';
-    clearInterval(adminCountdownTimer);
-  }
-  adminIdleTimer = setTimeout(qtShowWarning, ADMIN_TIMEOUT_MS - ADMIN_WARNING_SEC * 1000);
+// ── Khởi động timer sau khi đăng nhập thành công ──
+function adminStartIdle() {
+  adminStopIdle();
+  _idleTimer = setTimeout(adminShowWarning, IDLE_MS - WARN_MS);
 }
 
-function qtShowWarning() {
+// ── Dừng toàn bộ timer ──
+function adminStopIdle() {
+  clearTimeout(_idleTimer);
+  clearInterval(_warnTimer);
+  _idleTimer = null;
+  _warnTimer = null;
+}
+
+// ── Reset timer khi có thao tác ──
+function adminResetIdle() {
   if(!adminLoggedIn) return;
-  const warn = document.getElementById('qt-session-warning');
-  if(!warn) return;
-  adminCountdownSec = ADMIN_WARNING_SEC;
+  // Nếu warning đang hiện → ẩn đi
+  const w = document.getElementById('qt-session-warning');
+  if(w && w.style.display !== 'none') {
+    w.style.display = 'none';
+    clearInterval(_warnTimer);
+    _warnTimer = null;
+  }
+  adminStartIdle();
+}
+
+// ── Hiện thanh cảnh báo 60 giây ──
+function adminShowWarning() {
+  if(!adminLoggedIn) return;
+  const w = document.getElementById('qt-session-warning');
+  if(!w) return;
+  _warnSec = WARN_SECONDS;
   const numEl = document.getElementById('qt-countdown-num');
-  if(numEl) numEl.textContent = adminCountdownSec;
-  warn.style.display = 'flex';
-  clearInterval(adminCountdownTimer);
-  adminCountdownTimer = setInterval(() => {
-    adminCountdownSec--;
-    const el = document.getElementById('qt-countdown-num');
-    if(el) el.textContent = adminCountdownSec;
-    // Update progress bar
-    const bar = document.getElementById('qt-countdown-bar');
-    if(bar) bar.style.width = (adminCountdownSec / ADMIN_WARNING_SEC * 100) + '%';
-    if(adminCountdownSec <= 0) { clearInterval(adminCountdownTimer); qtForceLogout(); }
+  const barEl = document.getElementById('qt-countdown-bar');
+  if(numEl) numEl.textContent = _warnSec;
+  if(barEl) barEl.style.width = '100%';
+  w.style.display = 'flex';
+  clearInterval(_warnTimer);
+  _warnTimer = setInterval(() => {
+    _warnSec--;
+    if(numEl) numEl.textContent = _warnSec;
+    if(barEl) barEl.style.width = Math.max(0, _warnSec / WARN_SECONDS * 100) + '%';
+    if(_warnSec <= 0) {
+      clearInterval(_warnTimer);
+      adminForceLogout('⚠️ Phiên làm việc đã hết hạn. Vui lòng đăng nhập lại.');
+    }
   }, 1000);
 }
 
-function qtExtendSession() {
-  clearInterval(adminCountdownTimer);
-  document.getElementById('qt-session-warning').style.display = 'none';
-  qtResetIdleTimer();
+// ── Gia hạn khi nhấn nút ──
+function adminExtendSession() {
+  const w = document.getElementById('qt-session-warning');
+  if(w) w.style.display = 'none';
+  clearInterval(_warnTimer);
+  _warnTimer = null;
+  adminStartIdle();
 }
 
-function qtForceLogout() {
+// ── Đăng xuất cưỡng bức ──
+function adminForceLogout(msg) {
   adminLoggedIn = false;
-  qtClearSession();
-  clearTimeout(adminIdleTimer);
-  clearInterval(adminCountdownTimer);
-  document.getElementById('qt-session-warning').style.display = 'none';
-  document.getElementById('qt-admin-u').value = '';
-  document.getElementById('qt-admin-p').value = '';
-  document.getElementById('qt-admin-err').textContent = '⚠️ Phiên làm việc đã hết hạn. Vui lòng đăng nhập lại.';
+  adminStopIdle();
+  sessionStorage.removeItem('vsh_admin');
+  const w = document.getElementById('qt-session-warning');
+  if(w) w.style.display = 'none';
+  // Xóa form
+  const u = document.getElementById('qt-admin-u');
+  const p = document.getElementById('qt-admin-p');
+  const e = document.getElementById('qt-admin-err');
+  if(u) u.value = '';
+  if(p) p.value = '';
+  if(e) e.textContent = msg || '';
+  // Về màn hình login
   SUBS['quantri'].forEach(s => {
-    const el = document.getElementById('sub-'+s);
+    const el = document.getElementById('sub-' + s);
     if(el) el.style.display = 'none';
   });
-  document.getElementById('sub-qt-login').style.display = '';
+  const login = document.getElementById('sub-qt-login');
+  if(login) login.style.display = '';
 }
 
-// Lắng nghe thao tác — reset idle timer
-['mousemove','keydown','click','scroll','touchstart'].forEach(evt => {
-  document.addEventListener(evt, () => { if(adminLoggedIn) qtResetIdleTimer(); }, {passive:true});
+// ── Lắng nghe thao tác người dùng ──
+['mousedown','mousemove','keydown','scroll','touchstart','click'].forEach(evt => {
+  document.addEventListener(evt, () => {
+    if(adminLoggedIn) adminResetIdle();
+  }, {passive: true});
 });
 
-// Đăng xuất ngay khi đóng tab/trình duyệt
+// ── Đăng xuất khi đóng tab/trình duyệt ──
 window.addEventListener('beforeunload', () => {
-  if(adminLoggedIn) qtClearSession();
+  if(adminLoggedIn) sessionStorage.removeItem('vsh_admin');
 });
+
 
 </script>
 
@@ -1048,7 +1072,7 @@ window.addEventListener('beforeunload', () => {
     <div style="background:#374151;border-radius:4px;height:5px;margin-bottom:12px;overflow:hidden">
       <div id="qt-countdown-bar" style="height:100%;background:linear-gradient(90deg,#dc2626,#f97316);border-radius:4px;width:100%;transition:width 1s linear"></div>
     </div>
-    <button onclick="qtExtendSession()" style="width:100%;background:#16a34a;color:white;border:none;padding:10px;border-radius:9px;font-size:13px;font-weight:800;cursor:pointer;transition:.2s" onmouseover="this.style.background='#15803d'" onmouseout="this.style.background='#16a34a'">
+    <button onclick="adminExtendSession()" style="width:100%;background:#16a34a;color:white;border:none;padding:10px;border-radius:9px;font-size:13px;font-weight:800;cursor:pointer;transition:.2s" onmouseover="this.style.background='#15803d'" onmouseout="this.style.background='#16a34a'">
       ✅ Gia hạn thêm 10 phút
     </button>
   </div>
