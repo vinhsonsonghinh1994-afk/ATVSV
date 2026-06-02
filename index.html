@@ -530,6 +530,10 @@ nav{background:#1e3a8a;display:flex;justify-content:center}
   </div>
 
 <script>
+// ── SUPABASE CONFIG ──
+const SUPABASE_URL = 'https://lasbxdhexxczzfrfkexn.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_eRMAip0BXZYzWQ98gwvqrA_udyYHxkR';
+
 const TABS = ['trangchu','tailieu','luyenthi','kythi','quantri'];
 const SUBS = {
   trangchu: ['tc-main'],
@@ -807,7 +811,7 @@ function qtRenderCandidates() {
       <button onclick="qtToggleActive(${c.id},${c.is_active})" style="background:${c.is_active?'#fee2e2':'#dcfce7'};color:${c.is_active?'#dc2626':'#16a34a'};border:none;padding:5px 12px;border-radius:7px;font-size:12px;font-weight:700;cursor:pointer">
         ${c.is_active?'🔒 Khóa':'🔓 Mở khóa'}
       </button>
-      <button onclick="qtOpenResetModal(${c.id},'${c.full_name.replace(/'/g,"\\'")}')}" style="background:#fef9c3;color:#92400e;border:none;padding:5px 12px;border-radius:7px;font-size:12px;font-weight:700;cursor:pointer">
+      <button onclick="qtOpenResetModal(${c.id},'${c.full_name.replace(/'/g,"\\'")}')" style="background:#fef9c3;color:#92400e;border:none;padding:5px 12px;border-radius:7px;font-size:12px;font-weight:700;cursor:pointer">
         🔑 Đặt lại MK
       </button>
     </td>
