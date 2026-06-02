@@ -277,7 +277,7 @@ nav{background:#1e3a8a;display:flex;justify-content:center}
 <header class="site-header">
   <div class="header-top">
     <div class="h-company">Công ty Cổ phần Thủy điện Vĩnh Sơn – Sông Hinh</div>
-    <div class="h-title">PHẦN MỀM LUYỆN THI TRẮC NGHIỆM CHO AN TOÀN VỆ SINH VIÊN</div>
+    <div class="h-title">Hệ thống luyện thi ATVSLĐ</div>
     <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
   </div>
 
@@ -645,8 +645,9 @@ async function qtAdminLogin() {
     return;
   }
   adminLoggedIn = true;
+  qtSaveSession();
   err.textContent = '';
-  // Go to thisinh tab by default
+  qtResetIdleTimer();
   qtSwitchAdmin('thisinh');
   qtLoadCandidates();
 }
@@ -654,10 +655,12 @@ async function qtAdminLogin() {
 function qtAdminLogout() {
   if(!confirm('Bạn có chắc muốn đăng xuất khỏi trang quản trị?')) return;
   adminLoggedIn = false;
+  qtClearSession();
+  clearTimeout(adminIdleTimer);
+  clearInterval(adminCountdownTimer);
   document.getElementById('qt-admin-u').value = '';
   document.getElementById('qt-admin-p').value = '';
   document.getElementById('qt-admin-err').textContent = '';
-  // Show login, hide dashboards
   const subs = SUBS['quantri'];
   subs.forEach(s => {
     const el = document.getElementById('sub-'+s);
@@ -950,6 +953,85 @@ function qtExportPDF() {
   win.document.close();
 }
 
+// ════════════════════════════════════════════
+// ADMIN SESSION MANAGEMENT — tự động đăng xuất
+// ════════════════════════════════════════════
+const ADMIN_TIMEOUT_MS  = 15 * 60 * 1000; // 15 phút không thao tác
+const ADMIN_WARNING_SEC = 60;              // cảnh báo trước 60 giây
+let adminIdleTimer      = null;
+let adminCountdownTimer = null;
+let adminCountdownSec   = ADMIN_WARNING_SEC;
+
+function qtSaveSession()    { sessionStorage.setItem('vsh_admin_logged','1'); }
+function qtClearSession()   { sessionStorage.removeItem('vsh_admin_logged'); }
+
+function qtResetIdleTimer() {
+  if(!adminLoggedIn) return;
+  clearTimeout(adminIdleTimer);
+  const warn = document.getElementById('qt-session-warning');
+  if(warn && warn.style.display !== 'none') {
+    warn.style.display = 'none';
+    clearInterval(adminCountdownTimer);
+  }
+  adminIdleTimer = setTimeout(qtShowWarning, ADMIN_TIMEOUT_MS - ADMIN_WARNING_SEC * 1000);
+}
+
+function qtShowWarning() {
+  if(!adminLoggedIn) return;
+  const warn = document.getElementById('qt-session-warning');
+  if(!warn) return;
+  adminCountdownSec = ADMIN_WARNING_SEC;
+  document.getElementById('qt-countdown-num').textContent = adminCountdownSec;
+  warn.style.display = 'flex';
+  clearInterval(adminCountdownTimer);
+  adminCountdownTimer = setInterval(() => {
+    adminCountdownSec--;
+    const el = document.getElementById('qt-countdown-num');
+    if(el) el.textContent = adminCountdownSec;
+    if(adminCountdownSec <= 0) { clearInterval(adminCountdownTimer); qtForceLogout(); }
+  }, 1000);
+}
+
+function qtExtendSession() {
+  clearInterval(adminCountdownTimer);
+  document.getElementById('qt-session-warning').style.display = 'none';
+  qtResetIdleTimer();
+}
+
+function qtForceLogout() {
+  adminLoggedIn = false;
+  qtClearSession();
+  clearTimeout(adminIdleTimer);
+  clearInterval(adminCountdownTimer);
+  document.getElementById('qt-session-warning').style.display = 'none';
+  document.getElementById('qt-admin-u').value = '';
+  document.getElementById('qt-admin-p').value = '';
+  document.getElementById('qt-admin-err').textContent = '⚠️ Phiên làm việc đã hết hạn. Vui lòng đăng nhập lại.';
+  SUBS['quantri'].forEach(s => {
+    const el = document.getElementById('sub-'+s);
+    if(el) el.style.display = 'none';
+  });
+  document.getElementById('sub-qt-login').style.display = '';
+}
+
+// Lắng nghe thao tác — reset idle timer
+['mousemove','keydown','click','scroll','touchstart'].forEach(evt => {
+  document.addEventListener(evt, () => { if(adminLoggedIn) qtResetIdleTimer(); }, {passive:true});
+});
+
 </script>
+
+<!-- ADMIN SESSION WARNING MODAL -->
+<div id="qt-session-warning" class="qt-modal-overlay" style="display:none">
+  <div class="qt-modal" style="text-align:center">
+    <div style="font-size:48px;margin-bottom:12px">⏰</div>
+    <h3 style="font-size:16px;font-weight:800;color:#dc2626;margin-bottom:8px">Phiên làm việc sắp hết hạn!</h3>
+    <p style="font-size:13px;color:#64748b;margin-bottom:16px">Hệ thống sẽ tự đăng xuất sau:</p>
+    <div id="qt-countdown-num" style="font-size:52px;font-weight:900;color:#dc2626;line-height:1;margin-bottom:8px">60</div>
+    <p style="font-size:12px;color:#94a3b8;margin-bottom:20px">giây</p>
+    <button onclick="qtExtendSession()" style="width:100%;background:#16a34a;color:white;border:none;padding:12px;border-radius:10px;font-size:14px;font-weight:800;cursor:pointer">✅ Tiếp tục làm việc</button>
+  </div>
+</div>
+
 </body>
 </html>
