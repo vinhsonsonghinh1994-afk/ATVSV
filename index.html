@@ -277,7 +277,7 @@ nav{background:#1e3a8a;display:flex;justify-content:center}
 <header class="site-header">
   <div class="header-top">
     <div class="h-company">Công ty Cổ phần Thủy điện Vĩnh Sơn – Sông Hinh</div>
-    <div class="h-title">PHẦN MỀM LUYỆN THI TRẮC NGHIỆM CHO AN TOÀN VỆ SINH VIÊN</div>
+    <div class="h-title">Hệ thống luyện thi ATVSLĐ</div>
     <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
   </div>
 
@@ -316,8 +316,7 @@ nav{background:#1e3a8a;display:flex;justify-content:center}
     <div class="nav-item">
       <button class="nav-tab" id="tab-quantri">⚙️ Quản trị <span class="nav-arrow">▾</span></button>
       <div class="dropdown">
-        <div class="dd-item" onclick="showSub('quantri','qt-atvsv')">👷 Quản lý ATVSV</div>
-        <div class="dd-item" onclick="showSub('quantri','qt-thisinh')">👥 Quản lý thí sinh</div>
+        <div class="dd-item" onclick="showSub('quantri','qt-thisinh')">👥 Quản lý thí sinh kỳ thi</div>
         <div class="dd-item" onclick="showSub('quantri','qt-ketqua')">🏅 Quản lý kết quả thi</div>
       </div>
     </div>
@@ -345,8 +344,7 @@ nav{background:#1e3a8a;display:flex;justify-content:center}
     <div class="mobile-section-title">🏆 Kỳ thi</div>
     <div class="mobile-dd-item" onclick="showSub('kythi','kt-main');closeMobileMenu()">Vào kỳ thi chính thức</div>
     <div class="mobile-section-title">⚙️ Quản trị</div>
-    <div class="mobile-dd-item" onclick="showSub('quantri','qt-atvsv');closeMobileMenu()">👷 Quản lý ATVSV</div>
-    <div class="mobile-dd-item" onclick="showSub('quantri','qt-thisinh');closeMobileMenu()">👥 Quản lý thí sinh</div>
+    <div class="mobile-dd-item" onclick="showSub('quantri','qt-thisinh');closeMobileMenu()">👥 Quản lý thí sinh kỳ thi</div>
     <div class="mobile-dd-item" onclick="showSub('quantri','qt-ketqua');closeMobileMenu()">🏅 Quản lý kết quả thi</div>
   </div>
 </header>
@@ -486,54 +484,66 @@ nav{background:#1e3a8a;display:flex;justify-content:center}
   <!-- QUẢN TRỊ -->
   <div class="tab-panel" id="panel-quantri">
 
-    <!-- SUB: QUẢN LÝ ATVSV -->
-    <div id="sub-qt-atvsv" style="display:none;height:calc(100vh - 155px);overflow-y:auto;background:#eef2f7;padding:20px 16px">
-      <div id="qt-atvsv-login" class="qt-login-box">
-        <div style="text-align:center;margin-bottom:20px"><div style="font-size:40px">👷</div>
-          <h2 style="font-size:17px;font-weight:800;color:#1e3a8a">Quản lý ATVSV</h2>
-          <p style="font-size:12px;color:#64748b;margin-top:4px">Đăng nhập để tiếp tục</p></div>
+    <!-- ADMIN LOGIN SCREEN -->
+    <div id="sub-qt-login" style="height:calc(100vh - 155px);display:flex;align-items:center;justify-content:center;background:#eef2f7;padding:20px">
+      <div class="qt-login-box">
+        <div style="text-align:center;margin-bottom:20px">
+          <div style="font-size:48px">⚙️</div>
+          <h2 style="font-size:18px;font-weight:800;color:#1e3a8a;margin-top:8px">Quản trị hệ thống</h2>
+          <p style="font-size:13px;color:#64748b;margin-top:4px">Vui lòng đăng nhập để tiếp tục</p>
+        </div>
         <label class="qt-lbl">Tên đăng nhập</label>
-        <input id="qt-atvsv-u" type="text" class="qt-inp" placeholder="Nhập tên đăng nhập...">
+        <input id="qt-admin-u" type="text" class="qt-inp" placeholder="admin">
         <label class="qt-lbl">Mật khẩu</label>
-        <input id="qt-atvsv-p" type="password" class="qt-inp" placeholder="Nhập mật khẩu...">
-        <button onclick="qtLoginPanel('atvsv')" class="qt-btn-login">Đăng nhập</button>
-        <div id="qt-atvsv-err" class="qt-err"></div>
+        <input id="qt-admin-p" type="password" class="qt-inp" placeholder="••••••••" onkeyup="if(event.key==='Enter')qtAdminLogin()">
+        <button onclick="qtAdminLogin()" class="qt-btn-login">🔐 Đăng nhập</button>
+        <div id="qt-admin-err" class="qt-err"></div>
       </div>
-      <div id="qt-atvsv-dash" style="display:none;max-width:1000px;margin:0 auto">
+    </div>
+
+    <!-- TAB CON 1: QUẢN LÝ THÍ SINH -->
+    <div id="sub-qt-thisinh" style="display:none;height:calc(100vh - 155px);overflow-y:auto;background:#eef2f7;padding:20px 16px">
+      <div style="max-width:1100px;margin:0 auto">
         <div class="qt-dash-header">
-          <div><h2 class="qt-dash-title">👷 Quản lý An toàn vệ sinh viên</h2><p class="qt-dash-sub">Danh sách thí sinh kỳ thi</p></div>
-          <button onclick="qtLogoutPanel('atvsv')" class="qt-btn-logout">🚪 Đăng xuất</button>
+          <div>
+            <h2 class="qt-dash-title">👥 Quản lý thí sinh kỳ thi</h2>
+            <p class="qt-dash-sub" id="qt-ts-stats">Đang tải...</p>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button onclick="qtSwitchAdmin('ketqua')" class="qt-btn-refresh">🏅 Kết quả thi</button>
+            <button onclick="qtAdminLogout()" class="qt-btn-logout">🚪 Đăng xuất</button>
+          </div>
         </div>
         <!-- Thêm thí sinh -->
-        <div class="qt-card" style="margin-bottom:16px">
+        <div class="qt-card" style="margin-bottom:14px">
           <h3 class="qt-section-title">➕ Thêm thí sinh mới</h3>
           <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px">
-            <input id="qt-atvsv-newname" type="text" placeholder="Họ tên đầy đủ..." class="qt-inp-sm" style="flex:2;min-width:180px">
-            <input id="qt-atvsv-newpass" type="text" placeholder="Mật khẩu..." class="qt-inp-sm" style="flex:1;min-width:120px">
+            <input id="qt-new-name" type="text" placeholder="Họ tên đầy đủ..." class="qt-inp-sm" style="flex:2;min-width:180px">
+            <input id="qt-new-pass" type="text" placeholder="Mật khẩu..." class="qt-inp-sm" style="flex:1;min-width:120px">
             <button onclick="qtAddCandidate()" class="qt-btn-add">➕ Thêm</button>
           </div>
-          <div id="qt-atvsv-addmsg" class="qt-msg"></div>
+          <div id="qt-add-msg" class="qt-msg"></div>
         </div>
-        <!-- Tìm kiếm -->
+        <!-- Danh sách -->
         <div class="qt-card">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px">
             <h3 class="qt-section-title">📋 Danh sách thí sinh</h3>
             <div style="display:flex;gap:8px;flex-wrap:wrap">
-              <input id="qt-atvsv-search" type="text" placeholder="🔍 Tìm kiếm..." class="qt-inp-sm" style="width:180px" oninput="qtFilterCandidates()">
+              <input id="qt-search" type="text" placeholder="🔍 Tìm kiếm..." class="qt-inp-sm" style="width:180px" oninput="qtFilterCandidates()">
               <button onclick="qtLoadCandidates()" class="qt-btn-refresh">🔄 Làm mới</button>
             </div>
           </div>
-          <div id="qt-atvsv-list" style="overflow-x:auto"><div class="qt-empty">Nhấn "Làm mới" để tải danh sách</div></div>
+          <div id="qt-ts-list" style="overflow-x:auto"><div class="qt-empty">Nhấn "Làm mới" để tải danh sách</div></div>
         </div>
         <!-- Modal đặt lại mật khẩu -->
         <div id="qt-reset-modal" class="qt-modal-overlay" style="display:none">
           <div class="qt-modal">
             <h3 style="font-size:15px;font-weight:800;color:#1e3a8a;margin-bottom:6px">🔑 Đặt lại mật khẩu</h3>
-            <p id="qt-reset-name-label" style="font-size:13px;color:#64748b;margin-bottom:14px"></p>
-            <input id="qt-new-pass" type="text" placeholder="Mật khẩu mới..." class="qt-inp">
+            <p id="qt-reset-label" style="font-size:13px;color:#64748b;margin-bottom:12px"></p>
+            <input id="qt-reset-pass" type="text" placeholder="Mật khẩu mới..." class="qt-inp">
             <div id="qt-reset-msg" class="qt-msg"></div>
             <div style="display:flex;gap:10px;margin-top:12px">
-              <button onclick="qtCloseResetModal()" class="qt-btn-cancel">Hủy</button>
+              <button onclick="qtCloseModal()" class="qt-btn-cancel">Hủy</button>
               <button onclick="qtConfirmReset()" class="qt-btn-ok">Xác nhận</button>
             </div>
           </div>
@@ -541,64 +551,32 @@ nav{background:#1e3a8a;display:flex;justify-content:center}
       </div>
     </div>
 
-    <!-- SUB: QUẢN LÝ THÍ SINH (kết quả hôm nay) -->
-    <div id="sub-qt-thisinh" style="display:none;height:calc(100vh - 155px);overflow-y:auto;background:#eef2f7;padding:20px 16px">
-      <div id="qt-thisinh-login" class="qt-login-box">
-        <div style="text-align:center;margin-bottom:20px"><div style="font-size:40px">👥</div>
-          <h2 style="font-size:17px;font-weight:800;color:#1e3a8a">Quản lý thí sinh</h2>
-          <p style="font-size:12px;color:#64748b;margin-top:4px">Đăng nhập để tiếp tục</p></div>
-        <label class="qt-lbl">Tên đăng nhập</label>
-        <input id="qt-thisinh-u" type="text" class="qt-inp" placeholder="Nhập tên đăng nhập...">
-        <label class="qt-lbl">Mật khẩu</label>
-        <input id="qt-thisinh-p" type="password" class="qt-inp" placeholder="Nhập mật khẩu...">
-        <button onclick="qtLoginPanel('thisinh')" class="qt-btn-login">Đăng nhập</button>
-        <div id="qt-thisinh-err" class="qt-err"></div>
-      </div>
-      <div id="qt-thisinh-dash" style="display:none;max-width:1000px;margin:0 auto">
-        <div class="qt-dash-header">
-          <div><h2 class="qt-dash-title">👥 Thí sinh đã thi hôm nay</h2><p id="qt-thisinh-date" class="qt-dash-sub"></p></div>
-          <div style="display:flex;gap:8px">
-            <button onclick="qtLoadToday()" class="qt-btn-refresh">🔄 Làm mới</button>
-            <button onclick="qtLogoutPanel('thisinh')" class="qt-btn-logout">🚪 Đăng xuất</button>
-          </div>
-        </div>
-        <div class="qt-card">
-          <div id="qt-thisinh-list" style="overflow-x:auto"><div class="qt-empty">Đang tải...</div></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- SUB: QUẢN LÝ KẾT QUẢ THI -->
+    <!-- TAB CON 2: QUẢN LÝ KẾT QUẢ THI -->
     <div id="sub-qt-ketqua" style="display:none;height:calc(100vh - 155px);overflow-y:auto;background:#eef2f7;padding:20px 16px">
-      <div id="qt-ketqua-login" class="qt-login-box">
-        <div style="text-align:center;margin-bottom:20px"><div style="font-size:40px">🏅</div>
-          <h2 style="font-size:17px;font-weight:800;color:#1e3a8a">Quản lý kết quả thi</h2>
-          <p style="font-size:12px;color:#64748b;margin-top:4px">Đăng nhập để tiếp tục</p></div>
-        <label class="qt-lbl">Tên đăng nhập</label>
-        <input id="qt-ketqua-u" type="text" class="qt-inp" placeholder="Nhập tên đăng nhập...">
-        <label class="qt-lbl">Mật khẩu</label>
-        <input id="qt-ketqua-p" type="password" class="qt-inp" placeholder="Nhập mật khẩu...">
-        <button onclick="qtLoginPanel('ketqua')" class="qt-btn-login">Đăng nhập</button>
-        <div id="qt-ketqua-err" class="qt-err"></div>
-      </div>
-      <div id="qt-ketqua-dash" style="display:none;max-width:1100px;margin:0 auto">
+      <div style="max-width:1200px;margin:0 auto">
         <div class="qt-dash-header">
-          <div><h2 class="qt-dash-title">🏅 Kết quả kỳ thi</h2><p class="qt-dash-sub">Xếp hạng từ cao đến thấp – Toàn bộ lịch sử</p></div>
-          <div style="display:flex;gap:8px;flex-wrap:wrap">
-            <input id="qt-ketqua-date" type="date" class="qt-inp-sm" style="width:160px" onchange="qtLoadResults()">
-            <button onclick="document.getElementById('qt-ketqua-date').value='';qtLoadResults()" class="qt-btn-refresh">Tất cả</button>
+          <div>
+            <h2 class="qt-dash-title">🏅 Quản lý kết quả kỳ thi</h2>
+            <p class="qt-dash-sub" id="qt-kq-stats">Đang tải...</p>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+            <input id="qt-date-filter" type="date" class="qt-inp-sm" style="width:150px" onchange="qtLoadResults()">
+            <button onclick="document.getElementById('qt-date-filter').value='';qtLoadResults()" class="qt-btn-refresh">Tất cả</button>
             <button onclick="qtLoadResults()" class="qt-btn-refresh">🔄 Làm mới</button>
-            <button onclick="qtExportResultsPDF()" class="qt-btn-add" style="background:#16a34a">📄 Xuất PDF</button>
-            <button onclick="qtLogoutPanel('ketqua')" class="qt-btn-logout">🚪 Đăng xuất</button>
+            <button onclick="qtExportPDF()" class="qt-btn-add" style="background:#16a34a">📄 Xuất PDF</button>
+            <button onclick="qtSwitchAdmin('thisinh')" class="qt-btn-refresh">👥 Thí sinh</button>
+            <button onclick="qtAdminLogout()" class="qt-btn-logout">🚪 Đăng xuất</button>
           </div>
         </div>
         <div class="qt-card">
-          <div id="qt-ketqua-list" style="overflow-x:auto"><div class="qt-empty">Nhấn "Làm mới" để tải kết quả</div></div>
+          <div id="qt-kq-list" style="overflow-x:auto"><div class="qt-empty">Nhấn "Làm mới" để tải dữ liệu</div></div>
         </div>
       </div>
     </div>
 
   </div>
+
+
 
 
 <script>
@@ -612,7 +590,7 @@ const SUBS = {
   tailieu:  ['tl-welcome','tl-atgt','tl-pccc','tl-atvsv','tl-ktatld','tl-ktvsld','tl-vbqc','tl-pl'],
   luyenthi: ['lt-welcome','lt-de1','lt-de2','lt-de3','lt-de4','lt-de5','lt-de6','lt-de7','lt-de8'],
   kythi:    ['kt-main'],
-  quantri:  ['qt-atvsv','qt-thisinh','qt-ketqua']
+  quantri:  ['qt-login','qt-thisinh','qt-ketqua']
 };
 
 function showSub(tab, sub) {
@@ -654,101 +632,137 @@ let qtResetTargetId = null;
 let qtResultsData = [];
 
 // ── ĐĂNG NHẬP / ĐĂNG XUẤT từng panel ──
-function qtLoginPanel(panel) {
-  const u = document.getElementById(`qt-${panel}-u`).value.trim();
-  const p = document.getElementById(`qt-${panel}-p`).value.trim();
-  const err = document.getElementById(`qt-${panel}-err`);
-  if(u === QT_USER && p === QT_PASS) {
-    qtAuth[panel] = true;
-    document.getElementById(`qt-${panel}-login`).style.display = 'none';
-    document.getElementById(`qt-${panel}-dash`).style.display = 'block';
-    if(panel === 'atvsv') qtLoadCandidates();
-    if(panel === 'thisinh') qtLoadToday();
-    if(panel === 'ketqua') qtLoadResults();
-  } else {
+
+// ════════════════════════════════════════════
+// QUẢN TRỊ — Admin panel JS
+// ════════════════════════════════════════════
+
+// SHA-256 simple check — hash of 'vsh@2026'
+const ADMIN_USER = 'admin';
+const ADMIN_PASS_HASH = '3c4e5f1a9b2d7e8f0c6a3b1d4e9f2a5c8b3d7e0f1a4c6b9d2e5f8a3c1b4d7e0a'; // placeholder
+// We use direct compare for simplicity (stored obfuscated)
+const _ap = atob('dnNoQDIwMjY='); // base64 of 'vsh@2026'
+
+let adminLoggedIn = false;
+let qtCandidatesData = [];
+let qtResultsData = [];
+let qtResetTargetId = null;
+
+async function qtAdminLogin() {
+  const u = document.getElementById('qt-admin-u').value.trim();
+  const p = document.getElementById('qt-admin-p').value;
+  const err = document.getElementById('qt-admin-err');
+  if(u !== ADMIN_USER || p !== _ap) {
     err.textContent = '❌ Tên đăng nhập hoặc mật khẩu không đúng.';
+    return;
   }
+  adminLoggedIn = true;
+  err.textContent = '';
+  // Go to thisinh tab by default
+  qtSwitchAdmin('thisinh');
+  qtLoadCandidates();
 }
-function qtLogoutPanel(panel) {
-  if(!confirm('Bạn có chắc muốn đăng xuất?')) return;
-  qtAuth[panel] = false;
-  document.getElementById(`qt-${panel}-dash`).style.display = 'none';
-  document.getElementById(`qt-${panel}-login`).style.display = 'block';
-  document.getElementById(`qt-${panel}-u`).value = '';
-  document.getElementById(`qt-${panel}-p`).value = '';
-  document.getElementById(`qt-${panel}-err`).textContent = '';
-}
-// Enter key support
-document.addEventListener('keyup', e => {
-  if(e.key !== 'Enter') return;
-  ['atvsv','thisinh','ketqua'].forEach(panel => {
-    const p = document.getElementById(`qt-${panel}-p`);
-    if(p && p === document.activeElement) qtLoginPanel(panel);
+
+function qtAdminLogout() {
+  if(!confirm('Bạn có chắc muốn đăng xuất khỏi trang quản trị?')) return;
+  adminLoggedIn = false;
+  document.getElementById('qt-admin-u').value = '';
+  document.getElementById('qt-admin-p').value = '';
+  document.getElementById('qt-admin-err').textContent = '';
+  // Show login, hide dashboards
+  const subs = SUBS['quantri'];
+  subs.forEach(s => {
+    const el = document.getElementById('sub-'+s);
+    if(el) el.style.display = 'none';
   });
-});
-
-// ── HELPER ──
-function fmtDate(iso) {
-  if(!iso) return '–';
-  const d = new Date(iso);
-  return `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+  document.getElementById('sub-qt-login').style.display = '';
 }
-function fmtTime(sec) {
-  if(!sec) return '–';
-  return `${Math.floor(sec/60)}:${String(sec%60).padStart(2,'0')}`;
-}
-function pctClass(p) { return p>=80?'pct-hi':p>=60?'pct-mid':'pct-lo'; }
 
-// ══ TAB 1: QUẢN LÝ ATVSV (thí sinh kỳ thi) ══
+function qtSwitchAdmin(panel) {
+  if(!adminLoggedIn) return;
+  const subs = SUBS['quantri'];
+  subs.forEach(s => {
+    const el = document.getElementById('sub-'+s);
+    if(el) el.style.display = 'none';
+  });
+  const target = document.getElementById('sub-qt-'+panel);
+  if(target) target.style.display = '';
+  if(panel === 'thisinh') qtLoadCandidates();
+  if(panel === 'ketqua') qtLoadResults();
+}
+
+// ── QUẢN LÝ THÍ SINH ──
+let qtCandidatesAll = [];
+
 async function qtLoadCandidates() {
-  const wrap = document.getElementById('qt-atvsv-list');
-  wrap.innerHTML = '<div class="qt-empty">Đang tải...</div>';
+  const wrap = document.getElementById('qt-ts-list');
+  wrap.innerHTML = '<div class="qt-empty">⏳ Đang tải...</div>';
   try {
     const res = await fetch(
       `${SUPABASE_URL}/rest/v1/exam_candidates?select=id,full_name,password,is_active&order=full_name.asc`,
       {headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${SUPABASE_KEY}`}}
     );
-    qtCandidates = res.ok ? await res.json() : [];
+    qtCandidatesAll = res.ok ? await res.json() : [];
+    qtCandidatesData = [...qtCandidatesAll];
     qtRenderCandidates();
-  } catch(e) { wrap.innerHTML = '<div class="qt-empty">⚠️ Lỗi kết nối</div>'; }
+    const active = qtCandidatesAll.filter(c=>c.is_active).length;
+    document.getElementById('qt-ts-stats').textContent =
+      `Tổng: ${qtCandidatesAll.length} thí sinh | Đang hoạt động: ${active} | Đã khóa: ${qtCandidatesAll.length - active}`;
+  } catch(e) {
+    wrap.innerHTML = '<div class="qt-empty">⚠️ Lỗi kết nối</div>';
+  }
 }
 
 function qtFilterCandidates() {
-  const kw = document.getElementById('qt-atvsv-search').value.toLowerCase();
-  const filtered = qtCandidates.filter(c => c.full_name.toLowerCase().includes(kw));
-  qtRenderCandidates(filtered);
+  const kw = document.getElementById('qt-search').value.toLowerCase();
+  qtCandidatesData = kw
+    ? qtCandidatesAll.filter(c => c.full_name.toLowerCase().includes(kw))
+    : [...qtCandidatesAll];
+  qtRenderCandidates();
 }
 
-function qtRenderCandidates(data) {
-  const list = data || qtCandidates;
-  const wrap = document.getElementById('qt-atvsv-list');
-  if(!list.length) { wrap.innerHTML = '<div class="qt-empty">Không có thí sinh nào</div>'; return; }
-  const rows = list.map((c,i) => `<tr>
-    <td style="text-align:center">${i+1}</td>
+function qtRenderCandidates() {
+  const wrap = document.getElementById('qt-ts-list');
+  if(!qtCandidatesData.length) {
+    wrap.innerHTML = '<div class="qt-empty">Không có thí sinh nào</div>';
+    return;
+  }
+  const rows = qtCandidatesData.map((c,i) => `<tr>
+    <td style="text-align:center;color:#64748b">${i+1}</td>
     <td><b>${c.full_name}</b></td>
-    <td style="font-family:monospace">${c.password}</td>
-    <td><span class="${c.is_active?'badge-active':'badge-lock'}">${c.is_active?'✅ Hoạt động':'🔒 Bị khóa'}</span></td>
     <td>
-      <button class="btn-tbl btn-tbl-blue" onclick="qtOpenResetModal(${c.id},'${c.full_name.replace(/'/g,"\\'")}')">🔑 Đặt lại MK</button>
-      <button class="btn-tbl ${c.is_active?'btn-tbl-red':'btn-tbl-green'}" onclick="qtToggleActive(${c.id},${!c.is_active})">${c.is_active?'🔒 Khóa':'🔓 Mở'}</button>
-      <button class="btn-tbl btn-tbl-red" onclick="qtDeleteCandidate(${c.id},'${c.full_name.replace(/'/g,"\\'")}')">🗑️ Xóa</button>
+      <span id="pass-text-${c.id}" style="font-family:monospace">••••••</span>
+      <button onclick="qtTogglePass(${c.id},'${c.password}')" style="background:none;border:none;cursor:pointer;font-size:14px;margin-left:6px" title="Xem/ẩn mật khẩu">👁</button>
+    </td>
+    <td>
+      <span class="qt-status ${c.is_active?'qt-active':'qt-locked'}" onclick="qtToggleActive(${c.id},${c.is_active})">
+        ${c.is_active ? '✅ Hoạt động' : '🔒 Đã khóa'}
+      </span>
+    </td>
+    <td>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <button class="btn-tbl btn-tbl-blue" onclick="qtOpenReset(${c.id},'${c.full_name.replace(/'/g,'\\'')}')">🔑 Đặt lại MK</button>
+        <button class="btn-tbl btn-tbl-red" onclick="qtDeleteCandidate(${c.id},'${c.full_name.replace(/'/g,'\\'')}')">🗑️ Xóa</button>
+      </div>
     </td>
   </tr>`).join('');
   wrap.innerHTML = `<table class="qt-table">
     <thead><tr><th>#</th><th>Họ tên</th><th>Mật khẩu</th><th>Trạng thái</th><th>Thao tác</th></tr></thead>
     <tbody>${rows}</tbody>
-  </table><p style="font-size:12px;color:#94a3b8;margin-top:10px">Tổng: ${list.length} thí sinh</p>`;
+  </table>`;
+}
+
+function qtTogglePass(id, pass) {
+  const el = document.getElementById('pass-text-'+id);
+  if(!el) return;
+  el.textContent = el.textContent === '••••••' ? pass : '••••••';
 }
 
 async function qtAddCandidate() {
-  const name = document.getElementById('qt-atvsv-newname').value.trim();
-  const pass = document.getElementById('qt-atvsv-newpass').value.trim();
-  const msg  = document.getElementById('qt-atvsv-addmsg');
-  if(!name) { msg.textContent='⚠️ Vui lòng nhập họ tên.'; msg.style.color='#dc2626'; return; }
-  if(!pass) { msg.textContent='⚠️ Vui lòng nhập mật khẩu.'; msg.style.color='#dc2626'; return; }
-  if(qtCandidates.some(c=>c.full_name.toLowerCase()===name.toLowerCase())) {
-    msg.textContent='⚠️ Tên này đã tồn tại trong danh sách.'; msg.style.color='#dc2626'; return;
-  }
+  const name = document.getElementById('qt-new-name').value.trim();
+  const pass = document.getElementById('qt-new-pass').value.trim();
+  const msg  = document.getElementById('qt-add-msg');
+  if(!name || !pass) { msg.textContent='⚠️ Vui lòng nhập đủ họ tên và mật khẩu.'; msg.className='qt-msg qt-msg-err'; return; }
   try {
     const res = await fetch(`${SUPABASE_URL}/rest/v1/exam_candidates`, {
       method:'POST',
@@ -756,53 +770,70 @@ async function qtAddCandidate() {
       body: JSON.stringify({full_name:name, password:pass, is_active:true})
     });
     if(res.ok) {
-      msg.textContent = `✅ Đã thêm "${name}" thành công!`; msg.style.color='#16a34a';
-      document.getElementById('qt-atvsv-newname').value = '';
-      document.getElementById('qt-atvsv-newpass').value = '';
-      setTimeout(()=>{ msg.textContent=''; qtLoadCandidates(); }, 1500);
-    } else { msg.textContent='⚠️ Không thể thêm. Vui lòng thử lại.'; msg.style.color='#dc2626'; }
-  } catch(e) { msg.textContent='⚠️ Lỗi kết nối.'; msg.style.color='#dc2626'; }
+      msg.textContent = `✅ Đã thêm: ${name}`;
+      msg.className = 'qt-msg qt-msg-ok';
+      document.getElementById('qt-new-name').value = '';
+      document.getElementById('qt-new-pass').value = '';
+      setTimeout(()=>{msg.textContent='';}, 3000);
+      qtLoadCandidates();
+    } else {
+      msg.textContent = '❌ Không thể thêm. Tên có thể đã tồn tại.';
+      msg.className = 'qt-msg qt-msg-err';
+    }
+  } catch(e) { msg.textContent='⚠️ Lỗi kết nối.'; msg.className='qt-msg qt-msg-err'; }
+}
+
+async function qtToggleActive(id, current) {
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/exam_candidates?id=eq.${id}`, {
+      method:'PATCH',
+      headers:{'Content-Type':'application/json','apikey':SUPABASE_KEY,'Authorization':`Bearer ${SUPABASE_KEY}`,'Prefer':'return=minimal'},
+      body: JSON.stringify({is_active: !current})
+    });
+    if(res.ok) {
+      const c = qtCandidatesAll.find(x=>x.id===id);
+      if(c) c.is_active = !current;
+      const d = qtCandidatesData.find(x=>x.id===id);
+      if(d) d.is_active = !current;
+      qtRenderCandidates();
+      const active = qtCandidatesAll.filter(c=>c.is_active).length;
+      document.getElementById('qt-ts-stats').textContent =
+        `Tổng: ${qtCandidatesAll.length} thí sinh | Đang hoạt động: ${active} | Đã khóa: ${qtCandidatesAll.length - active}`;
+    }
+  } catch(e) { alert('Lỗi kết nối.'); }
 }
 
 async function qtDeleteCandidate(id, name) {
-  if(!confirm(`Bạn có chắc muốn XÓA thí sinh "${name}" không?\nHành động này không thể hoàn tác!`)) return;
+  if(!confirm(`Bạn có chắc muốn XÓA thí sinh:\n"${name}"\n\nHành động này không thể hoàn tác!`)) return;
   try {
     const res = await fetch(`${SUPABASE_URL}/rest/v1/exam_candidates?id=eq.${id}`, {
       method:'DELETE',
       headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${SUPABASE_KEY}`}
     });
-    if(res.ok) { qtCandidates = qtCandidates.filter(c=>c.id!==id); qtRenderCandidates(); }
-    else alert('Không thể xóa. Vui lòng thử lại.');
+    if(res.ok) {
+      qtCandidatesAll = qtCandidatesAll.filter(c=>c.id!==id);
+      qtCandidatesData = qtCandidatesData.filter(c=>c.id!==id);
+      qtRenderCandidates();
+      qtLoadCandidates();
+    } else alert('Không thể xóa. Vui lòng thử lại.');
   } catch(e) { alert('Lỗi kết nối.'); }
 }
 
-async function qtToggleActive(id, newStatus) {
-  try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/exam_candidates?id=eq.${id}`, {
-      method:'PATCH',
-      headers:{'Content-Type':'application/json','apikey':SUPABASE_KEY,'Authorization':`Bearer ${SUPABASE_KEY}`,'Prefer':'return=minimal'},
-      body: JSON.stringify({is_active: newStatus})
-    });
-    if(res.ok) { const c=qtCandidates.find(c=>c.id===id); if(c){c.is_active=newStatus; qtRenderCandidates();} }
-    else alert('Không thể cập nhật. Vui lòng thử lại.');
-  } catch(e) { alert('Lỗi kết nối.'); }
-}
-
-function qtOpenResetModal(id, name) {
+function qtOpenReset(id, name) {
   qtResetTargetId = id;
-  document.getElementById('qt-reset-name-label').textContent = `Thí sinh: ${name}`;
-  document.getElementById('qt-new-pass').value = '';
+  document.getElementById('qt-reset-label').textContent = `Thí sinh: ${name}`;
+  document.getElementById('qt-reset-pass').value = '';
   document.getElementById('qt-reset-msg').textContent = '';
-  document.getElementById('qt-reset-modal').classList.add('open');
+  document.getElementById('qt-reset-modal').style.display = 'flex';
 }
-function qtCloseResetModal() {
-  document.getElementById('qt-reset-modal').classList.remove('open');
+function qtCloseModal() {
+  document.getElementById('qt-reset-modal').style.display = 'none';
   qtResetTargetId = null;
 }
 async function qtConfirmReset() {
-  const newPass = document.getElementById('qt-new-pass').value.trim();
+  const newPass = document.getElementById('qt-reset-pass').value.trim();
   const msg = document.getElementById('qt-reset-msg');
-  if(!newPass || newPass.length < 4) { msg.textContent='⚠️ Mật khẩu phải có ít nhất 4 ký tự.'; msg.style.color='#dc2626'; return; }
+  if(!newPass || newPass.length < 3) { msg.textContent='⚠️ Mật khẩu phải có ít nhất 3 ký tự.'; return; }
   try {
     const res = await fetch(`${SUPABASE_URL}/rest/v1/exam_candidates?id=eq.${qtResetTargetId}`, {
       method:'PATCH',
@@ -810,49 +841,29 @@ async function qtConfirmReset() {
       body: JSON.stringify({password: newPass})
     });
     if(res.ok) {
-      msg.textContent='✅ Đặt lại mật khẩu thành công!'; msg.style.color='#16a34a';
-      const c=qtCandidates.find(c=>c.id===qtResetTargetId); if(c) c.password=newPass;
-      setTimeout(()=>{ qtCloseResetModal(); qtRenderCandidates(); }, 1500);
-    } else { msg.textContent='⚠️ Không thể cập nhật.'; msg.style.color='#dc2626'; }
-  } catch(e) { msg.textContent='⚠️ Lỗi kết nối.'; msg.style.color='#dc2626'; }
-}
-document.getElementById('qt-reset-modal').addEventListener('click', function(e){ if(e.target===this) qtCloseResetModal(); });
-
-// ══ TAB 2: THÍ SINH ĐÃ THI HÔM NAY ══
-async function qtLoadToday() {
-  const wrap = document.getElementById('qt-thisinh-list');
-  wrap.innerHTML = '<div class="qt-empty">Đang tải...</div>';
-  const today = new Date();
-  const y = today.getFullYear(), m = String(today.getMonth()+1).padStart(2,'0'), d = String(today.getDate()).padStart(2,'0');
-  const startOfDay = `${y}-${m}-${d}T00:00:00`;
-  document.getElementById('qt-thisinh-date').textContent = `Ngày ${d}/${m}/${y}`;
-  try {
-    const res = await fetch(
-      `${SUPABASE_URL}/rest/v1/exam_results?exam_id=eq.kythi&created_at=gte.${startOfDay}&select=name,score,total,percent,duration_sec,created_at&order=percent.desc,duration_sec.asc`,
-      {headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${SUPABASE_KEY}`}}
-    );
-    const data = res.ok ? await res.json() : [];
-    if(!data.length) { wrap.innerHTML='<div class="qt-empty">Hôm nay chưa có thí sinh nào thi</div>'; return; }
-    const rows = data.map((r,i) => `<tr>
-      <td style="text-align:center" class="${i===0?'rank-1':i===1?'rank-2':i===2?'rank-3':''}">${i===0?'🥇':i===1?'🥈':i===2?'🥉':i+1}</td>
-      <td><b>${r.name}</b></td>
-      <td style="text-align:center">${r.score}/${r.total}</td>
-      <td style="text-align:center" class="${pctClass(r.percent)}">${r.percent}%</td>
-      <td style="text-align:center">${fmtTime(r.duration_sec)}</td>
-      <td style="color:#64748b;font-size:12px">${fmtDate(r.created_at)}</td>
-    </tr>`).join('');
-    wrap.innerHTML = `<table class="qt-table">
-      <thead><tr><th>#</th><th>Họ tên</th><th>Điểm</th><th>%</th><th>Thời gian</th><th>Nộp bài lúc</th></tr></thead>
-      <tbody>${rows}</tbody>
-    </table><p style="font-size:12px;color:#94a3b8;margin-top:10px">Tổng: ${data.length} lượt thi hôm nay</p>`;
-  } catch(e) { wrap.innerHTML='<div class="qt-empty">⚠️ Lỗi kết nối</div>'; }
+      const c = qtCandidatesAll.find(x=>x.id===qtResetTargetId);
+      if(c) c.password = newPass;
+      const d = qtCandidatesData.find(x=>x.id===qtResetTargetId);
+      if(d) d.password = newPass;
+      msg.textContent = '✅ Đặt lại mật khẩu thành công!';
+      setTimeout(()=>{ qtCloseModal(); qtRenderCandidates(); }, 1500);
+    } else { msg.textContent = '❌ Không thể cập nhật.'; }
+  } catch(e) { msg.textContent = '⚠️ Lỗi kết nối.'; }
 }
 
-// ══ TAB 3: QUẢN LÝ KẾT QUẢ THI ══
+// ── QUẢN LÝ KẾT QUẢ THI ──
+function pctClass(p) { return p>=80?'pct-hi':p>=60?'pct-mid':'pct-lo'; }
+function fmtTime(sec) { if(!sec) return '–'; const m=Math.floor(sec/60),s=sec%60; return `${m}:${String(s).padStart(2,'0')}`; }
+function fmtDate(iso) {
+  if(!iso) return '–';
+  const d=new Date(iso);
+  return `${d.getDate().toString().padStart(2,'0')}/${(d.getMonth()+1).toString().padStart(2,'0')}/${d.getFullYear()} ${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}`;
+}
+
 async function qtLoadResults() {
-  const wrap = document.getElementById('qt-ketqua-list');
-  wrap.innerHTML = '<div class="qt-empty">Đang tải...</div>';
-  const dateFilter = document.getElementById('qt-ketqua-date').value;
+  const wrap = document.getElementById('qt-kq-list');
+  wrap.innerHTML = '<div class="qt-empty">⏳ Đang tải...</div>';
+  const dateFilter = document.getElementById('qt-date-filter').value;
   let url = `${SUPABASE_URL}/rest/v1/exam_results?exam_id=eq.kythi&select=id,name,score,total,percent,duration_sec,created_at&order=percent.desc,duration_sec.asc`;
   if(dateFilter) {
     url += `&created_at=gte.${dateFilter}T00:00:00&created_at=lte.${dateFilter}T23:59:59`;
@@ -861,25 +872,32 @@ async function qtLoadResults() {
     const res = await fetch(url, {headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${SUPABASE_KEY}`}});
     qtResultsData = res.ok ? await res.json() : [];
     qtRenderResults();
-  } catch(e) { wrap.innerHTML='<div class="qt-empty">⚠️ Lỗi kết nối</div>'; }
+    const passed = qtResultsData.filter(r=>r.percent>=80).length;
+    const top = qtResultsData.length ? Math.max(...qtResultsData.map(r=>r.percent)) : 0;
+    document.getElementById('qt-kq-stats').textContent =
+      `Tổng: ${qtResultsData.length} lượt thi | Đạt (≥80%): ${passed} | Điểm cao nhất: ${top}%${dateFilter?' | Ngày: '+dateFilter:''}`;
+  } catch(e) {
+    wrap.innerHTML = '<div class="qt-empty">⚠️ Lỗi kết nối</div>';
+  }
 }
 
 function qtRenderResults() {
-  const wrap = document.getElementById('qt-ketqua-list');
+  const wrap = document.getElementById('qt-kq-list');
   if(!qtResultsData.length) { wrap.innerHTML='<div class="qt-empty">Không có kết quả nào</div>'; return; }
   const rows = qtResultsData.map((r,i) => `<tr>
-    <td style="text-align:center" class="${i===0?'rank-1':i===1?'rank-2':i===2?'rank-3':''}">${i===0?'🥇':i===1?'🥈':i===2?'🥉':i+1}</td>
+    <td style="text-align:center;font-weight:700" class="${i===0?'rank-1':i===1?'rank-2':i===2?'rank-3':''}">${i===0?'🥇':i===1?'🥈':i===2?'🥉':i+1}</td>
     <td><b>${r.name}</b></td>
     <td style="text-align:center">${r.score}/${r.total}</td>
-    <td style="text-align:center" class="${pctClass(r.percent)}">${r.percent}%</td>
+    <td style="text-align:center;font-weight:700" class="${pctClass(r.percent)}">${r.percent}%</td>
     <td style="text-align:center">${fmtTime(r.duration_sec)}</td>
-    <td style="color:#64748b;font-size:12px">${fmtDate(r.created_at)}</td>
+    <td style="font-size:12px;color:#64748b">${fmtDate(r.created_at)}</td>
+    <td style="text-align:center;font-weight:700;color:${r.percent>=80?'#16a34a':'#dc2626'}">${r.percent>=80?'✅ Đạt':'❌ Chưa đạt'}</td>
     <td><button class="btn-tbl btn-tbl-red" onclick="qtDeleteResult(${r.id})">🗑️ Xóa</button></td>
   </tr>`).join('');
   wrap.innerHTML = `<table class="qt-table">
-    <thead><tr><th>#</th><th>Họ tên</th><th>Điểm</th><th>%</th><th>Thời gian</th><th>Ngày thi</th><th>Thao tác</th></tr></thead>
+    <thead><tr><th>#</th><th>Họ tên</th><th>Điểm</th><th>%</th><th>Thời gian</th><th>Ngày thi</th><th>Kết quả</th><th>Thao tác</th></tr></thead>
     <tbody>${rows}</tbody>
-  </table><p style="font-size:12px;color:#94a3b8;margin-top:10px">Tổng: ${qtResultsData.length} kết quả</p>`;
+  </table>`;
 }
 
 async function qtDeleteResult(id) {
@@ -889,45 +907,59 @@ async function qtDeleteResult(id) {
       method:'DELETE',
       headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${SUPABASE_KEY}`}
     });
-    if(res.ok) { qtResultsData = qtResultsData.filter(r=>r.id!==id); qtRenderResults(); }
-    else alert('Không thể xóa. Vui lòng thử lại.');
+    if(res.ok) {
+      qtResultsData = qtResultsData.filter(r=>r.id!==id);
+      qtRenderResults();
+      const passed = qtResultsData.filter(r=>r.percent>=80).length;
+      const top = qtResultsData.length ? Math.max(...qtResultsData.map(r=>r.percent)) : 0;
+      const dateFilter = document.getElementById('qt-date-filter').value;
+      document.getElementById('qt-kq-stats').textContent =
+        `Tổng: ${qtResultsData.length} lượt thi | Đạt (≥80%): ${passed} | Điểm cao nhất: ${top}%${dateFilter?' | Ngày: '+dateFilter:''}`;
+    } else alert('Không thể xóa. Vui lòng thử lại.');
   } catch(e) { alert('Lỗi kết nối.'); }
 }
 
-function qtExportResultsPDF() {
+function qtExportPDF() {
   if(!qtResultsData.length) { alert('Không có dữ liệu để xuất.'); return; }
-  const dateFilter = document.getElementById('qt-ketqua-date').value;
-  const title = dateFilter ? `Kết quả thi ngày ${dateFilter}` : 'Toàn bộ kết quả kỳ thi';
+  const dateFilter = document.getElementById('qt-date-filter').value;
+  const title = dateFilter ? `Kết quả kỳ thi ngày ${dateFilter}` : 'Toàn bộ kết quả kỳ thi ATVSLĐ';
+  const passed = qtResultsData.filter(r=>r.percent>=80).length;
   const rows = qtResultsData.map((r,i) => `<tr style="background:${i%2===0?'#f9fafb':'white'}">
     <td style="text-align:center;font-weight:700">${i+1}</td>
     <td>${r.name}</td>
     <td style="text-align:center">${r.score}/${r.total}</td>
     <td style="text-align:center;font-weight:700;color:${r.percent>=80?'#16a34a':r.percent>=60?'#f59e0b':'#dc2626'}">${r.percent}%</td>
     <td style="text-align:center">${fmtTime(r.duration_sec)}</td>
-    <td style="font-size:11px;color:#64748b">${fmtDate(r.created_at)}</td>
-    <td style="text-align:center;font-weight:700;color:${r.percent>=80?'#16a34a':'#dc2626'}">${r.percent>=80?'✅ Đạt':'❌ Chưa đạt'}</td>
+    <td style="font-size:11px">${fmtDate(r.created_at)}</td>
+    <td style="text-align:center;font-weight:700;color:${r.percent>=80?'#16a34a':'#dc2626'}">${r.percent>=80?'ĐẠT':'CHƯA ĐẠT'}</td>
   </tr>`).join('');
   const win = window.open('','_blank');
-  win.document.write(`<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
-  <title>${title}</title>
-  <style>body{font-family:Arial,sans-serif;padding:20px;max-width:1000px;margin:0 auto}
+  win.document.write(`<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8"><title>${title}</title>
+  <style>body{font-family:Arial,sans-serif;padding:20px;max-width:1050px;margin:0 auto}
   h2,h3{color:#1e3a8a;text-align:center}
-  table{width:100%;border-collapse:collapse;font-size:12px}
+  .summary{display:flex;gap:20px;justify-content:center;margin:12px 0;flex-wrap:wrap}
+  .sum-box{background:#f1f5f9;border-radius:8px;padding:8px 20px;text-align:center;font-size:13px}
+  .sum-num{font-size:20px;font-weight:900;color:#1e3a8a}
+  table{width:100%;border-collapse:collapse;font-size:12px;margin-top:16px}
   th{background:#1e3a8a;color:white;padding:8px;text-align:center}
-  td{border:1px solid #e2e8f0;padding:7px 10px}
-  .footer{text-align:center;color:#94a3b8;font-size:10px;margin-top:20px}
-  @media print{@page{margin:1.5cm}}</style></head>
-  <body>
+  td{border:1px solid #e2e8f0;padding:6px 10px}
+  .footer{text-align:center;color:#94a3b8;font-size:10px;margin-top:20px;border-top:1px solid #eee;padding-top:10px}
+  @media print{@page{margin:1.5cm}}</style></head><body>
   <h2>CÔNG TY CỔ PHẦN THỦY ĐIỆN VĨNH SƠN – SÔNG HINH</h2>
   <h3>${title.toUpperCase()}</h3>
-  <p style="text-align:center;font-size:12px;color:#64748b;margin-bottom:16px">Xuất lúc: ${fmtDate(new Date().toISOString())} | Tổng: ${qtResultsData.length} kết quả</p>
+  <div class="summary">
+    <div class="sum-box"><div class="sum-num">${qtResultsData.length}</div>Tổng lượt thi</div>
+    <div class="sum-box"><div class="sum-num" style="color:#16a34a">${passed}</div>Đạt (≥80%)</div>
+    <div class="sum-box"><div class="sum-num" style="color:#dc2626">${qtResultsData.length-passed}</div>Chưa đạt</div>
+    <div class="sum-box"><div class="sum-num">${qtResultsData.length?Math.max(...qtResultsData.map(r=>r.percent)):0}%</div>Điểm cao nhất</div>
+  </div>
   <table><thead><tr><th>#</th><th>Họ tên</th><th>Điểm</th><th>%</th><th>TG làm bài</th><th>Ngày thi</th><th>Kết quả</th></tr></thead>
   <tbody>${rows}</tbody></table>
-  <div class="footer">Hệ thống luyện thi ATVSLĐ – Công ty CP Thủy điện Vĩnh Sơn – Sông Hinh</div>
-  <script>window.onload=function(){window.print();}<\/script>
-  </body></html>`);
+  <div class="footer">Xuất lúc: ${fmtDate(new Date().toISOString())} | Hệ thống luyện thi ATVSLĐ – VSH</div>
+  <script>window.onload=function(){window.print();}<\/script></body></html>`);
   win.document.close();
 }
+
 </script>
 </body>
 </html>
