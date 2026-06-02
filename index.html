@@ -594,7 +594,11 @@ const SUBS = {
 };
 
 function showSub(tab, sub) {
-  // Nếu vào tab quantri mà chưa đăng nhập → về màn hình login
+  // Rời khỏi tab QUẢN TRỊ → đăng xuất admin ngay
+  if(tab !== 'quantri' && adminLoggedIn) {
+    adminForceLogout('');
+  }
+  // Vào tab quantri mà chưa đăng nhập → về màn hình login
   if(tab === 'quantri' && sub !== 'qt-login' && !adminLoggedIn) {
     sub = 'qt-login';
   }
