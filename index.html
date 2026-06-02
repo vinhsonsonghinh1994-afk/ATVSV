@@ -276,6 +276,9 @@ nav{background:#1e3a8a;display:flex;justify-content:center}
     <div class="nav-item">
       <button class="nav-tab" id="tab-kythi" onclick="showSub('kythi','kt-main')">🏆 Kỳ thi</button>
     </div>
+    <div class="nav-item">
+      <button class="nav-tab" id="tab-quantri" onclick="showSub('quantri','qt-main')">⚙️ Quản trị</button>
+    </div>
   </nav>
 
   <div class="mobile-nav" id="mobileNav">
@@ -299,6 +302,7 @@ nav{background:#1e3a8a;display:flex;justify-content:center}
     <div class="mobile-dd-item" onclick="showSub('luyenthi','lt-de8');closeMobileMenu()">Luyện thi tổng hợp các chủ đề</div>
     <div class="mobile-section-title">🏆 Kỳ thi</div>
     <div class="mobile-dd-item" onclick="showSub('kythi','kt-main');closeMobileMenu()">Vào kỳ thi chính thức</div>
+    <div class="mobile-section-title" onclick="showSub('quantri','qt-main');closeMobileMenu()" style="cursor:pointer">⚙️ Quản trị</div>
   </div>
 </header>
 
@@ -373,7 +377,7 @@ nav{background:#1e3a8a;display:flex;justify-content:center}
       </div>
       <div class="tc-plant">
         <div class="tc-plant-name">🌊 Nhà máy Thuỷ điện Thượng Kon Tum</div>
-        <div class="tc-plant-detail">📍 Thôn Điền Tem, xã Kon Plông, Tỉnh Quảng Ngãi<br>⚙️ Công suất 220 MW | Hòa lưới 2021</div>
+        <div class="tc-plant-detail">📍 Thôn Điền Tem, xã Kon Plông, Tỉnh Quảng Ngãi<br>⚙️ Công suất 220 MW | Vận hành thương mại 2021</div>
       </div>
     </div>
   </div>
@@ -434,15 +438,105 @@ nav{background:#1e3a8a;display:flex;justify-content:center}
     </div>
   </div>
 
-</div>
+  <!-- QUẢN TRỊ -->
+  <div class="tab-panel" id="panel-quantri">
+    <div id="sub-qt-main" style="height:calc(100vh - 155px);overflow-y:auto;background:#eef2f7;padding:20px 16px">
+
+      <!-- LOGIN -->
+      <div id="qt-login" style="max-width:380px;margin:40px auto;background:white;border-radius:20px;padding:32px 28px;box-shadow:0 8px 24px rgba(0,0,0,.1)">
+        <div style="text-align:center;margin-bottom:24px">
+          <div style="font-size:36px;margin-bottom:8px">⚙️</div>
+          <h2 style="font-size:18px;font-weight:800;color:#1e3a8a">Đăng nhập Quản trị</h2>
+          <p style="font-size:13px;color:#64748b;margin-top:4px">Chỉ dành cho Admin hệ thống</p>
+        </div>
+        <div style="margin-bottom:12px">
+          <label style="display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:5px">Tên đăng nhập</label>
+          <input id="qtUser" type="text" placeholder="Nhập tên đăng nhập..." style="width:100%;padding:10px 14px;border:2px solid #cbd5e1;border-radius:10px;font-size:14px;outline:none">
+        </div>
+        <div style="margin-bottom:16px">
+          <label style="display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:5px">Mật khẩu</label>
+          <input id="qtPass" type="password" placeholder="Nhập mật khẩu..." style="width:100%;padding:10px 14px;border:2px solid #cbd5e1;border-radius:10px;font-size:14px;outline:none">
+        </div>
+        <button onclick="qtLogin()" style="width:100%;background:#1e3a8a;color:white;border:none;padding:12px;border-radius:10px;font-size:15px;font-weight:800;cursor:pointer">Đăng nhập</button>
+        <div id="qt-login-err" style="color:#dc2626;font-size:13px;font-weight:600;margin-top:10px;text-align:center;min-height:18px"></div>
+      </div>
+
+      <!-- DASHBOARD -->
+      <div id="qt-dashboard" style="display:none;max-width:1100px;margin:0 auto">
+
+        <!-- Header bar -->
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px">
+          <div>
+            <h2 style="font-size:20px;font-weight:900;color:#1e3a8a">⚙️ Trang Quản trị</h2>
+            <p style="font-size:13px;color:#64748b">Hệ thống luyện thi ATVSLĐ – VSH</p>
+          </div>
+          <button onclick="qtLogout()" style="background:#fee2e2;color:#dc2626;border:none;padding:9px 18px;border-radius:9px;font-size:13px;font-weight:800;cursor:pointer">🚪 Đăng xuất</button>
+        </div>
+
+        <!-- PHẦN 1: BẢNG XẾP HẠNG -->
+        <div style="background:white;border-radius:18px;padding:20px 22px;margin-bottom:20px;box-shadow:0 2px 10px rgba(0,0,0,.07)">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px">
+            <h3 style="font-size:16px;font-weight:800;color:#1e3a8a">🏅 Bảng xếp hạng Top 20 – Kỳ thi</h3>
+            <div style="display:flex;gap:8px">
+              <button onclick="qtLoadLeaderboard()" style="background:#eff6ff;color:#1e3a8a;border:none;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer">🔄 Làm mới</button>
+              <button onclick="qtExportLeaderPDF()" style="background:#16a34a;color:white;border:none;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer">📄 Xuất PDF</button>
+            </div>
+          </div>
+          <div id="qt-leader-wrap" style="overflow-x:auto">
+            <div style="text-align:center;color:#94a3b8;padding:24px;font-size:13px">Nhấn "Làm mới" để tải dữ liệu</div>
+          </div>
+        </div>
+
+        <!-- PHẦN 2: TÌM KIẾM LỊCH SỬ -->
+        <div style="background:white;border-radius:18px;padding:20px 22px;margin-bottom:20px;box-shadow:0 2px 10px rgba(0,0,0,.07)">
+          <h3 style="font-size:16px;font-weight:800;color:#1e3a8a;margin-bottom:14px">🔍 Tìm kiếm lịch sử thi</h3>
+          <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap">
+            <input id="qt-search-name" type="text" placeholder="Nhập họ tên thí sinh..." style="flex:1;min-width:200px;padding:10px 14px;border:2px solid #cbd5e1;border-radius:10px;font-size:14px;outline:none">
+            <button onclick="qtSearchHistory()" style="background:#1e3a8a;color:white;border:none;padding:10px 20px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer">Tìm kiếm</button>
+            <button onclick="qtExportHistoryPDF()" id="qt-export-hist-btn" style="background:#16a34a;color:white;border:none;padding:10px 16px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;display:none">📄 Xuất PDF</button>
+          </div>
+          <div id="qt-history-wrap">
+            <div style="text-align:center;color:#94a3b8;padding:20px;font-size:13px">Nhập tên và nhấn Tìm kiếm</div>
+          </div>
+        </div>
+
+        <!-- PHẦN 3: QUẢN LÝ THÍ SINH -->
+        <div style="background:white;border-radius:18px;padding:20px 22px;box-shadow:0 2px 10px rgba(0,0,0,.07)">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px">
+            <h3 style="font-size:16px;font-weight:800;color:#1e3a8a">👥 Quản lý thí sinh</h3>
+            <button onclick="qtLoadCandidates()" style="background:#eff6ff;color:#1e3a8a;border:none;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer">🔄 Làm mới</button>
+          </div>
+          <div id="qt-candidates-wrap" style="overflow-x:auto">
+            <div style="text-align:center;color:#94a3b8;padding:24px;font-size:13px">Nhấn "Làm mới" để tải danh sách</div>
+          </div>
+        </div>
+
+        <!-- MODAL ĐẶT LẠI MẬT KHẨU -->
+        <div id="qt-reset-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;align-items:center;justify-content:center">
+          <div style="background:white;border-radius:20px;padding:28px 24px;max-width:360px;width:90%;box-shadow:0 20px 40px rgba(0,0,0,.2)">
+            <h3 style="font-size:16px;font-weight:800;color:#1e3a8a;margin-bottom:6px">🔑 Đặt lại mật khẩu</h3>
+            <p id="qt-reset-name-label" style="font-size:13px;color:#64748b;margin-bottom:16px"></p>
+            <input id="qt-new-pass" type="text" placeholder="Nhập mật khẩu mới..." style="width:100%;padding:10px 14px;border:2px solid #cbd5e1;border-radius:10px;font-size:14px;outline:none;margin-bottom:12px">
+            <div id="qt-reset-msg" style="font-size:13px;font-weight:600;min-height:18px;margin-bottom:12px"></div>
+            <div style="display:flex;gap:10px">
+              <button onclick="qtCloseResetModal()" style="flex:1;background:#f1f5f9;color:#374151;border:none;padding:11px;border-radius:9px;font-size:14px;font-weight:700;cursor:pointer">Hủy</button>
+              <button onclick="qtConfirmReset()" style="flex:1;background:#1e3a8a;color:white;border:none;padding:11px;border-radius:9px;font-size:14px;font-weight:800;cursor:pointer">Xác nhận</button>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- end dashboard -->
+    </div>
+  </div>
 
 <script>
-const TABS = ['trangchu','tailieu','luyenthi','kythi'];
+const TABS = ['trangchu','tailieu','luyenthi','kythi','quantri'];
 const SUBS = {
   trangchu: ['tc-main'],
   tailieu:  ['tl-welcome','tl-atgt','tl-pccc','tl-atvsv','tl-ktatld','tl-ktvsld','tl-vbqc','tl-pl'],
   luyenthi: ['lt-welcome','lt-de1','lt-de2','lt-de3','lt-de4','lt-de5','lt-de6','lt-de7','lt-de8'],
-  kythi:    ['kt-main']
+  kythi:    ['kt-main'],
+  quantri:  ['qt-main']
 };
 
 function showSub(tab, sub) {
@@ -472,6 +566,305 @@ function closeMobileMenu() {
 }
 // Default: show trang chủ
 showSub('trangchu','tc-main');
+
+// ══════════════════════════════════════
+// QUẢN TRỊ ADMIN
+// ══════════════════════════════════════
+const QT_USER = 'admin';
+const QT_PASS = 'vsh@2026';
+let qtResetTargetId = null;
+let qtLeaderData = [];
+let qtHistoryData = [];
+let qtHistoryName = '';
+
+function qtLogin() {
+  const u = document.getElementById('qtUser').value.trim();
+  const p = document.getElementById('qtPass').value.trim();
+  const err = document.getElementById('qt-login-err');
+  if(u === QT_USER && p === QT_PASS) {
+    document.getElementById('qt-login').style.display = 'none';
+    document.getElementById('qt-dashboard').style.display = 'block';
+    qtLoadLeaderboard();
+    qtLoadCandidates();
+  } else {
+    err.textContent = '❌ Tên đăng nhập hoặc mật khẩu không đúng.';
+  }
+}
+document.addEventListener('keyup', e => {
+  if(e.key==='Enter' && document.getElementById('qtPass') === document.activeElement) qtLogin();
+});
+
+function qtLogout() {
+  if(!confirm('Bạn có chắc muốn đăng xuất khỏi trang quản trị?')) return;
+  document.getElementById('qt-dashboard').style.display = 'none';
+  document.getElementById('qt-login').style.display = 'block';
+  document.getElementById('qtUser').value = '';
+  document.getElementById('qtPass').value = '';
+  document.getElementById('qt-login-err').textContent = '';
+}
+
+function fmtDate(iso) {
+  if(!iso) return '–';
+  const d = new Date(iso);
+  return `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+}
+function fmtTime(sec) {
+  if(!sec) return '–';
+  return `${Math.floor(sec/60)}:${String(sec%60).padStart(2,'0')}`;
+}
+function pctColor(p) {
+  return p>=80?'#16a34a':p>=60?'#f59e0b':'#dc2626';
+}
+
+// ── PHẦN 1: BẢNG XẾP HẠNG ──
+async function qtLoadLeaderboard() {
+  const wrap = document.getElementById('qt-leader-wrap');
+  wrap.innerHTML = '<div style="text-align:center;padding:20px;color:#64748b">Đang tải...</div>';
+  try {
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/exam_results?exam_id=eq.kythi&select=name,score,total,percent,duration_sec,created_at&order=percent.desc,duration_sec.asc&limit=20`,
+      {headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${SUPABASE_KEY}`}}
+    );
+    qtLeaderData = res.ok ? await res.json() : [];
+  } catch(e) { qtLeaderData = []; }
+
+  if(!qtLeaderData.length) {
+    wrap.innerHTML = '<div style="text-align:center;padding:24px;color:#94a3b8;font-size:13px">Chưa có dữ liệu kỳ thi</div>';
+    return;
+  }
+  const rows = qtLeaderData.map((r,i) => {
+    const medal = i===0?'🥇':i===1?'🥈':i===2?'🥉':i+1;
+    return `<tr style="border-bottom:1px solid #f1f5f9">
+      <td style="padding:9px 10px;text-align:center;font-weight:800">${medal}</td>
+      <td style="padding:9px 10px;font-weight:700">${r.name}</td>
+      <td style="padding:9px 10px;text-align:center">${r.score}/${r.total}</td>
+      <td style="padding:9px 10px;text-align:center;font-weight:800;color:${pctColor(r.percent)}">${r.percent}%</td>
+      <td style="padding:9px 10px;text-align:center;color:#64748b">${fmtTime(r.duration_sec)}</td>
+      <td style="padding:9px 10px;text-align:center;color:#64748b;font-size:12px">${fmtDate(r.created_at)}</td>
+    </tr>`;
+  }).join('');
+  wrap.innerHTML = `<table style="width:100%;border-collapse:collapse;font-size:13px">
+    <thead><tr style="background:#f8fafc">
+      <th style="padding:9px 10px;text-align:center;color:#475569;font-weight:700">#</th>
+      <th style="padding:9px 10px;text-align:left;color:#475569;font-weight:700">Họ tên</th>
+      <th style="padding:9px 10px;text-align:center;color:#475569;font-weight:700">Điểm</th>
+      <th style="padding:9px 10px;text-align:center;color:#475569;font-weight:700">%</th>
+      <th style="padding:9px 10px;text-align:center;color:#475569;font-weight:700">Thời gian</th>
+      <th style="padding:9px 10px;text-align:center;color:#475569;font-weight:700">Ngày thi</th>
+    </tr></thead>
+    <tbody>${rows}</tbody>
+  </table>`;
+}
+
+function qtExportLeaderPDF() {
+  if(!qtLeaderData.length) { alert('Chưa có dữ liệu. Nhấn Làm mới trước.'); return; }
+  const rows = qtLeaderData.map((r,i) => {
+    const medal = i===0?'🥇':i===1?'🥈':i===2?'🥉':i+1;
+    return `<tr style="background:${i%2===0?'#f8fafc':'white'}">
+      <td style="padding:7px 10px;text-align:center;border:1px solid #e2e8f0">${medal}</td>
+      <td style="padding:7px 10px;font-weight:700;border:1px solid #e2e8f0">${r.name}</td>
+      <td style="padding:7px 10px;text-align:center;border:1px solid #e2e8f0">${r.score}/${r.total}</td>
+      <td style="padding:7px 10px;text-align:center;font-weight:800;color:${pctColor(r.percent)};border:1px solid #e2e8f0">${r.percent}%</td>
+      <td style="padding:7px 10px;text-align:center;border:1px solid #e2e8f0">${fmtTime(r.duration_sec)}</td>
+      <td style="padding:7px 10px;text-align:center;border:1px solid #e2e8f0;font-size:11px">${fmtDate(r.created_at)}</td>
+    </tr>`;
+  }).join('');
+  const win = window.open('','_blank');
+  win.document.write(`<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+  <title>Bảng xếp hạng kỳ thi</title>
+  <style>body{font-family:Arial,sans-serif;padding:20px;max-width:900px;margin:0 auto}
+  @media print{@page{margin:1.5cm}}</style></head>
+  <body>
+  <h2 style="color:#1e3a8a;text-align:center;margin-bottom:4px">CÔNG TY CỔ PHẦN THỦY ĐIỆN VĨNH SƠN – SÔNG HINH</h2>
+  <h3 style="text-align:center;color:#374151;margin-bottom:4px">BẢNG XẾP HẠNG KỲ THI ATVSLĐ</h3>
+  <p style="text-align:center;color:#64748b;font-size:12px;margin-bottom:16px">Xuất lúc: ${new Date().toLocaleString('vi-VN')}</p>
+  <table style="width:100%;border-collapse:collapse;font-size:13px">
+    <thead><tr style="background:#1e3a8a;color:white">
+      <th style="padding:8px;border:1px solid #1e3a8a">#</th>
+      <th style="padding:8px;border:1px solid #1e3a8a;text-align:left">Họ tên</th>
+      <th style="padding:8px;border:1px solid #1e3a8a">Điểm</th>
+      <th style="padding:8px;border:1px solid #1e3a8a">%</th>
+      <th style="padding:8px;border:1px solid #1e3a8a">Thời gian làm bài</th>
+      <th style="padding:8px;border:1px solid #1e3a8a">Ngày thi</th>
+    </tr></thead>
+    <tbody>${rows}</tbody>
+  </table>
+  <p style="text-align:center;color:#94a3b8;font-size:11px;margin-top:20px">Hệ thống luyện thi ATVSLĐ – VSH</p>
+  <script>window.onload=function(){window.print();}<\/script>
+  </body></html>`);
+  win.document.close();
+}
+
+// ── PHẦN 2: LỊCH SỬ THI ──
+async function qtSearchHistory() {
+  const name = document.getElementById('qt-search-name').value.trim();
+  const wrap = document.getElementById('qt-history-wrap');
+  const exportBtn = document.getElementById('qt-export-hist-btn');
+  if(!name) { wrap.innerHTML='<div style="text-align:center;color:#94a3b8;padding:16px;font-size:13px">Vui lòng nhập tên thí sinh</div>'; return; }
+  wrap.innerHTML = '<div style="text-align:center;padding:16px;color:#64748b;font-size:13px">Đang tìm kiếm...</div>';
+  exportBtn.style.display = 'none';
+  try {
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/exam_results?name=eq.${encodeURIComponent(name)}&select=name,exam_name,score,total,percent,duration_sec,created_at&order=created_at.desc`,
+      {headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${SUPABASE_KEY}`}}
+    );
+    qtHistoryData = res.ok ? await res.json() : [];
+    qtHistoryName = name;
+  } catch(e) { qtHistoryData = []; }
+
+  if(!qtHistoryData.length) {
+    wrap.innerHTML = `<div style="text-align:center;color:#94a3b8;padding:20px;font-size:13px">Không tìm thấy lịch sử thi của "<b>${name}</b>"</div>`;
+    return;
+  }
+  exportBtn.style.display = '';
+  const rows = qtHistoryData.map((r,i) => `<tr style="border-bottom:1px solid #f1f5f9;background:${i%2===0?'white':'#f8fafc'}">
+    <td style="padding:9px 10px;font-size:12px;color:#64748b">${fmtDate(r.created_at)}</td>
+    <td style="padding:9px 10px;font-size:12px">${r.exam_name||'–'}</td>
+    <td style="padding:9px 10px;text-align:center">${r.score}/${r.total}</td>
+    <td style="padding:9px 10px;text-align:center;font-weight:800;color:${pctColor(r.percent)}">${r.percent}%</td>
+    <td style="padding:9px 10px;text-align:center;color:#64748b">${fmtTime(r.duration_sec)}</td>
+  </tr>`).join('');
+  wrap.innerHTML = `<div style="font-size:13px;font-weight:700;color:#1e3a8a;margin-bottom:10px">
+    Tìm thấy ${qtHistoryData.length} lần thi của: <span style="color:#dc2626">${name}</span>
+  </div>
+  <table style="width:100%;border-collapse:collapse;font-size:13px">
+    <thead><tr style="background:#f8fafc">
+      <th style="padding:9px 10px;text-align:left;color:#475569;font-weight:700">Ngày thi</th>
+      <th style="padding:9px 10px;text-align:left;color:#475569;font-weight:700">Đề thi</th>
+      <th style="padding:9px 10px;text-align:center;color:#475569;font-weight:700">Điểm</th>
+      <th style="padding:9px 10px;text-align:center;color:#475569;font-weight:700">%</th>
+      <th style="padding:9px 10px;text-align:center;color:#475569;font-weight:700">Thời gian</th>
+    </tr></thead>
+    <tbody>${rows}</tbody>
+  </table>`;
+}
+
+function qtExportHistoryPDF() {
+  if(!qtHistoryData.length) return;
+  const rows = qtHistoryData.map((r,i) => `<tr style="background:${i%2===0?'#f8fafc':'white'}">
+    <td style="padding:7px 10px;border:1px solid #e2e8f0;font-size:11px">${fmtDate(r.created_at)}</td>
+    <td style="padding:7px 10px;border:1px solid #e2e8f0;font-size:11px">${r.exam_name||'–'}</td>
+    <td style="padding:7px 10px;text-align:center;border:1px solid #e2e8f0">${r.score}/${r.total}</td>
+    <td style="padding:7px 10px;text-align:center;font-weight:800;color:${pctColor(r.percent)};border:1px solid #e2e8f0">${r.percent}%</td>
+    <td style="padding:7px 10px;text-align:center;border:1px solid #e2e8f0">${fmtTime(r.duration_sec)}</td>
+  </tr>`).join('');
+  const win = window.open('','_blank');
+  win.document.write(`<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+  <title>Lịch sử thi – ${qtHistoryName}</title>
+  <style>body{font-family:Arial,sans-serif;padding:20px;max-width:800px;margin:0 auto}
+  @media print{@page{margin:1.5cm}}</style></head>
+  <body>
+  <h2 style="color:#1e3a8a;text-align:center;margin-bottom:4px">CÔNG TY CỔ PHẦN THỦY ĐIỆN VĨNH SƠN – SÔNG HINH</h2>
+  <h3 style="text-align:center;color:#374151;margin-bottom:4px">LỊCH SỬ THI ATVSLĐ</h3>
+  <p style="text-align:center;font-size:13px;margin-bottom:4px">Thí sinh: <b>${qtHistoryName}</b> | Tổng: ${qtHistoryData.length} lần thi</p>
+  <p style="text-align:center;color:#64748b;font-size:12px;margin-bottom:16px">Xuất lúc: ${new Date().toLocaleString('vi-VN')}</p>
+  <table style="width:100%;border-collapse:collapse;font-size:13px">
+    <thead><tr style="background:#1e3a8a;color:white">
+      <th style="padding:8px;border:1px solid #1e3a8a">Ngày thi</th>
+      <th style="padding:8px;border:1px solid #1e3a8a;text-align:left">Đề thi</th>
+      <th style="padding:8px;border:1px solid #1e3a8a">Điểm</th>
+      <th style="padding:8px;border:1px solid #1e3a8a">%</th>
+      <th style="padding:8px;border:1px solid #1e3a8a">Thời gian</th>
+    </tr></thead>
+    <tbody>${rows}</tbody>
+  </table>
+  <p style="text-align:center;color:#94a3b8;font-size:11px;margin-top:20px">Hệ thống luyện thi ATVSLĐ – VSH</p>
+  <script>window.onload=function(){window.print();}<\/script>
+  </body></html>`);
+  win.document.close();
+}
+
+// ── PHẦN 3: QUẢN LÝ THÍ SINH ──
+let qtCandidates = [];
+async function qtLoadCandidates() {
+  const wrap = document.getElementById('qt-candidates-wrap');
+  wrap.innerHTML = '<div style="text-align:center;padding:20px;color:#64748b;font-size:13px">Đang tải...</div>';
+  try {
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/exam_candidates?select=id,full_name,is_active&order=full_name.asc`,
+      {headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${SUPABASE_KEY}`}}
+    );
+    qtCandidates = res.ok ? await res.json() : [];
+  } catch(e) { qtCandidates = []; }
+
+  if(!qtCandidates.length) {
+    wrap.innerHTML = '<div style="text-align:center;color:#94a3b8;padding:24px;font-size:13px">Chưa có thí sinh nào</div>';
+    return;
+  }
+  qtRenderCandidates();
+}
+
+function qtRenderCandidates() {
+  const wrap = document.getElementById('qt-candidates-wrap');
+  const rows = qtCandidates.map((c,i) => `<tr style="border-bottom:1px solid #f1f5f9;background:${i%2===0?'white':'#f8fafc'}">
+    <td style="padding:9px 10px">${c.full_name}</td>
+    <td style="padding:9px 10px;text-align:center">
+      <span style="background:${c.is_active?'#dcfce7':'#fee2e2'};color:${c.is_active?'#16a34a':'#dc2626'};padding:3px 12px;border-radius:20px;font-size:12px;font-weight:700">
+        ${c.is_active?'✅ Hoạt động':'🔒 Bị khóa'}
+      </span>
+    </td>
+    <td style="padding:9px 10px;text-align:center;display:flex;gap:6px;justify-content:center;flex-wrap:wrap">
+      <button onclick="qtToggleActive(${c.id},${c.is_active})" style="background:${c.is_active?'#fee2e2':'#dcfce7'};color:${c.is_active?'#dc2626':'#16a34a'};border:none;padding:5px 12px;border-radius:7px;font-size:12px;font-weight:700;cursor:pointer">
+        ${c.is_active?'🔒 Khóa':'🔓 Mở khóa'}
+      </button>
+      <button onclick="qtOpenResetModal(${c.id},'${c.full_name.replace(/'/g,"\\'")}')}" style="background:#fef9c3;color:#92400e;border:none;padding:5px 12px;border-radius:7px;font-size:12px;font-weight:700;cursor:pointer">
+        🔑 Đặt lại MK
+      </button>
+    </td>
+  </tr>`).join('');
+  wrap.innerHTML = `<div style="font-size:13px;color:#64748b;margin-bottom:10px">Tổng: <b>${qtCandidates.length}</b> thí sinh</div>
+  <table style="width:100%;border-collapse:collapse;font-size:13px">
+    <thead><tr style="background:#f8fafc">
+      <th style="padding:9px 10px;text-align:left;color:#475569;font-weight:700">Họ tên</th>
+      <th style="padding:9px 10px;text-align:center;color:#475569;font-weight:700">Trạng thái</th>
+      <th style="padding:9px 10px;text-align:center;color:#475569;font-weight:700">Thao tác</th>
+    </tr></thead>
+    <tbody>${rows}</tbody>
+  </table>`;
+}
+
+async function qtToggleActive(id, currentStatus) {
+  const newStatus = !currentStatus;
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/exam_candidates?id=eq.${id}`, {
+      method:'PATCH',
+      headers:{'Content-Type':'application/json','apikey':SUPABASE_KEY,'Authorization':`Bearer ${SUPABASE_KEY}`,'Prefer':'return=minimal'},
+      body: JSON.stringify({is_active: newStatus})
+    });
+    if(res.ok) {
+      const c = qtCandidates.find(x=>x.id===id);
+      if(c) { c.is_active = newStatus; qtRenderCandidates(); }
+    } else { alert('Không thể cập nhật. Vui lòng thử lại.'); }
+  } catch(e) { alert('Lỗi kết nối.'); }
+}
+
+function qtOpenResetModal(id, name) {
+  qtResetTargetId = id;
+  document.getElementById('qt-reset-name-label').textContent = `Thí sinh: ${name}`;
+  document.getElementById('qt-new-pass').value = '';
+  document.getElementById('qt-reset-msg').textContent = '';
+  document.getElementById('qt-reset-modal').style.display = 'flex';
+}
+function qtCloseResetModal() {
+  document.getElementById('qt-reset-modal').style.display = 'none';
+  qtResetTargetId = null;
+}
+async function qtConfirmReset() {
+  const newPass = document.getElementById('qt-new-pass').value.trim();
+  const msg = document.getElementById('qt-reset-msg');
+  if(!newPass || newPass.length < 4) { msg.textContent='⚠️ Mật khẩu phải có ít nhất 4 ký tự.'; msg.style.color='#dc2626'; return; }
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/exam_candidates?id=eq.${qtResetTargetId}`, {
+      method:'PATCH',
+      headers:{'Content-Type':'application/json','apikey':SUPABASE_KEY,'Authorization':`Bearer ${SUPABASE_KEY}`,'Prefer':'return=minimal'},
+      body: JSON.stringify({password: newPass})
+    });
+    if(res.ok) {
+      msg.textContent = '✅ Đặt lại mật khẩu thành công!'; msg.style.color='#16a34a';
+      setTimeout(()=>qtCloseResetModal(), 1500);
+    } else { msg.textContent='⚠️ Không thể cập nhật.'; msg.style.color='#dc2626'; }
+  } catch(e) { msg.textContent='⚠️ Lỗi kết nối.'; msg.style.color='#dc2626'; }
+}
 </script>
 </body>
 </html>
