@@ -593,8 +593,15 @@ const SUBS = {
   quantri:  ['qt-login','qt-thisinh','qt-ketqua']
 };
 
+// Khai báo sớm để showSub có thể dùng
+let adminLoggedIn = false;
+
 function showSub(tab, sub) {
-  // Nếu vào tab quantri mà chưa đăng nhập → về màn hình login
+  // Rời khỏi tab QUẢN TRỊ → đăng xuất admin ngay
+  if(tab !== 'quantri' && adminLoggedIn) {
+    adminForceLogout('');
+  }
+  // Vào tab quantri mà chưa đăng nhập → về màn hình login
   if(tab === 'quantri' && sub !== 'qt-login' && !adminLoggedIn) {
     sub = 'qt-login';
   }
@@ -631,11 +638,9 @@ showSub('trangchu','tc-main');
 
 // SHA-256 simple check — hash of 'vsh@2026'
 const ADMIN_USER = 'admin';
-const ADMIN_PASS_HASH = '3c4e5f1a9b2d7e8f0c6a3b1d4e9f2a5c8b3d7e0f1a4c6b9d2e5f8a3c1b4d7e0a'; // placeholder
-// We use direct compare for simplicity (stored obfuscated)
+const ADMIN_PASS_HASH = '3c4e5f1a9b2d7e8f0c6a3b1d4e9f2a5c8b3d7e0f1a4c6b9d2e5f8a3c1b4d7e0a';
 const _ap = atob('dnNoQDIwMjY='); // base64 of 'vsh@2026'
 
-let adminLoggedIn = false;
 let qtCandidatesData = [];
 let qtResultsData = [];
 let qtResetTargetId = null;
