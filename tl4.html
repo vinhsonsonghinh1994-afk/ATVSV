@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kỹ thuật an toàn lao động – Tài liệu ATVSLĐ VSH</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Roboto,sans-serif;background:#eef2f7;color:#1e293b}
+.header{background:linear-gradient(135deg,#fffde7,#fff9c4);border-bottom:3px solid #f0c000;padding:14px 16px;text-align:center;position:sticky;top:0;z-index:99;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.company{font-size:13px;font-weight:800;color:#dc2626;text-transform:uppercase}
+.title{font-size:18px;font-weight:900;color:#1e3a8a;margin:4px 0 2px}
+.subtitle{font-size:12px;color:#92400e;font-weight:700}
+.toolbar{background:#1e3a8a;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;position:sticky;top:72px;z-index:98}
+.search-box{flex:1;min-width:200px;padding:8px 14px;border-radius:20px;border:none;font-size:14px;outline:none}
+.stats-bar{color:rgba(255,255,255,.85);font-size:12px;font-weight:600;white-space:nowrap}
+.content{max-width:900px;margin:0 auto;padding:16px}
+.q-card{background:white;border-radius:14px;padding:16px 18px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.05);border-left:4px solid #1e3a8a;transition:.2s}
+.q-card:hover{box-shadow:0 4px 14px rgba(30,58,138,.12)}
+.q-header{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.q-num{background:#1e3a8a;color:white;border-radius:6px;padding:2px 10px;font-size:12px;font-weight:800;white-space:nowrap}
+.q-text{font-size:14px;font-weight:700;line-height:1.6;color:#0f3b4c;margin-bottom:12px}
+.opts{display:flex;flex-direction:column;gap:6px}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:8px 12px;border-radius:8px;font-size:13px;background:#f8fafc;border:1px solid #e2e8f0}
+.opt.correct{background:#dcfce7;border-color:#16a34a;font-weight:700}
+.opt-key{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;flex-shrink:0;background:#e2e8f0;color:#475569}
+.opt.correct .opt-key{background:#16a34a;color:white}
+.opt-text{flex:1;line-height:1.45}
+.no-result{text-align:center;padding:60px 20px;color:#94a3b8}
+.no-result .icon{font-size:48px;margin-bottom:12px}
+.back-note{text-align:center;padding:20px;font-size:12px;color:#94a3b8;border-top:1px solid #e2e8f0;margin-top:8px}
+@media(max-width:600px){.content{padding:10px}.q-card{padding:14px 14px}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="company">Công ty Cổ phần Thủy điện Vĩnh Sơn – Sông Hinh</div>
+  <div class="title">⚙️ Kỹ thuật an toàn lao động</div>
+  <div class="subtitle">Tài liệu ôn tập – 28 câu hỏi & đáp án</div>
+</div>
+
+<div class="toolbar">
+  <input class="search-box" id="searchBox" type="text" placeholder="🔍 Tìm kiếm câu hỏi..." oninput="doSearch()">
+  <span class="stats-bar" id="statsBar">28 câu hỏi</span>
+</div>
+
+<div class="content">
+  <div id="cardList"><div class="q-card" data-idx="1">
+  <div class="q-header">
+    <span class="q-num">Câu 1/28</span>
+  </div>
+  <div class="q-text">An toàn lao động là gì?</div>
+  <div class="opts"><div class="opt correct" data-correct="1"><div class="opt-key">A</div><div class="opt-text">An toàn lao động là giải pháp phòng, chống tác động của các yếu tố nguy hiểm nhằm bảo đảm không xảy ra thương tật, tử vong đối với con người trong quá trình lao động.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">An toàn lao động là không xảy ra tai nạn lao động và bệnh nghề nghiệp.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">An toàn lao động là giải pháp phòng, chống tác động của yếu tố có hại gây bệnh tật, làm suy giảm sức khỏe cho con người trong quá trình lao động.</div></div></div>
+</div>
+<div class="q-card" data-idx="2">
+  <div class="q-header">
+    <span class="q-num">Câu 2/28</span>
+  </div>
+  <div class="q-text">Yếu tố nguy hiểm là gì?</div>
+  <div class="opts"><div class="opt correct" data-correct="1"><div class="opt-key">A</div><div class="opt-text">Yếu tố nguy hiểm là yếu tố gây mất an toàn, làm tổn thương hoặc gây tử vong cho con người trong quá trình lao động.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Yếu tố nguy hiểm là yếu tố có thể gây ra tai nạn lao động và bệnh nghề nghiệp.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Yếu tố nguy hiểm là yếu tố gây ra cháy, nổ, mất an toàn lao động.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Yếu tố nguy hiểm là yếu tố có hại.</div></div></div>
+</div>
+<div class="q-card" data-idx="3">
+  <div class="q-header">
+    <span class="q-num">Câu 3/28</span>
+  </div>
+  <div class="q-text">Thế nào là tai nạn lao động?</div>
+  <div class="opts"><div class="opt correct" data-correct="1"><div class="opt-key">A</div><div class="opt-text">Tai nạn lao động là tai nạn gây tổn thương cho bất kỳ bộ phận, chức năng nào của cơ thể hoặc gây tử vong cho người lao động, xảy ra trong quá trình lao động, gắn liền với việc thực hiện công việc, nhiệm vụ lao động.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Tai nạn lao động là tai nạn gây tổn thương cho người lao động có tỷ lệ thương tật từ 5 đến 10%.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Tai nạn lao động là tai nạn gây tổn thương cho người lao động trong quá trình lao động sản xuất.</div></div></div>
+</div>
+<div class="q-card" data-idx="4">
+  <div class="q-header">
+    <span class="q-num">Câu 4/28</span>
+  </div>
+  <div class="q-text">Sự cố kỹ thuật gây mất an toàn, vệ sinh lao động là gì?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Là việc gây ra cháy, nổ, tai nạn lao động.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">B</div><div class="opt-text">Là hư hỏng của máy, thiết bị, vật tư, chất vượt quá giới hạn an toàn kỹ thuật cho phép, xảy ra trong quá trình lao động và gây thiệt hại hoặc có nguy cơ gây thiệt hại cho con người, tài sản và môi trường.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Là thiết bị lạc hậu trong quá trình sản xuất gây ra tai nạn lao động.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Cả a,b,c đều sai.</div></div></div>
+</div>
+<div class="q-card" data-idx="5">
+  <div class="q-header">
+    <span class="q-num">Câu 5/28</span>
+  </div>
+  <div class="q-text">Vùng nguy hiểm là gì?</div>
+  <div class="opts"><div class="opt correct" data-correct="1"><div class="opt-key">A</div><div class="opt-text">Phạm vi, khu vực hoặc không gian nơi có mối nguy hiểm hoặc/và chịu tác động của mối nguy hiểm.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Là nơi mà người lao động bị bệnh nghề nghiệp sau quá trình lao động.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Cả a và b.</div></div></div>
+</div>
+<div class="q-card" data-idx="6">
+  <div class="q-header">
+    <span class="q-num">Câu 6/28</span>
+  </div>
+  <div class="q-text">Các yếu tố nguy hiểm gây tai nạn lao động trong sản xuất có thể phân thành mấy nhóm cơ bản?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">3 nhóm: hóa học, vật lý, cơ học</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">4 nhóm: hóa học, cơ học, điện, vật lý</div></div><div class="opt correct" data-correct="1"><div class="opt-key">C</div><div class="opt-text">5 nhóm: cơ học, điện, hóa chất, nổ, nhiệt.</div></div></div>
+</div>
+<div class="q-card" data-idx="7">
+  <div class="q-header">
+    <span class="q-num">Câu 7/28</span>
+  </div>
+  <div class="q-text">Nêu một số yếu tố nguy hiểm có nguy cơ gây tai nạn lao động trong sản xuất?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Những hóa chất độc; nguồn nhiệt; nguồn điện; nổ vật lý; nổ hoá học; những yếu tố vi khí hậu xấu; vi sinh vật có hại; bức xạ và phóng xạ.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">B</div><div class="opt-text">Vật văng bắn; vật rơi, đổ, sập; các bộ phận truyền động và chuyển động; nguồn nhiệt; nguồn điện; nổ.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Những vật văng bắn; vật rơi, đổ, sập; tiếng ồn và rung động; bức xạ và phóng xạ; những yếu tố vi khí hậu xấu.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Vật văng bắn; bức xạ và phóng xạ; vật rơi, đổ, sập; bụi, ồn, hóa chất, những yếu tố vi khí hậu xấu; vi sinh vật có hại.</div></div></div>
+</div>
+<div class="q-card" data-idx="8">
+  <div class="q-header">
+    <span class="q-num">Câu 8/28</span>
+  </div>
+  <div class="q-text">Các nguyên nhân nào sau đây do tổ chức - kỹ thuật không tốt gây tai nạn lao động?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Tổ chức chỗ làm việc không hợp lý, chật hẹp, thao tác gò bó; mặt bằng sản xuất, đường đi lại, vận chuyển không an toàn.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Bố trí, sắp đặt máy móc, thiết bị, dụng cụ, nguyên vật liệu, thành phẩm sai nguyên tắc an toàn.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Không huấn luyện hoặc huấn luyện ATVSLĐ không đạt yêu cầu và không cung cấp hoặc cung cấp trang bị phương tiện bảo vệ cá nhân cho người lao động không đúng chủng loại, không đảm bảo chất lượng.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">D</div><div class="opt-text">Tất cả các nguyên nhân trên.</div></div></div>
+</div>
+<div class="q-card" data-idx="9">
+  <div class="q-header">
+    <span class="q-num">Câu 9/28</span>
+  </div>
+  <div class="q-text">Hệ thống tín hiệu, biển hiệu nhằm mục đích chính là gì?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Đảm bảo khoảng cách an toàn.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Không cho yếu tố nguy hiểm tác động lên NLĐ.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">C</div><div class="opt-text">Báo trước cho người lao động sự cố có thể xảy ra và đưa ra hướng dẫn, quy định.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Không cho tai nạn xảy ra.</div></div></div>
+</div>
+<div class="q-card" data-idx="10">
+  <div class="q-header">
+    <span class="q-num">Câu 10/28</span>
+  </div>
+  <div class="q-text">Các loại tín hiệu, báo hiệu nào sau đây được áp dụng để phòng ngừa tai nạn lao động?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Ánh sáng, màu sắc, mầu sơn, hình vẽ, bảng chữ.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Âm thanh.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Đồng hồ, dụng cụ đo lường.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">D</div><div class="opt-text">Tất cả các loại thiết bị tín hiệu, báo hiệu trên.</div></div></div>
+</div>
+<div class="q-card" data-idx="11">
+  <div class="q-header">
+    <span class="q-num">Câu 11/28</span>
+  </div>
+  <div class="q-text">Theo QCVN 09:2012/BLĐTBXH thời gian kiểm tra định kỳ cho các dụng cụ điện cầm tay là?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">3 tháng/một lần</div></div><div class="opt correct" data-correct="1"><div class="opt-key">B</div><div class="opt-text">6 tháng/một lần</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">12 tháng/một lần</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">24 tháng/một lần</div></div></div>
+</div>
+<div class="q-card" data-idx="12">
+  <div class="q-header">
+    <span class="q-num">Câu 12/28</span>
+  </div>
+  <div class="q-text">Đối với thiết bị điện có trung tính cách ly, trị số điện trở nối đất của thiết bị điện không được lớn hơn?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">1Ω</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">2Ω</div></div><div class="opt correct" data-correct="1"><div class="opt-key">C</div><div class="opt-text">4Ω</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">10Ω</div></div></div>
+</div>
+<div class="q-card" data-idx="13">
+  <div class="q-header">
+    <span class="q-num">Câu 13/28</span>
+  </div>
+  <div class="q-text">Dây nối đất hoặc nối 'không' bảo vệ vào vỏ thiết bị phải thực hiện bằng biện pháp hàn hoặc bắt bằng ốc vít?</div>
+  <div class="opts"><div class="opt correct" data-correct="1"><div class="opt-key">A</div><div class="opt-text">Đúng</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Sai</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Tùy từng trường hợp</div></div></div>
+</div>
+<div class="q-card" data-idx="14">
+  <div class="q-header">
+    <span class="q-num">Câu 14/28</span>
+  </div>
+  <div class="q-text">Khi tai nạn điện xảy ra, để cấp cứu người bị nạn cần thực hiện theo các bước sau:</div>
+  <div class="opts"><div class="opt correct" data-correct="1"><div class="opt-key">A</div><div class="opt-text">Tách nạn nhân khỏi nguồn điện, tiến hành sơ cứu và đưa nạn nhân đến cơ sở y tế gần nhất.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Tách nạn nhân khỏi nguồn điện và chở đến bệnh viện.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Giữ nguyên hiện trường và báo cáo cơ quan chức năng.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Báo cáo với người phụ trách và bộ phận y tế.</div></div></div>
+</div>
+<div class="q-card" data-idx="15">
+  <div class="q-header">
+    <span class="q-num">Câu 15/28</span>
+  </div>
+  <div class="q-text">Nguyên tắc cấp cứu bỏng do nhiệt, do hóa chất?</div>
+  <div class="opts"><div class="opt correct" data-correct="1"><div class="opt-key">A</div><div class="opt-text">Bỏng nhiệt thì cần làm mát vết thương. Bỏng hóa chất cần rửa nước nhiều lần để loại bỏ hóa chất. Nếu vết bỏng bị rộp, trầy da thì phải rửa bằng nước sạch, đề phòng nhiễm trùng.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Theo kinh nghiệm dân gian: Bôi lên vùng da bị bỏng nước mắm hoặc kem đánh răng để giảm đau và chuyển nạn nhân về bệnh viện.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Dùng kim sạch chọc các nốt phỏng lớn, sau đó dùng gạc sạch băng nhẹ lên vùng bị bỏng và chuyển nạn nhân về bệnh viện.</div></div></div>
+</div>
+<div class="q-card" data-idx="16">
+  <div class="q-header">
+    <span class="q-num">Câu 16/28</span>
+  </div>
+  <div class="q-text">Để chống bị điện giật khi chạm vào các bộ phận mang điện cần phải:</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Bọc cách điện và che chắn.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Giữ khoảng cách an toàn.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Nối trung tính.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">D</div><div class="opt-text">Cả a và b.</div></div></div>
+</div>
+<div class="q-card" data-idx="17">
+  <div class="q-header">
+    <span class="q-num">Câu 17/28</span>
+  </div>
+  <div class="q-text">Thiết bị che chắn an toàn nhằm mục đích chính là:</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Ngăn ngừa sự cố của thiết bị.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">B</div><div class="opt-text">Ngăn ngừa được tác động của các yếu tố nguy hiểm tác động lên người lao động.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Báo trước cho người lao động sự cố có thể xảy ra.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Cả a và c.</div></div></div>
+</div>
+<div class="q-card" data-idx="18">
+  <div class="q-header">
+    <span class="q-num">Câu 18/28</span>
+  </div>
+  <div class="q-text">Mục đích của thiết bị và cơ cấu phòng ngừa là gì?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Tự động loại trừ nguy cơ sự cố hoặc tai nạn một khi đối tượng phòng ngừa vượt quá giới hạn quy định.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">B</div><div class="opt-text">Tự động ngắt chuyển động, hoạt động của máy và thiết bị khi một thông số kỹ thuật nào đó vượt quá giới hạn quy định cho phép.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Ngăn chặn tác động xấu do sự cố của quá trình sản xuất gây ra; ngăn chặn, hạn chế sự cố sản xuất.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Báo hiệu yếu tố nguy hiểm, có hại, hướng dẫn thao tác máy, thiết bị.</div></div></div>
+</div>
+<div class="q-card" data-idx="19">
+  <div class="q-header">
+    <span class="q-num">Câu 19/28</span>
+  </div>
+  <div class="q-text">Làm việc ở trên cao, nơi có khả năng xảy ra nguy hiểm ngã cao cần phải:</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Đội mũ bảo hộ lao động đúng quy định.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Không được hút thuốc lá.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Đeo dây an toàn đúng quy định.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">D</div><div class="opt-text">Cả a, b, c</div></div></div>
+</div>
+<div class="q-card" data-idx="20">
+  <div class="q-header">
+    <span class="q-num">Câu 20/28</span>
+  </div>
+  <div class="q-text">Phải trang bị dây an toàn cho công nhân hoặc lưới bảo vệ nếu không làm được sàn thao tác có lan can an toàn khi công nhân làm việc từ độ cao từ bao nhiêu mét trở lên?</div>
+  <div class="opts"><div class="opt correct" data-correct="1"><div class="opt-key">A</div><div class="opt-text">2 m</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">3 m</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">4 m</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">5 m</div></div></div>
+</div>
+<div class="q-card" data-idx="21">
+  <div class="q-header">
+    <span class="q-num">Câu 21/28</span>
+  </div>
+  <div class="q-text">Thang tựa phải đặt có độ nghiêng so với mặt đất bao nhiêu độ?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Trên 30 độ.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">B</div><div class="opt-text">Khoảng 45-60 độ.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Khoảng 50 - 80 độ</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Khoảng 50 - 85 độ.</div></div></div>
+</div>
+<div class="q-card" data-idx="22">
+  <div class="q-header">
+    <span class="q-num">Câu 22/28</span>
+  </div>
+  <div class="q-text">Nguyên tắc an toàn đối với thiết bị cầm tay?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Bảo quản và bảo dưỡng thiết bị tốt.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Sử dụng công cụ phù hợp với công việc; sử dụng phương tiện bảo vệ cá nhân đúng cách và phù hợp.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Kiểm tra thiết bị trước khi sử dụng; vận hành thiết bị theo hướng dẫn của nhà sản xuất.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">D</div><div class="opt-text">Cả a, b, c</div></div></div>
+</div>
+<div class="q-card" data-idx="23">
+  <div class="q-header">
+    <span class="q-num">Câu 23/28</span>
+  </div>
+  <div class="q-text">Tách người bị điện giật ra khỏi mạch điện hạ áp, người cứu phải thực hiện?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Có thể dùng kìm cách điện; búa, rìu cán gỗ... để chặt đứt dây điện</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Có thể dùng gậy khô (tre, gỗ...) để gạt dây điện hoặc đẩy nạn nhân ra</div></div><div class="opt correct" data-correct="1"><div class="opt-key">C</div><div class="opt-text">Cả a và b.</div></div></div>
+</div>
+<div class="q-card" data-idx="24">
+  <div class="q-header">
+    <span class="q-num">Câu 24/28</span>
+  </div>
+  <div class="q-text">Để đảm bảo an toàn trong sử dụng, sửa chữa điện người lao động phải?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Sử dụng đầy đủ trang bị PTBVCN.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Chấp hành đúng quy trình an toàn trong sửa chữa, sử dụng điện.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Kiểm tra tình trạng an toàn thiết bị, hệ thống điện trước khi làm việc.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">D</div><div class="opt-text">Cả a, b, c.</div></div></div>
+</div>
+<div class="q-card" data-idx="25">
+  <div class="q-header">
+    <span class="q-num">Câu 25/28</span>
+  </div>
+  <div class="q-text">Dây điện không được buộc vắt trực tiếp trên các kết cấu bằng kim loại, các bệ máy thiết bị?</div>
+  <div class="opts"><div class="opt correct" data-correct="1"><div class="opt-key">A</div><div class="opt-text">Đúng</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Sai</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Tùy từng trường hợp</div></div></div>
+</div>
+<div class="q-card" data-idx="26">
+  <div class="q-header">
+    <span class="q-num">Câu 26/28</span>
+  </div>
+  <div class="q-text">Dây dẫn điện không được rải xuống sàn nhà xưởng nơi có người, thiết bị thường xuyên qua lại?</div>
+  <div class="opts"><div class="opt correct" data-correct="1"><div class="opt-key">A</div><div class="opt-text">Đúng</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Sai</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Tùy từng trường hợp</div></div></div>
+</div>
+<div class="q-card" data-idx="27">
+  <div class="q-header">
+    <span class="q-num">Câu 27/28</span>
+  </div>
+  <div class="q-text">Những công việc có yêu cầu nghiêm ngặt về an toàn lao động, vệ sinh lao động là những công việc?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Sử dụng máy, thiết bị dễ gây ra tai nạn lao động.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Làm việc trong các điều kiện tiếp xúc với hóa chất, môi trường độc hại.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">C</div><div class="opt-text">Cả a và b.</div></div></div>
+</div>
+<div class="q-card" data-idx="28">
+  <div class="q-header">
+    <span class="q-num">Câu 28/28</span>
+  </div>
+  <div class="q-text">Yêu cầu trước khi đưa vào sử dụng các thiết bị có yêu cầu nghiêm ngặt về an toàn lao động?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Công nhân vận hành thiết bị phải có chứng chỉ về chuyên môn, nắm được nguyên tắc an toàn khi sử dụng và có thẻ an toàn lao động.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Ban hành và niêm yết nội quy an toàn, quy trình vận hành, quy trình xử lý sự cố tại nơi để thiết bị ở vị trí dễ thấy, dễ đọc.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Phải được kiểm định kỹ thuật an toàn với cơ quan có thẩm quyền theo quy định.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">D</div><div class="opt-text">Cả a, b và c.</div></div></div>
+</div>
+</div>
+  <div id="noResult" class="no-result" style="display:none">
+    <div class="icon">🔍</div>
+    <p>Không tìm thấy câu hỏi nào phù hợp</p>
+  </div>
+  <div class="back-note">📚 Tài liệu ôn tập ATVSLĐ – Đáp án đúng được tô xanh</div>
+</div>
+
+<script>
+const cards = document.querySelectorAll('.q-card');
+const noResult = document.getElementById('noResult');
+const statsBar = document.getElementById('statsBar');
+
+function doSearch() {
+  const kw = document.getElementById('searchBox').value.toLowerCase().trim();
+  let visible = 0;
+  cards.forEach(card => {
+    const text = card.textContent.toLowerCase();
+    const show = !kw || text.includes(kw);
+    card.style.display = show ? '' : 'none';
+    if(show) visible++;
+  });
+  noResult.style.display = visible === 0 ? 'block' : 'none';
+  statsBar.textContent = kw ? `${visible}/28 câu` : '28 câu hỏi';
+}
+</script>
+</body>
+</html>

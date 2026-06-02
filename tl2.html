@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phòng cháy chữa cháy – Tài liệu ATVSLĐ VSH</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Roboto,sans-serif;background:#eef2f7;color:#1e293b}
+.header{background:linear-gradient(135deg,#fffde7,#fff9c4);border-bottom:3px solid #f0c000;padding:14px 16px;text-align:center;position:sticky;top:0;z-index:99;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.company{font-size:13px;font-weight:800;color:#dc2626;text-transform:uppercase}
+.title{font-size:18px;font-weight:900;color:#1e3a8a;margin:4px 0 2px}
+.subtitle{font-size:12px;color:#92400e;font-weight:700}
+.toolbar{background:#1e3a8a;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;position:sticky;top:72px;z-index:98}
+.search-box{flex:1;min-width:200px;padding:8px 14px;border-radius:20px;border:none;font-size:14px;outline:none}
+.stats-bar{color:rgba(255,255,255,.85);font-size:12px;font-weight:600;white-space:nowrap}
+.content{max-width:900px;margin:0 auto;padding:16px}
+.q-card{background:white;border-radius:14px;padding:16px 18px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.05);border-left:4px solid #1e3a8a;transition:.2s}
+.q-card:hover{box-shadow:0 4px 14px rgba(30,58,138,.12)}
+.q-header{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.q-num{background:#1e3a8a;color:white;border-radius:6px;padding:2px 10px;font-size:12px;font-weight:800;white-space:nowrap}
+.q-text{font-size:14px;font-weight:700;line-height:1.6;color:#0f3b4c;margin-bottom:12px}
+.opts{display:flex;flex-direction:column;gap:6px}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:8px 12px;border-radius:8px;font-size:13px;background:#f8fafc;border:1px solid #e2e8f0}
+.opt.correct{background:#dcfce7;border-color:#16a34a;font-weight:700}
+.opt-key{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;flex-shrink:0;background:#e2e8f0;color:#475569}
+.opt.correct .opt-key{background:#16a34a;color:white}
+.opt-text{flex:1;line-height:1.45}
+.no-result{text-align:center;padding:60px 20px;color:#94a3b8}
+.no-result .icon{font-size:48px;margin-bottom:12px}
+.back-note{text-align:center;padding:20px;font-size:12px;color:#94a3b8;border-top:1px solid #e2e8f0;margin-top:8px}
+@media(max-width:600px){.content{padding:10px}.q-card{padding:14px 14px}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="company">Công ty Cổ phần Thủy điện Vĩnh Sơn – Sông Hinh</div>
+  <div class="title">🔥 Phòng cháy chữa cháy</div>
+  <div class="subtitle">Tài liệu ôn tập – 60 câu hỏi & đáp án</div>
+</div>
+
+<div class="toolbar">
+  <input class="search-box" id="searchBox" type="text" placeholder="🔍 Tìm kiếm câu hỏi..." oninput="doSearch()">
+  <span class="stats-bar" id="statsBar">60 câu hỏi</span>
+</div>
+
+<div class="content">
+  <div id="cardList"><div class="q-card" data-idx="1">
+  <div class="q-header">
+    <span class="q-num">Câu 1/60</span>
+  </div>
+  <div class="q-text">Luật phòng cháy, chữa cháy và cứu nạn, cứu hộ áp dụng đối với chủ thể nào?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Tất cả các cơ sở hoạt động, sản xuất, kinh doanh trên lãnh thổ nước Cộng hòa xã hội chủ nghĩa Việt Nam.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Tất cả các cơ quan, tổ chức hoạt động trên lãnh thổ nước Cộng hòa xã hội chủ nghĩa Việt Nam.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">C</div><div class="opt-text">Tất cả các cơ quan, tổ chức, hộ gia đình, cá nhân hoạt động, sinh sống trên lãnh thổ nước Cộng hòa xã hội chủ nghĩa Việt Nam.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Tất cả các tổ chức, cá nhân hoạt động, sinh sống trong và ngoài nước.</div></div></div>
+</div>
+<div class="q-card" data-idx="2">
+  <div class="q-header">
+    <span class="q-num">Câu 2/60</span>
+  </div>
+  <div class="q-text">Luật phòng cháy, chữa cháy và cứu nạn, cứu hộ số 55/2024/QH15 được ban hành vào ngày 29/11/2024, theo đó quy định ngày nào hằng năm là 'Ngày toàn dân phòng cháy, chữa cháy và cứu nạn cứu hộ'?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Ngày 15 tháng 5</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Ngày 28 tháng 4</div></div><div class="opt correct" data-correct="1"><div class="opt-key">C</div><div class="opt-text">Ngày 4 tháng 10</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Ngày 29 tháng 11</div></div></div>
+</div>
+<div class="q-card" data-idx="3">
+  <div class="q-header">
+    <span class="q-num">Câu 3/60</span>
+  </div>
+  <div class="q-text">Khi có cháy, yêu cầu nào sau đây được ưu tiên sử dụng cho chữa cháy?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Mọi nguồn nước chữa cháy.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">B</div><div class="opt-text">Mọi nguồn nước và chất chữa cháy.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Các vật liệu chữa cháy phải được ưu tiên sử dụng cho chữa cháy.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Mọi nguồn nước và các vật dụng khác.</div></div></div>
+</div>
+<div class="q-card" data-idx="4">
+  <div class="q-header">
+    <span class="q-num">Câu 4/60</span>
+  </div>
+  <div class="q-text">Theo quy định của pháp luật, phát biểu nào sau đây đúng về chế độ, chính sách đối với người được huy động, người tham gia chữa cháy, cứu nạn, cứu hộ?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Người được huy động, người tham gia chữa cháy, cứu nạn, cứu hộ không thuộc lực lượng phòng cháy, chữa cháy và cứu nạn, cứu hộ không được hưởng chế độ bồi dưỡng, hỗ trợ khi tham gia chữa cháy, cứu nạn, cứu hộ.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">B</div><div class="opt-text">Người được huy động, người tham gia phòng cháy, chữa cháy, cứu nạn, cứu hộ mà bị tai nạn, hy sinh, bị thương, bị tổn hại sức khỏe, bị tổn thất về tài sản được hưởng chế độ, chính sách theo quy định của pháp luật.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Chỉ những người tham gia bảo hiểm y tế khi được huy động, tham gia phòng cháy, chữa cháy, cứu nạn, cứu hộ mà bị tai nạn, bị thương mới được hưởng chế độ theo quy định của pháp luật.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Tất cả các phương án trên.</div></div></div>
+</div>
+<div class="q-card" data-idx="5">
+  <div class="q-header">
+    <span class="q-num">Câu 5/60</span>
+  </div>
+  <div class="q-text">Việc trang bị phương tiện phòng cháy, chữa cháy, cứu nạn, cứu hộ đối với cơ sở được quy định như thế nào?</div>
+  <div class="opts"><div class="opt correct" data-correct="1"><div class="opt-key">A</div><div class="opt-text">Người đứng đầu cơ sở quyết định hoặc đề xuất người có thẩm quyền quyết định trang bị cho lực lượng PCCC và CNCH cơ sở, chuyên ngành thuộc phạm vi quản lý.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Cơ sở không phải trang bị nếu đã có lực lượng dân phòng.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Ủy ban nhân dân cấp xã phải trang bị toàn bộ cho mọi cơ sở.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Cơ quan Công an có trách nhiệm trang bị trực tiếp cho mọi cơ sở.</div></div></div>
+</div>
+<div class="q-card" data-idx="6">
+  <div class="q-header">
+    <span class="q-num">Câu 6/60</span>
+  </div>
+  <div class="q-text">Trình tự xử lý ban đầu của lực lượng tại chỗ khi phát hiện cháy nên được thực hiện như thế nào?</div>
+  <div class="opts"><div class="opt correct" data-correct="1"><div class="opt-key">A</div><div class="opt-text">Báo động cháy 🡪 ngắt điện 🡪 dùng bình chữa cháy, cát, nước dập cháy 🡪 gọi 114.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Báo động cháy 🡪 gọi 114 🡪 ngắt điện 🡪 dùng bình chữa cháy, cát, nước dập cháy.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Ngắt điện 🡪 báo động cháy 🡪 dùng bình chữa cháy, cát, nước dập cháy🡪 gọi 114.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Gọi 114 🡪 Ngắt điện 🡪 báo động cháy 🡪 dùng bình chữa cháy, cát, nước dập cháy.</div></div></div>
+</div>
+<div class="q-card" data-idx="7">
+  <div class="q-header">
+    <span class="q-num">Câu 7/60</span>
+  </div>
+  <div class="q-text">Phát biểu nào sau đây đúng về Đội phòng cháy, chữa cháy và cứu nạn, cứu hộ?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Đội phòng cháy, chữa cháy và cứu nạn, cứu hộ cơ sở là tổ chức gồm những người tham gia hoạt động phòng cháy chữa cháy, giữ gìn an ninh trật tự nơi cư trú.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">B</div><div class="opt-text">Đội phòng cháy, chữa cháy và cứu nạn, cứu hộ cơ sở là lực lượng kiêm nhiệm do người đứng đầu cơ sở thành lập để thực hiện nhiệm vụ PCCC và CNCH tại cơ sở.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Đội phòng cháy, chữa cháy và cứu nạn, cứu hộ chuyên ngành là lực lượng do Công an nhân dân tổ chức để thực hiện nhiệm vụ phòng cháy, chữa cháy, cứu nạn, cứu hộ tại một số cơ sở có nguy hiểm về cháy, nổ.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Đội phòng cháy, chữa cháy và cứu nạn, cứu hộ chuyên ngành là lực lượng gồm đội phòng cháy, chữa cháy và cứu nạn, cứu hộ cơ sở và những người tình nguyện tham gia hoạt động trực tiếp trong công tác phòng cháy chữa cháy.</div></div></div>
+</div>
+<div class="q-card" data-idx="8">
+  <div class="q-header">
+    <span class="q-num">Câu 8/60</span>
+  </div>
+  <div class="q-text">Những đối tượng nào phải mua bảo hiểm cháy, nổ bắt buộc đối với tài sản của mình?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Tất cả các cơ sở sản xuất, kinh doanh</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Tất cả các tổ chức, cơ quan và cá nhân có cơ sở có nguy hiểm về cháy nổ quy định tại Phụ lục II kèm theo Nghị định 105/2025/NĐ-CP</div></div><div class="opt correct" data-correct="1"><div class="opt-key">C</div><div class="opt-text">Cơ quan, tổ chức và cá nhân có cơ sở có nguy hiểm về cháy nổ thuộc Phụ lục VII kèm theo Nghị định 105/2025/NĐ-CP, trừ cơ sở thuộc phạm vi quản lý của Bộ Quốc phòng, Bộ Công an phục vụ mục đích quân sự, quốc phòng, an ninh, trật tự.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Cơ quan, tổ chức và cá nhân có cơ sở thuộc danh mục quy định tại Phụ lục VII kèm theo Nghị định 105/2025/NĐ-CP và các cơ sở thuộc phạm vi quản lý của Bộ Quốc phòng, Bộ Công an phục vụ mục đích quân sự, quốc phòng, an ninh, trật tự.</div></div></div>
+</div>
+<div class="q-card" data-idx="9">
+  <div class="q-header">
+    <span class="q-num">Câu 9/60</span>
+  </div>
+  <div class="q-text">Phát biểu nào sau đây đúng về bảo hiểm cháy, nổ bắt buộc?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Phạt tiền từ 15.000.000 đồng đến 20.000.000 đồng đối với hành vi mua bảo hiểm cháy, nổ bắt buộc không đúng mức phí bảo hiểm cháy, nổ bắt buộc theo quy định đối với cơ sở phải mua bảo hiểm cháy, nổ bắt buộc.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Phạt tiền từ 10.000.000 đồng đến 15.000.000 đồng đối với hành vi mua bảo hiểm cháy, nổ bắt buộc không đủ đối tượng bảo hiểm cháy, nổ bắt buộc hoặc không đúng mức phí bảo hiểm cháy, nổ bắt buộc theo quy định đối với cơ sở phải mua bảo hiểm cháy, nổ bắt buộc.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">C</div><div class="opt-text">Phạt tiền từ 30.000.000 đồng đến 40.000.000 đồng đối với hành vi không mua bảo hiểm cháy, nổ bắt buộc đối với cơ sở có nguy hiểm về cháy, nổ theo quy định của pháp luật về phòng cháy, chữa cháy và cứu nạn, cứu hộ.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Phạt tiền từ 40.000.000 đồng đến 50.000.000 đồng đối với hành vi không mua bảo hiểm cháy, nổ bắt buộc đối với cơ sở có nguy hiểm về cháy, nổ theo quy định của pháp luật về phòng cháy, chữa cháy và cứu nạn, cứu hộ.</div></div></div>
+</div>
+<div class="q-card" data-idx="10">
+  <div class="q-header">
+    <span class="q-num">Câu 10/60</span>
+  </div>
+  <div class="q-text">Phát biểu nào sau đây đúng về bảo hiểm cháy, nổ bắt buộc?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Phạt tiền từ 30.000.000 đồng đến 40.000.000 đồng đối với hành vi không mua bảo hiểm cháy, nổ bắt buộc đối với cơ sở có nguy hiểm về cháy, nổ thuộc nhóm 1 theo quy định của pháp luật về phòng cháy, chữa cháy và cứu nạn, cứu hộ.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Phạt tiền từ 40.000.000 đồng đến 50.000.000 đồng đối với hành vi không mua bảo hiểm cháy, nổ bắt buộc đối với cơ sở có nguy hiểm về cháy, nổ thuộc nhóm 2 theo quy định của pháp luật về phòng cháy, chữa cháy và cứu nạn, cứu hộ.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Phạt tiền từ 10.000.000 đồng đến 15.000.000 đồng đối với hành vi mua bảo hiểm cháy, nổ bắt buộc không đủ đối tượng bảo hiểm cháy, nổ bắt buộc đối với cơ sở phải mua bảo hiểm cháy, nổ bắt buộc</div></div><div class="opt correct" data-correct="1"><div class="opt-key">D</div><div class="opt-text">Phạt tiền từ 30.000.000 đồng đến 50.000.000 đồng đối với hành vi không mua bảo hiểm cháy, nổ bắt buộc đối với cơ sở có nguy hiểm về cháy, nổ theo quy định của pháp luật về phòng cháy, chữa cháy và cứu nạn, cứu hộ.</div></div></div>
+</div>
+<div class="q-card" data-idx="11">
+  <div class="q-header">
+    <span class="q-num">Câu 11/60</span>
+  </div>
+  <div class="q-text">Trong hoạt động phòng cháy, chữa cháy và cứu nạn, cứu hộ, nhiệm vụ nào là chính?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Lấy tuyên truyền là chính.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Lấy phương châm 4 tại chỗ làm chính.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Lấy chữa cháy làm chính.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">D</div><div class="opt-text">Lấy phòng ngừa làm chính.</div></div></div>
+</div>
+<div class="q-card" data-idx="12">
+  <div class="q-header">
+    <span class="q-num">Câu 12/60</span>
+  </div>
+  <div class="q-text">Theo quy định hiện hành, 'chữa cháy' được hiểu như thế nào?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Là tổng hợp các hoạt động, biện pháp, giải pháp để hạn chế, loại trừ nguyên nhân, điều kiện, nguy cơ xảy ra cháy nhằm bảo đảm an toàn, giảm thiểu thiệt hại do cháy gây ra.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">B</div><div class="opt-text">Là tổng hợp các hoạt động chống cháy lan, dập tắt đám cháy và các hoạt động khác để giảm thiểu thiệt hại do cháy gây ra.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Chỉ là việc phun nước hoặc chất chữa cháy vào đám cháy.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Chỉ là việc cứu người, cứu tài sản khỏi đám cháy.</div></div></div>
+</div>
+<div class="q-card" data-idx="13">
+  <div class="q-header">
+    <span class="q-num">Câu 13/60</span>
+  </div>
+  <div class="q-text">Nhận định nào dưới đây phản ánh đầy đủ và chính xác nhất các nguyên tắc cơ bản của hoạt động phòng cháy, chữa cháy, cứu nạn, cứu hộ?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Huy động toàn dân tham gia; lấy chữa cháy là nhiệm vụ trọng tâm; ưu tiên cứu tài sản trước để hạn chế thiệt hại kinh tế; tăng cường ứng dụng công nghệ hiện đại.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">B</div><div class="opt-text">Chủ động phòng ngừa, lấy phòng ngừa là chính; chuẩn bị sẵn sàng lực lượng, phương tiện, phương án và điều kiện cần thiết; thống nhất chỉ huy, ưu tiên cứu người, cứu tài sản; phát hiện, ngăn chặn và xử lý nghiêm hành vi vi phạm pháp luật về PCCC và CNCH.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Phát huy vai trò nòng cốt của lực lượng PCCC và CNCH; ưu tiên sử dụng lực lượng chuyên trách thay cho lực lượng tại chỗ; chỉ huy linh hoạt theo từng lực lượng để bảo đảm xử lý nhanh; bảo đảm tính nhân đạo trong cứu nạn, cứu hộ.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Tuân thủ pháp luật Việt Nam; huy động sức mạnh toàn dân; ứng dụng khoa học công nghệ; bảo đảm công bằng, bình đẳng giới; tuy nhiên có thể linh hoạt không xử lý nghiêm đối với vi phạm lần đầu nếu chưa gây hậu quả.</div></div></div>
+</div>
+<div class="q-card" data-idx="14">
+  <div class="q-header">
+    <span class="q-num">Câu 14/60</span>
+  </div>
+  <div class="q-text">Trong hoạt động phòng cháy, chữa cháy, cứu nạn, cứu hộ, nguyên tắc nào dưới đây đúng khi Việt Nam và nước ngoài chưa có điều ước quốc tế liên quan?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Chỉ thực hiện khi có sự đồng ý của chính quyền địa phương.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Thực hiện theo yêu cầu của phía nước ngoài trong mọi trường hợp.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">C</div><div class="opt-text">Thực hiện trên nguyên tắc có đi có lại hoặc yêu cầu đối ngoại nhưng không trái pháp luật Việt Nam, phù hợp với pháp luật và tập quán quốc tế.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Tạm dừng mọi hoạt động phối hợp cho đến khi ký điều ước quốc tế.</div></div></div>
+</div>
+<div class="q-card" data-idx="15">
+  <div class="q-header">
+    <span class="q-num">Câu 15/60</span>
+  </div>
+  <div class="q-text">Nội dung nào sau đây phản ánh đúng nguyên tắc huy động lực lượng trong hoạt động PCCC và CNCH?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Chỉ lực lượng chuyên trách mới tham gia hoạt động PCCC và CNCH.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Chỉ huy động lực lượng tại chỗ, không cần các lực lượng khác.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">C</div><div class="opt-text">Huy động sức mạnh tổng hợp của toàn dân, đồng thời phát huy vai trò nòng cốt của lực lượng PCCC và CNCH.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Giao hoàn toàn trách nhiệm cho người đứng đầu cơ sở.</div></div></div>
+</div>
+<div class="q-card" data-idx="16">
+  <div class="q-header">
+    <span class="q-num">Câu 16/60</span>
+  </div>
+  <div class="q-text">Khi xảy ra cháy, tai nạn, sự cố, nội dung nào sau đây phù hợp nhất với nguyên tắc chỉ huy, điều hành?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Ưu tiên bảo vệ tài sản trước, sau đó mới tổ chức cứu người.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Chờ lực lượng cấp trên đến mới tổ chức xử lý ban đầu.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Mỗi lực lượng tự triển khai theo kinh nghiệm riêng để tiết kiệm thời gian</div></div><div class="opt correct" data-correct="1"><div class="opt-key">D</div><div class="opt-text">Thống nhất chỉ huy, điều hành; phát huy vai trò của lực lượng, phương tiện, hậu cần tại chỗ.</div></div></div>
+</div>
+<div class="q-card" data-idx="17">
+  <div class="q-header">
+    <span class="q-num">Câu 17/60</span>
+  </div>
+  <div class="q-text">Nội dung nào dưới đây thể hiện đúng yêu cầu về giá trị xã hội trong hoạt động PCCC và CNCH?</div>
+  <div class="opts"><div class="opt correct" data-correct="1"><div class="opt-key">A</div><div class="opt-text">Bảo đảm tính nhân đạo, công bằng, bình đẳng giới.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Ưu tiên xử lý theo vị trí công tác và cấp bậc.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Chỉ ưu tiên hỗ trợ lực lượng trực tiếp tham gia chữa cháy.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Tập trung cứu hộ theo mức độ thiệt hại tài sản.</div></div></div>
+</div>
+<div class="q-card" data-idx="18">
+  <div class="q-header">
+    <span class="q-num">Câu 18/60</span>
+  </div>
+  <div class="q-text">Phương án nào sau đây không đúng với các nguyên tắc cơ bản của hoạt động PCCC và CNCH?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Chủ động phòng ngừa, lấy phòng ngừa là chính.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Huy động sức mạnh tổng hợp của toàn dân.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Ưu tiên cứu người, cứu tài sản khi xảy ra cháy, tai nạn, sự cố.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">D</div><div class="opt-text">Chỉ xử lý hành vi vi phạm khi đã gây ra hậu quả đặc biệt nghiêm trọng.</div></div></div>
+</div>
+<div class="q-card" data-idx="19">
+  <div class="q-header">
+    <span class="q-num">Câu 19/60</span>
+  </div>
+  <div class="q-text">Trong một tình huống phối hợp CNCH với lực lượng nước ngoài khi chưa có điều ước quốc tế giữa hai bên, cách xử lý nào đúng nguyên tắc?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Từ chối phối hợp vì không có điều ước quốc tế.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">B</div><div class="opt-text">Phối hợp trên nguyên tắc có đi có lại hoặc yêu cầu đối ngoại, nhưng không trái pháp luật Việt Nam và phù hợp pháp luật, tập quán quốc tế.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Chỉ thực hiện theo thông lệ quốc tế, không cần xét pháp luật Việt Nam.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Giao toàn quyền quyết định cho phía nước ngoài.</div></div></div>
+</div>
+<div class="q-card" data-idx="20">
+  <div class="q-header">
+    <span class="q-num">Câu 20/60</span>
+  </div>
+  <div class="q-text">Theo nguyên tắc hoạt động PCCC và CNCH, phát biểu nào sau đây đúng?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Hậu cần tại chỗ chỉ có vai trò hỗ trợ, không cần phát huy khi xảy ra sự cố.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">B</div><div class="opt-text">Khi xảy ra cháy, mọi nguồn nước và chất chữa cháy phải được ưu tiên cho chữa cháy.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Chỉ lực lượng chuyên trách mới được tham gia cứu nạn, cứu hộ.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Bình đẳng giới không phải là yêu cầu trong hoạt động PCCC và CNCH.</div></div></div>
+</div>
+<div class="q-card" data-idx="21">
+  <div class="q-header">
+    <span class="q-num">Câu 21/60</span>
+  </div>
+  <div class="q-text">Hàng hóa nguy hiểm về cháy, nổ là gì?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Chỉ gồm chất lỏng, chất khí, chất rắn dễ cháy nổ.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">B</div><div class="opt-text">Là hàng hóa có chứa các chất, vật phẩm có nguy cơ cháy, nổ ở dạng khí, lỏng hoặc rắn, khi quản lý, vận chuyển, sử dụng có khả năng gây cháy, nổ.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Là chất lỏng, chất khí,chất rắn, hoặc máy móc dễ xảy ra cháy, nổ.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Chỉ gồm các chất có tính chất đặc biệt nguy hiểm về cháy nổ như xăng, dầu, khí đốt, hóa lỏng.</div></div></div>
+</div>
+<div class="q-card" data-idx="22">
+  <div class="q-header">
+    <span class="q-num">Câu 22/60</span>
+  </div>
+  <div class="q-text">Biện pháp cơ bản trong chữa cháy?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Huy động nhanh nhất các lực lượng, phương tiện để dập tắt ngay đám cháy.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Tập trung cứu người, cứu tài sản và chống cháy lan.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Thống nhất chỉ huy, điều hành trong chữa cháy.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">D</div><div class="opt-text">Cả 3 đáp án đều đúng.</div></div></div>
+</div>
+<div class="q-card" data-idx="23">
+  <div class="q-header">
+    <span class="q-num">Câu 23/60</span>
+  </div>
+  <div class="q-text">Khi tổ chức chữa cháy đối với một đám cháy có nguy cơ phát triển nhanh và lan rộng, việc áp dụng các biện pháp cơ bản phải bảo đảm đồng thời nhiều yêu cầu về chiến thuật, tổ chức lực lượng và điều hành hiện trường. Phương án nào dưới đây phản ánh đầy đủ, toàn diện nhất các nội dung đó?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Tập trung huy động lực lượng, phương tiện thích hợp để nhanh chóng khống chế đám cháy, không để cháy kéo dài.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Tổ chức cứu người là nhiệm vụ ưu tiên, kết hợp cứu tài sản và triển khai đội hình ngăn chặn cháy lan sang khu vực liền kề.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">C</div><div class="opt-text">Kết hợp đầy đủ việc huy động nhanh lực lượng, phương tiện; cứu người, cứu tài sản, chống cháy lan; và bảo đảm thống nhất chỉ huy, điều hành chữa cháy.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Duy trì chế độ chỉ huy tập trung, thống nhất nhằm bảo đảm hiệu quả phối hợp giữa các lực lượng tham gia chữa cháy.</div></div></div>
+</div>
+<div class="q-card" data-idx="24">
+  <div class="q-header">
+    <span class="q-num">Câu 24/60</span>
+  </div>
+  <div class="q-text">Nội dung nào dưới đây phản ánh đúng và đầy đủ nhất biện pháp cơ bản trong phòng cháy, không nhầm lẫn với hoạt động chữa cháy và ứng phó khi sự cố đã xảy ra?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Quản lý chặt chẽ chất cháy, nguồn lửa, nguồn nhiệt; đồng thời bố trí lực lượng tại chỗ, phương tiện chữa cháy ban đầu để sẵn sàng dập tắt đám cháy ngay khi mới phát sinh.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Bảo đảm các điều kiện an toàn về phòng cháy; thường xuyên, định kỳ kiểm tra để phát hiện sơ hở, thiếu sót; đồng thời tổ chức thoát nạn, cứu người và chống cháy lan khi có cháy xảy ra.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">C</div><div class="opt-text">Quản lý chặt chẽ, sử dụng an toàn chất cháy, nguồn lửa, nguồn nhiệt và thiết bị sinh lửa, sinh nhiệt; bảo đảm các điều kiện an toàn về phòng cháy; thường xuyên, định kỳ kiểm tra để phát hiện và khắc phục kịp thời sơ hở, thiếu sót.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Kiểm soát chất cháy và nguồn gây cháy; xây dựng phương án chữa cháy, chuẩn bị phương tiện, tổ chức huấn luyện lực lượng cơ sở nhằm bảo đảm xử lý hiệu quả mọi tình huống cháy, nổ.</div></div></div>
+</div>
+<div class="q-card" data-idx="25">
+  <div class="q-header">
+    <span class="q-num">Câu 25/60</span>
+  </div>
+  <div class="q-text">Khi sử dụng chất chữa cháy để dập một đám cháy mới phát sinh, cách tác động nào dưới đây thường cho hiệu quả khống chế ngọn lửa nhanh nhất?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Phun trực tiếp vào phần đầu ngọn lửa để làm giảm chiều cao ngọn lửa.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">B</div><div class="opt-text">Phun vào gốc ngọn lửa, nơi đám cháy tiếp xúc trực tiếp với vật cháy hoặc bề mặt cháy.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Phun đều vào toàn bộ thân ngọn lửa để hạ nhiệt đồng thời toàn bộ vùng cháy.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Phun chếch lên phía trên ngọn lửa để chất chữa cháy phủ xuống toàn bộ khu vực đang cháy.</div></div></div>
+</div>
+<div class="q-card" data-idx="26">
+  <div class="q-header">
+    <span class="q-num">Câu 26/60</span>
+  </div>
+  <div class="q-text">Đối với cơ sở hoạt động trong khu công nghiệp, khu chế xuất, khu công nghệ cao, phương án nào dưới đây phản ánh đầy đủ nhất yêu cầu về phòng cháy, chữa cháy và cứu nạn, cứu hộ tại cơ sở?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Chỉ cần thành lập lực lượng PCCC và CNCH cơ sở theo quy định; việc xây dựng phương án và bố trí phương tiện sẽ thực hiện khi có yêu cầu của cơ quan có thẩm quyền.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Phải có phương án bảo đảm an toàn về PCCC và CNCH; việc tổ chức lực lượng, phương tiện được thực hiện tùy theo quy mô sản xuất, không bắt buộc gắn với phương án đã xây dựng.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">C</div><div class="opt-text">Thành lập lực lượng PCCC và CNCH cơ sở phù hợp quy định; có phương án bảo đảm an toàn về PCCC và CNCH; đồng thời tổ chức lực lượng, phương tiện phù hợp với phương án đó.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Chỉ cần tổ chức lực lượng, phương tiện chữa cháy tại chỗ đầy đủ; việc thành lập lực lượng PCCC và CNCH cơ sở hoặc xây dựng phương án riêng không phải là yêu cầu bắt buộc nếu đã có nội quy an toàn chung.</div></div></div>
+</div>
+<div class="q-card" data-idx="27">
+  <div class="q-header">
+    <span class="q-num">Câu 27/60</span>
+  </div>
+  <div class="q-text">Theo Luật Phòng cháy, chữa cháy và cứu nạn, cứu hộ hiện hành, nhiệm vụ của lực lượng PCCC và CNCH cơ sở, chuyên ngành và lực lượng dân phòng được quy định theo mấy nhóm nhiệm vụ chính?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">02 nhóm nhiệm vụ chính.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">B</div><div class="opt-text">04 nhóm nhiệm vụ chính.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">05 nhóm nhiệm vụ chính.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">06 nhóm nhiệm vụ chính.</div></div></div>
+</div>
+<div class="q-card" data-idx="28">
+  <div class="q-header">
+    <span class="q-num">Câu 28/60</span>
+  </div>
+  <div class="q-text">Theo luật hiện hành, đâu là nhận định đúng nhất về các lực lượng phòng cháy, chữa cháy và cứu nạn, cứu hộ?</div>
+  <div class="opts"><div class="opt correct" data-correct="1"><div class="opt-key">A</div><div class="opt-text">Bao gồm lực lượng dân phòng, lực lượng PCCC và CNCH cơ sở, lực lượng PCCC và CNCH chuyên ngành, lực lượng Cảnh sát PCCC và CNCH.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Bao gồm các lực lượng quy định tại phương án A và lực lượng PCCC, CNCH tình nguyện.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Bao gồm lực lượng dân phòng, lực lượng PCCC và CNCH cơ sở, lực lượng Cảnh sát PCCC và CNCH; còn lực lượng chuyên ngành chỉ được tổ chức trong một số trường hợp nên không tính là một lực lượng.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Bao gồm toàn bộ lực lượng nêu tại phương án A và các lực lượng khác trong Công an nhân dân khi được huy động tham gia chữa cháy, cứu nạn, cứu hộ.</div></div></div>
+</div>
+<div class="q-card" data-idx="29">
+  <div class="q-header">
+    <span class="q-num">Câu 29/60</span>
+  </div>
+  <div class="q-text">Đối với đám cháy dầu, mỡ, chất chữa cháy nào dưới đây không nên sử dụng vì có thể làm cháy lan, bắn văng chất cháy và làm tình huống trở nên nghiêm trọng hơn?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Khí chữa cháy, nếu sử dụng đúng loại và đúng cách.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Bột chữa cháy, trong một số trường hợp có thể dùng để khống chế đám cháy bề mặt.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">C</div><div class="opt-text">Nước, do có thể làm dầu mỡ đang cháy bắn tung và lan rộng vùng cháy.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Chăn chiên, tấm phủ chống cháy hoặc biện pháp cách ly oxy khỏi bề mặt cháy.</div></div></div>
+</div>
+<div class="q-card" data-idx="30">
+  <div class="q-header">
+    <span class="q-num">Câu 30/60</span>
+  </div>
+  <div class="q-text">Khi xảy ra cháy tại cơ sở, lực lượng Cảnh sát PCCC và CNCH chưa tới, những người có mặt dưới đây, ai là người chỉ huy chữa cháy?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Đội trưởng đội phòng cháy và chữa cháy cơ sở.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">B</div><div class="opt-text">Người đứng đầu cơ sở bị cháy.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Tổ trưởng tổ sản xuất.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Tổ trưởng tổ bảo vệ.</div></div></div>
+</div>
+<div class="q-card" data-idx="31">
+  <div class="q-header">
+    <span class="q-num">Câu 31/60</span>
+  </div>
+  <div class="q-text">Khi sử dụng bình chữa cháy khí để dập đám cháy mới phát sinh, trình tự thao tác nào dưới đây là đúng và phù hợp nhất?</div>
+  <div class="opts"><div class="opt correct" data-correct="1"><div class="opt-key">A</div><div class="opt-text">Mang bình tiếp cận đám cháy ở cự ly thích hợp, rút chốt hãm, hướng loa phun vào gốc lửa, giữ tư thế an toàn và bóp cò để phun chất chữa cháy.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Rút chốt hãm ngay từ vị trí ban đầu, vừa di chuyển vừa bóp cò để sẵn sàng phun ngay khi tiếp cận đám cháy.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Đưa loa phun hướng lên phần ngọn lửa để làm ngọn lửa tắt nhanh, sau đó mới điều chỉnh dần xuống vùng cháy.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Mang bình đến gần đám cháy, bóp cò trước để kiểm tra áp lực phun, rồi mới lựa chọn vị trí và hướng phun phù hợp.</div></div></div>
+</div>
+<div class="q-card" data-idx="32">
+  <div class="q-header">
+    <span class="q-num">Câu 32/60</span>
+  </div>
+  <div class="q-text">Theo nguyên lý cháy, điều kiện cần để sự cháy xảy ra là phải đồng thời có yếu tố nào sau đây?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Chất cháy và nguồn nhiệt, vì ôxy luôn tồn tại sẵn trong không khí nên không cần xem là điều kiện bắt buộc.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Nguồn nhiệt và ôxy, vì khi nhiệt độ đủ cao thì mọi vật liệu đều có thể tự bốc cháy.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Chất cháy và ôxy, vì khi đã có hai yếu tố này thì sự cháy có thể tự hình thành.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">D</div><div class="opt-text">Nguồn nhiệt, chất cháy và ôxy, trong đó thiếu bất kỳ yếu tố nào thì sự cháy không thể xảy ra.</div></div></div>
+</div>
+<div class="q-card" data-idx="33">
+  <div class="q-header">
+    <span class="q-num">Câu 33/60</span>
+  </div>
+  <div class="q-text">Khi phát hiện bình chữa cháy tại vị trí được trang bị không còn khả năng sử dụng hoặc không bảo đảm tình trạng sẵn sàng hoạt động, cách xử lý nào dưới đây là phù hợp nhất?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Chủ động mua bình chữa cháy mới để thay thế ngay nhằm bảo đảm luôn có phương tiện tại chỗ</div></div><div class="opt correct" data-correct="1"><div class="opt-key">B</div><div class="opt-text">Báo ngay cho cấp trên trực tiếp hoặc cán bộ phụ trách an toàn/PCCC của đơn vị để được kiểm tra, xử lý và thay thế theo quy định</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Tạm thời lấy bình chữa cháy ở khu vực khác đưa sang thay thế, sau đó báo lại sau để tránh gián đoạn trang bị</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Giữ nguyên hiện trạng vì việc kiểm tra, thay thế bình chữa cháy thuộc trách nhiệm của bộ phận chuyên trách</div></div></div>
+</div>
+<div class="q-card" data-idx="34">
+  <div class="q-header">
+    <span class="q-num">Câu 34/60</span>
+  </div>
+  <div class="q-text">Dấu hiệu nào cho thấy bình bột chữa cháy còn sử dụng được?</div>
+  <div class="opts"><div class="opt correct" data-correct="1"><div class="opt-key">A</div><div class="opt-text">Kim ở vạch chỉ màu xanh trên đồng hồ áp kế.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Kim ở vạch chỉ màu đỏ trên đồng hồ áp kế.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Kim ở vạch chỉ màu vàng trên đồng hồ áp kế.</div></div></div>
+</div>
+<div class="q-card" data-idx="35">
+  <div class="q-header">
+    <span class="q-num">Câu 35/60</span>
+  </div>
+  <div class="q-text">Nguyên lý chống cháy, nổ thường được hiểu là áp dụng các biện pháp nhằm?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Hạ thấp tốc độ cháy của vật liệu đến mức nhỏ nhất có thể, nhưng không cần quan tâm đến việc phân tán nhiệt lượng phát sinh.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Phân tán nhanh nhiệt lượng của đám cháy, nhưng không nhất thiết phải tác động đến khả năng bắt cháy hoặc tốc độ cháy của vật liệu.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">C</div><div class="opt-text">Vừa hạ thấp tốc độ cháy của vật liệu đến mức tối thiểu, vừa phân tán nhanh nhiệt lượng phát sinh để hạn chế khả năng hình thành và phát triển cháy, nổ.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Chỉ tập trung cô lập khu vực cháy, vì khi đã hạn chế phạm vi cháy thì nguy cơ nổ sẽ tự triệt tiêu.</div></div></div>
+</div>
+<div class="q-card" data-idx="36">
+  <div class="q-header">
+    <span class="q-num">Câu 36/60</span>
+  </div>
+  <div class="q-text">Đâu là phương án phản ánh đầy đủ nhất các nguyên lý cơ bản có thể áp dụng để dập tắt một đám cháy đang xảy ra?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Chỉ cần làm lạnh thật nhanh vùng cháy, vì khi nhiệt độ giảm thì mọi đám cháy đều sẽ tự tắt.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">B</div><div class="opt-text">Cắt sự tiếp xúc giữa chất cháy và chất ôxy hóa; làm giảm nồng độ ôxy hoặc hơi, khí cháy đến giới hạn không duy trì cháy; đồng thời làm lạnh vùng cháy xuống dưới nhiệt độ cháy của vật liệu.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Chủ yếu dùng biện pháp cô lập khu vực cháy và di chuyển vật dễ cháy ra xa để đám cháy tự suy giảm.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Tập trung phun chất chữa cháy vào phần ngọn lửa để triệt tiêu nhanh biểu hiện cháy nhìn thấy được.</div></div></div>
+</div>
+<div class="q-card" data-idx="37">
+  <div class="q-header">
+    <span class="q-num">Câu 37/60</span>
+  </div>
+  <div class="q-text">Dùng chất chữa cháy nào sau đây làm nhiệt độ đám cháy giảm nhanh và pha loãng nồng độ chất cháy, hạn chế sự thâm nhập của ôxy vào vùng cháy?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Nước.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">B</div><div class="opt-text">Bụi nước.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Bọt chữa cháy.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Bột chữa cháy.</div></div></div>
+</div>
+<div class="q-card" data-idx="38">
+  <div class="q-header">
+    <span class="q-num">Câu 38/60</span>
+  </div>
+  <div class="q-text">Để chữa cháy kim loại, chất rắn và chất lỏng phù hợp với đặc tính đám cháy, thường ưu tiên sử dụng loại chất chữa cháy nào sau đây?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Nước.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Các hợp chất halogen.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">C</div><div class="opt-text">Bột chữa cháy.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Bọt chữa cháy.</div></div></div>
+</div>
+<div class="q-card" data-idx="39">
+  <div class="q-header">
+    <span class="q-num">Câu 39/60</span>
+  </div>
+  <div class="q-text">Trong công tác chữa cháy ban đầu tại cơ sở, đâu là nhận định đúng nhất về các phương tiện chữa cháy tại chỗ thường được trang bị?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Chỉ bao gồm các loại bình chữa cháy xách tay như bình bọt, bình CO2, bình bột; các dụng cụ khác không được coi là phương tiện chữa cháy tại chỗ.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Chủ yếu là các dụng cụ thô sơ như cát, xẻng, thùng, xô đựng nước, câu liêm; các thiết bị có áp lực hoặc bơm không thuộc nhóm này.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">C</div><div class="opt-text">Bao gồm các loại bình chữa cháy xách tay, các dụng cụ chữa cháy thô sơ như cát, xẻng, xô, thùng nước, câu liêm, và cả các phương tiện như bơm, bơm tay dùng cho chữa cháy ban đầu.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Chỉ những phương tiện có khả năng phun chất chữa cháy trực tiếp vào đám cháy mới được coi là phương tiện chữa cháy tại chỗ.</div></div></div>
+</div>
+<div class="q-card" data-idx="40">
+  <div class="q-header">
+    <span class="q-num">Câu 40/60</span>
+  </div>
+  <div class="q-text">Trên bình chữa cháy bằng khí CO2, ký hiệu chữ A dùng để chỉ khả năng chữa cháy đối với nhóm cháy nào?</div>
+  <div class="opts"><div class="opt correct" data-correct="1"><div class="opt-key">A</div><div class="opt-text">Chữa chất cháy rắn.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Chữa chất cháy lỏng.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Chữa chất cháy khí.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Chữa cháy điện.</div></div></div>
+</div>
+<div class="q-card" data-idx="41">
+  <div class="q-header">
+    <span class="q-num">Câu 41/60</span>
+  </div>
+  <div class="q-text">Khi thực hiện công việc hàn, cắt có phát sinh tia lửa, nhiệt và xỉ nóng, nội dung nào dưới đây phản ánh đầy đủ nhất các yêu cầu an toàn cần thực hiện?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Di chuyển vật liệu dễ cháy ra xa khu vực hàn, cắt; có người giám sát và phương tiện chữa cháy tại chỗ.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Có người giám sát, chuẩn bị phương tiện chữa cháy tại chỗ và kiểm tra khu vực khi kết thúc công việc.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">C</div><div class="opt-text">Bảo đảm khoảng cách an toàn, di chuyển hoặc che chắn vật liệu dễ cháy; có phương tiện chữa cháy tại chỗ, có người giám sát; kiểm tra lại khu vực hàn, cắt sau khi kết thúc.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Chỉ cần che chắn vật liệu dễ cháy và kiểm tra khu vực sau khi hoàn thành, vì đó là hai nội dung quan trọng nhất.</div></div></div>
+</div>
+<div class="q-card" data-idx="42">
+  <div class="q-header">
+    <span class="q-num">Câu 42/60</span>
+  </div>
+  <div class="q-text">Phương án nào sau đây phản ánh đầy đủ và chính xác nhất các hành vi bị phạt tiền từ 30.000.000 đồng đến 40.000.000 đồng đối với vi phạm về trang bị, lắp đặt phương tiện phòng cháy, chữa cháy, cứu nạn, cứu hộ?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Trang bị, lắp đặt thiết bị thuộc hệ thống báo cháy không bảo đảm theo quy định.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Trang bị, lắp đặt thiết bị thuộc hệ thống chữa cháy không bảo đảm theo quy định.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">C</div><div class="opt-text">Trang bị, lắp đặt thiết bị thuộc hệ thống báo cháy không bảo đảm theo quy định; hoặc trang bị, lắp đặt thiết bị thuộc hệ thống chữa cháy không bảo đảm theo quy định; hoặc trang bị phương tiện chữa cháy, cứu nạn, cứu hộ cơ giới không bảo đảm số lượng hoặc không bảo đảm yêu cầu kỹ thuật theo quy định.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Trang bị, lắp đặt thiết bị thuộc hệ thống báo cháy không bảo đảm theo quy định hoặc trang bị, lắp đặt thiết bị thuộc hệ thống chữa cháy không bảo đảm theo quy định.</div></div></div>
+</div>
+<div class="q-card" data-idx="43">
+  <div class="q-header">
+    <span class="q-num">Câu 43/60</span>
+  </div>
+  <div class="q-text">Theo quy định hiện hành, có bao nhiêu nhóm hành vi bị phạt tiền từ 30.000.000 đồng đến 40.000.000 đồng đối với vi phạm về trang bị, lắp đặt phương tiện phòng cháy, chữa cháy, cứu nạn, cứu hộ?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">01 hành vi</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">02 hành vi</div></div><div class="opt correct" data-correct="1"><div class="opt-key">C</div><div class="opt-text">03 hành vi</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">04 hành vi</div></div></div>
+</div>
+<div class="q-card" data-idx="44">
+  <div class="q-header">
+    <span class="q-num">Câu 44/60</span>
+  </div>
+  <div class="q-text">Hành vi nào sau đây không thuộc trường hợp bị phạt tiền từ 30.000.000 đồng đến 40.000.000 đồng đối với vi phạm về trang bị, lắp đặt phương tiện phòng cháy, chữa cháy, cứu nạn, cứu hộ?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Trang bị, lắp đặt thiết bị thuộc hệ thống báo cháy không bảo đảm theo quy định.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Trang bị, lắp đặt thiết bị thuộc hệ thống chữa cháy không bảo đảm theo quy định.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Trang bị phương tiện chữa cháy, cứu nạn, cứu hộ cơ giới không bảo đảm số lượng hoặc không bảo đảm yêu cầu kỹ thuật theo quy định.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">D</div><div class="opt-text">Không trang bị phương tiện phòng cháy, chữa cháy, cứu nạn, cứu hộ cho Đội phòng cháy, chữa cháy và cứu nạn, cứu hộ chuyên ngành.</div></div></div>
+</div>
+<div class="q-card" data-idx="45">
+  <div class="q-header">
+    <span class="q-num">Câu 45/60</span>
+  </div>
+  <div class="q-text">Theo quy định về xử phạt vi phạm hành chính trong lĩnh vực phòng cháy, chữa cháy, trường hợp nào dưới đây bị phạt tiền từ 3.000.000 đồng đến 5.000.000 đồng?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Không duy trì đủ số lượng hoặc không bảo đảm chất lượng của phương tiện chữa cháy thông dụng, dụng cụ phá dỡ thô sơ đã được trang bị, lắp đặt.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Không duy trì đủ số lượng hoặc không bảo đảm yêu cầu kỹ thuật theo quy định của phương tiện chữa cháy thông dụng, dụng cụ phá dỡ thô sơ đã được trang bị, lắp đặt.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Không duy trì trữ lượng nước chữa cháy theo quy định.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">D</div><div class="opt-text">Chỉ có các hành vi nêu tại b và c thuộc trường hợp bị phạt tiền từ 3.000.000 đồng đến 5.000.000 đồng.</div></div></div>
+</div>
+<div class="q-card" data-idx="46">
+  <div class="q-header">
+    <span class="q-num">Câu 46/60</span>
+  </div>
+  <div class="q-text">Những hành vi nào sau đây thuộc trường hợp bị phạt tiền từ 3.000.000 đồng đến 5.000.000 đồng?
+
+ A. Không duy trì đủ số lượng hoặc không bảo đảm chất lượng của phương tiện chữa cháy thông dụng, dụng cụ phá dỡ thô sơ đã được trang bị, lắp đặt.
+
+ B. Không duy trì đủ số lượng hoặc không bảo đảm yêu cầu kỹ thuật theo quy định của phương tiện chữa cháy thông dụng, dụng cụ phá dỡ thô sơ đã được trang bị, lắp đặt.
+
+ C. Không duy trì trữ lượng nước chữa cháy theo quy định.</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Chỉ A</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Chỉ B và C</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Chỉ A và B</div></div><div class="opt correct" data-correct="1"><div class="opt-key">D</div><div class="opt-text">Cả A, B và C</div></div></div>
+</div>
+<div class="q-card" data-idx="47">
+  <div class="q-header">
+    <span class="q-num">Câu 47/60</span>
+  </div>
+  <div class="q-text">Những trường hợp nào sau đây thuộc hành vi bị phạt tiền từ 6.000.000 đồng đến 8.000.000 đồng?
+
+ A. Sử dụng người đứng đầu cơ sở; thành viên Đội phòng cháy, chữa cháy và cứu nạn, cứu hộ cơ sở; thành viên Đội phòng cháy, chữa cháy và cứu nạn, cứu hộ chuyên ngành; thành viên Đội dân phòng thực hiện nhiệm vụ phòng cháy, chữa cháy, cứu nạn, cứu hộ nhưng chưa có văn bản thông báo kết quả huấn luyện nghiệp vụ phòng cháy, chữa cháy, cứu nạn, cứu hộ. 
+
+B. Sử dụng người được phân công thực hiện nhiệm vụ phòng cháy, chữa cháy, cứu nạn, cứu hộ tại cơ sở; người được phân công thực hiện kiểm tra về phòng cháy, chữa cháy tại cơ sở; người làm việc trong môi trường nguy hiểm cháy, nổ hoặc thường xuyên tiếp xúc với chất, hàng hóa nguy hiểm về cháy, nổ thực hiện nhiệm vụ phòng cháy, chữa cháy, cứu nạn, cứu hộ nhưng chưa có văn bản thông báo kết quả huấn luyện nghiệp vụ phòng cháy, chữa cháy, cứu nạn, cứu hộ.
+
+ C. Sử dụng người điều khiển phương tiện, người làm việc trên phương tiện giao thông theo quy định của Luật Phòng cháy, chữa cháy và cứu nạn, cứu hộ thực hiện nhiệm vụ phòng cháy, chữa cháy, cứu nạn, cứu hộ nhưng chưa có văn bản thông báo kết quả huấn luyện nghiệp vụ phòng cháy, chữa cháy, cứu nạn, cứu hộ.</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Chỉ A</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Chỉ B và C</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Chỉ A và B</div></div><div class="opt correct" data-correct="1"><div class="opt-key">D</div><div class="opt-text">Cả A, B và C</div></div></div>
+</div>
+<div class="q-card" data-idx="48">
+  <div class="q-header">
+    <span class="q-num">Câu 48/60</span>
+  </div>
+  <div class="q-text">Những trường hợp nào sau đây thuộc hành vi bị phạt tiền từ 6.000.000 đồng đến 8.000.000 đồng?
+
+ A. Sử dụng người đứng đầu cơ sở; thành viên Đội phòng cháy, chữa cháy và cứu nạn, cứu hộ cơ sở; thành viên Đội dân phòng thực hiện nhiệm vụ phòng cháy, chữa cháy, cứu nạn, cứu hộ nhưng chưa có văn bản thông báo kết quả huấn luyện nghiệp vụ phòng cháy, chữa cháy, cứu nạn, cứu hộ. 
+
+B. Sử dụng người được phân công thực hiện nhiệm vụ phòng cháy, chữa cháy, cứu nạn, cứu hộ tại cơ sở; người được phân công thực hiện kiểm tra về phòng cháy, chữa cháy tại cơ sở; người làm việc trong môi trường nguy hiểm cháy, nổ thực hiện nhiệm vụ phòng cháy, chữa cháy, cứu nạn, cứu hộ nhưng chưa có văn bản thông báo kết quả huấn luyện nghiệp vụ phòng cháy, chữa cháy, cứu nạn, cứu hộ. 
+
+C. Sử dụng người đã đăng ký tham gia hoạt động phòng cháy, chữa cháy, cứu nạn, cứu hộ tình nguyện; đối tượng khác có nhu cầu thực hiện nhiệm vụ phòng cháy, chữa cháy, cứu nạn, cứu hộ nhưng chưa có văn bản thông báo kết quả huấn luyện nghiệp vụ phòng cháy, chữa cháy, cứu nạn, cứu hộ.</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Chỉ A</div></div><div class="opt correct" data-correct="1"><div class="opt-key">B</div><div class="opt-text">Chỉ A và B</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Chỉ B và C</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Cả A, B và C</div></div></div>
+</div>
+<div class="q-card" data-idx="49">
+  <div class="q-header">
+    <span class="q-num">Câu 49/60</span>
+  </div>
+  <div class="q-text">Theo nội dung quy định, có bao nhiêu nhóm đối tượng sau đây thuộc trường hợp bị xử phạt khi được sử dụng thực hiện nhiệm vụ phòng cháy, chữa cháy, cứu nạn, cứu hộ nhưng chưa có văn bản thông báo kết quả huấn luyện nghiệp vụ phòng cháy, chữa cháy, cứu nạn, cứu hộ?
+
+ 1. Người đứng đầu cơ sở.
+
+ 2. Thành viên Đội phòng cháy, chữa cháy và cứu nạn, cứu hộ cơ sở; thành viên Đội phòng cháy, chữa cháy và cứu nạn, cứu hộ chuyên ngành; thành viên Đội dân phòng.
+
+ 3. Người được phân công thực hiện nhiệm vụ hoặc kiểm tra về phòng cháy, chữa cháy tại cơ sở.
+
+ 4. Người làm việc trong môi trường nguy hiểm cháy, nổ hoặc thường xuyên tiếp xúc với chất, hàng hóa nguy hiểm về cháy, nổ. 
+
+5. Người điều khiển phương tiện, người làm việc trên phương tiện giao thông theo quy định.</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">02 nhóm</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">03 nhóm</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">04 nhóm</div></div><div class="opt correct" data-correct="1"><div class="opt-key">D</div><div class="opt-text">05 nhóm</div></div></div>
+</div>
+<div class="q-card" data-idx="50">
+  <div class="q-header">
+    <span class="q-num">Câu 50/60</span>
+  </div>
+  <div class="q-text">Những trường hợp nào sau đây thuộc hành vi bị phạt tiền từ 6.000.000 đồng đến 8.000.000 đồng?
+
+ A. Sử dụng người đứng đầu cơ sở nhưng chưa có văn bản thông báo kết quả huấn luyện nghiệp vụ phòng cháy, chữa cháy, cứu nạn, cứu hộ;
+
+ B. Thành viên Đội phòng cháy, chữa cháy và cứu nạn, cứu hộ cơ sở; thành viên Đội dân phòng thực hiện nhiệm vụ phòng cháy, chữa cháy, cứu nạn, cứu hộ nhưng chưa được huấn luyện nghiệp vụ phòng cháy, chữa cháy, cứu nạn, cứu hộ.
+
+ C. Sử dụng người được phân công thực hiện nhiệm vụ phòng cháy, chữa cháy, cứu nạn, cứu hộ tại cơ sở; người được phân công thực hiện kiểm tra về phòng cháy, chữa cháy tại cơ sở; người làm việc trong môi trường nguy hiểm cháy, nổ thực hiện nhiệm vụ phòng cháy, chữa cháy, cứu nạn, cứu hộ nhưng chưa được huấn luyện nghiệp vụ phòng cháy, chữa cháy, cứu nạn, cứu hộ.
+
+ D. Sử dụng người đã đăng ký tham gia hoạt động phòng cháy, chữa cháy, cứu nạn, cứu hộ tình nguyện; đối tượng khác có nhu cầu thực hiện nhiệm vụ phòng cháy, chữa cháy, cứu nạn, cứu hộ nhưng chưa được huấn luyện nghiệp vụ phòng cháy, chữa cháy, cứu nạn, cứu hộ.</div>
+  <div class="opts"><div class="opt correct" data-correct="1"><div class="opt-key">A</div><div class="opt-text">Chỉ A</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Chỉ C</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Cả B, C và D</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Cả A, B, C và D</div></div></div>
+</div>
+<div class="q-card" data-idx="51">
+  <div class="q-header">
+    <span class="q-num">Câu 51/60</span>
+  </div>
+  <div class="q-text">Tại khu gian máy, vách ngăn cháy đã được trang bị, lắp đặt, tuy nhiên đơn vị quản lý không duy trì đúng tình trạng kỹ thuật sau lắp đặt. Trong trường hợp này, mức xử phạt phù hợp nhất là?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Phạt tiền từ 30 đến 40 triệu đồng, vì hành vi này được xem tương đương với việc không trang bị vách ngăn cháy theo quy định</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Phạt tiền từ 5 đến 7 triệu đồng, vì đây là hành vi không duy trì tình trạng của vách ngăn cháy đã được trang bị, lắp đặt</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Phạt tiền từ 30 đến 40 triệu đồng, vì chỉ cần vách ngăn cháy không bảo đảm tình trạng sử dụng thì được hiểu là không có vách ngăn cháy</div></div><div class="opt correct" data-correct="1"><div class="opt-key">D</div><div class="opt-text">Không đủ căn cứ xác định, vì quy định chỉ đề cập đến hành vi không duy trì bộ phận ngăn cháy đã được thi công, lắp đặt</div></div></div>
+</div>
+<div class="q-card" data-idx="52">
+  <div class="q-header">
+    <span class="q-num">Câu 52/60</span>
+  </div>
+  <div class="q-text">Tại khu phụ trợ chứa vật tư dễ cháy, đơn vị chưa trang bị, lắp đặt vật liệu chống cháy theo yêu cầu về bố trí ngăn cháy. Đối với hành vi nêu trên, đơn vị bị xử phạt theo phương án nào sau đây?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Phạt tiền từ 5 đến 7 triệu đồng, vì đơn vị không bảo đảm điều kiện ngăn cháy tại khu vực có nguy cơ cháy</div></div><div class="opt correct" data-correct="1"><div class="opt-key">B</div><div class="opt-text">Phạt tiền từ 30 đến 40 triệu đồng, vì đây là hành vi không trang bị, lắp đặt vật liệu chống cháy theo yêu cầu ngăn cháy</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Phạt tiền từ 5 đến 7 triệu đồng, vì hành vi này được xem là không duy trì vật liệu ngăn cháy trong quá trình sử dụng</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Không thuộc phạm vi xử phạt, vì vật liệu chống cháy tại khu phụ trợ không phải đối tượng bắt buộc trong yêu cầu ngăn cháy</div></div></div>
+</div>
+<div class="q-card" data-idx="53">
+  <div class="q-header">
+    <span class="q-num">Câu 53/60</span>
+  </div>
+  <div class="q-text">Phát biểu nào sau đây phản ánh đúng nhất sự khác nhau giữa đội chuyên ngành chuyên trách và kiêm nhiệm?
+
+ A. Đội chuyên trách không cần huấn luyện nghiệp vụ định kỳ
+
+ B. Đội kiêm nhiệm không phải tổ chức thành đội
+
+ C. Đội chuyên trách là lực lượng làm nhiệm vụ PCCC&CNCH là chính, còn đội kiêm nhiệm thực hiện song song nhiệm vụ khác
+
+ D. Hai loại đội không có khác biệt về tổ chức</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Chỉ A</div></div><div class="opt correct" data-correct="1"><div class="opt-key">B</div><div class="opt-text">Chỉ C</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Chỉ B và C</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Cả A và D</div></div></div>
+</div>
+<div class="q-card" data-idx="54">
+  <div class="q-header">
+    <span class="q-num">Câu 54/60</span>
+  </div>
+  <div class="q-text">Đối tượng nào sau đây thuộc diện phải thành lập đội phòng cháy, chữa cháy và cứu nạn, cứu hộ chuyên ngành?
+
+ A. Nhà máy nhiệt điện có tổng công suất từ 600 MW trở lên; nhà máy thủy điện có tổng công suất từ 1.000 MW trở lên
+
+ B. Nhà máy nhiệt điện có tổng công suất từ 300 MW trở lên; nhà máy thủy điện có tổng công suất từ 600 MW trở lên
+
+ C. Chỉ nhà máy nhiệt điện có tổng công suất từ 1.200 MW trở lên
+
+ D. Mọi nhà máy điện không phụ thuộc công suất</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Chỉ A</div></div><div class="opt correct" data-correct="1"><div class="opt-key">B</div><div class="opt-text">Chỉ B</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Chỉ A và C</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Cả A, B và D</div></div></div>
+</div>
+<div class="q-card" data-idx="55">
+  <div class="q-header">
+    <span class="q-num">Câu 55/60</span>
+  </div>
+  <div class="q-text">Nhà máy nào sau đây phải tổ chức đội phòng cháy, chữa cháy và cứu nạn, cứu hộ chuyên ngành theo chế độ chuyên trách?
+
+ A. Nhà máy nhiệt điện 900 MW
+
+ B. Nhà máy nhiệt điện 1.200 MW
+
+ C. Nhà máy thủy điện 1.000 MW
+
+ D. Nhà máy thủy điện 900 MW</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Chỉ B</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Chỉ B và C</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Chỉ A và B</div></div><div class="opt correct" data-correct="1"><div class="opt-key">D</div><div class="opt-text">Cả A, B và C</div></div></div>
+</div>
+<div class="q-card" data-idx="56">
+  <div class="q-header">
+    <span class="q-num">Câu 56/60</span>
+  </div>
+  <div class="q-text">Nhà máy nhiệt điện A có tổng công suất 1.150 MW. Nhận định nào sau đây là đúng?
+
+ A. Không thuộc diện thành lập đội chuyên ngành
+
+ B. Thuộc diện thành lập đội chuyên ngành và hoạt động theo chế độ chuyên trách
+
+ C. Thuộc diện thành lập đội chuyên ngành và hoạt động theo chế độ kiêm nhiệm
+
+ D. Chỉ cần đội PCCC cơ sở, không cần đội chuyên ngành</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Chỉ A</div></div><div class="opt correct" data-correct="1"><div class="opt-key">B</div><div class="opt-text">Chỉ B</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Chỉ C</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Chỉ D</div></div></div>
+</div>
+<div class="q-card" data-idx="57">
+  <div class="q-header">
+    <span class="q-num">Câu 57/60</span>
+  </div>
+  <div class="q-text">Quy định nào sau đây áp dụng riêng đối với người được phân công điều khiển xe chữa cháy?
+
+A. Chỉ cần có mặt tại hiện trường khi xe đã xuất phát
+
+B. Được trực ở bất kỳ vị trí nào trong nhà máy miễn bảo đảm thông tin liên lạc
+
+C. Phải trực tại địa điểm bố trí xe chữa cháy
+
+D. Có thể kiêm nhiệm nhiều vị trí nên không bắt buộc cố định nơi trực</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Chỉ A</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Chỉ B</div></div><div class="opt correct" data-correct="1"><div class="opt-key">C</div><div class="opt-text">Chỉ C</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Cả C và D</div></div></div>
+</div>
+<div class="q-card" data-idx="58">
+  <div class="q-header">
+    <span class="q-num">Câu 58/60</span>
+  </div>
+  <div class="q-text">Một nhà máy nhiệt điện có tổng công suất 2×600 MW. Trong ca trực, lực lượng PCCC và CNCH chuyên ngành được tổ chức và bố trí như sau:
+
+Phương án A. Thành viên được phân công theo xe chữa cháy có thể làm nhiệm vụ khác trong khu vực sản xuất, chỉ cần có mặt khi có báo động.
+
+Phương án B. Người điều khiển xe chữa cháy trực tại phòng điều khiển trung tâm để thuận tiện nhận thông tin sự cố .
+
+Phương án C. Thành viên trong ca trực đang thực hiện nhiệm vụ khác khi có báo động phải hoàn thành công việc đang làm trước khi quay về vị trí phương tiện .
+
+Phương án D. Thành viên được phân công theo xe chữa cháy phải trực tại khu vực quy định; người điều khiển xe chữa cháy phải trực tại vị trí bố trí xe; khi có báo động, mọi thành viên đang làm nhiệm vụ khác phải khẩn trương di chuyển ngay đến vị trí để phương tiện và triển khai nhiệm vụ</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Chỉ A và B</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Chỉ B và C</div></div><div class="opt correct" data-correct="1"><div class="opt-key">C</div><div class="opt-text">Chỉ D</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Cả A, B và C</div></div></div>
+</div>
+<div class="q-card" data-idx="59">
+  <div class="q-header">
+    <span class="q-num">Câu 59/60</span>
+  </div>
+  <div class="q-text">Một nhà máy nhiệt điện có tổng công suất 2×600 MW. Trong cùng mặt bằng nhà máy có nhiều cơ quan, tổ chức cùng hoạt động (đơn vị vận hành, sửa chữa, dịch vụ kỹ thuật). Phương án nào dưới đây đúng và đầy đủ nhất về tổ chức Đội phòng cháy, chữa cháy và cứu nạn, cứu hộ?
+
+Phương án A. Vì nhà máy hoạt động theo chế độ chuyên trách nên chỉ lực lượng của đơn vị vận hành chính tham gia đội; các cơ quan, tổ chức khác không bắt buộc cử người.
+
+ Phương án B. Các cơ quan, tổ chức cùng hoạt động trong cơ sở phải tự thành lập đội riêng của mình, không tham gia đội do người đứng đầu cơ sở thành lập.
+
+ Phương án C. Các cơ quan, tổ chức cùng hoạt động trong cơ sở phải cử người tham gia Đội phòng cháy, chữa cháy và cứu nạn, cứu hộ cơ sở do người đứng đầu cơ sở thành lập; thành viên được phân công theo xe chữa cháy phải trực tại khu vực quy định, người điều khiển xe chữa cháy phải trực tại vị trí bố trí xe, khi có báo động phải khẩn trương di chuyển ngay đến vị trí để phương tiện và triển khai nhiệm vụ.
+
+ Phương án D. Chỉ cần bảo đảm đủ quân số ca trực của đội chuyên ngành, không cần yêu cầu các cơ quan, tổ chức khác cử người tham gia.</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">CHỈ A</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text"> b. CHỈ B</div></div><div class="opt correct" data-correct="1"><div class="opt-key">C</div><div class="opt-text"> c. CHỈ C</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text"> d. CHỈ D</div></div></div>
+</div>
+<div class="q-card" data-idx="60">
+  <div class="q-header">
+    <span class="q-num">Câu 60/60</span>
+  </div>
+  <div class="q-text">Một cơ quan quản lý, vận hành 03 nhà máy điện đều thuộc diện phải thành lập Đội phòng cháy, chữa cháy và cứu nạn, cứu hộ chuyên ngành. Cơ quan này thành lập 01 Đội PCCC và CNCH chuyên ngành đặt tại Nhà máy A. Từ địa điểm bố trí xe chữa cháy của đội tại Nhà máy A đến vị trí xa nhất của từng cơ sở được xác định như sau: - Nhà máy A: 1,6 km - Nhà máy B: 2,9 km - Nhà máy C: 3,0 km. Phương án nào dưới đây đúng nhất theo quy định?
+
+Phương án A. Chỉ Nhà máy A nằm trong bán kính phục vụ; Nhà máy B và C phải thành lập đội chuyên ngành riêng.
+
+Phương án B. Cả 03 nhà máy đều nằm trong bán kính phục vụ không vượt quá 03 km; Nhà máy B và C phải thành lập Tổ PCCC và CNCH thuộc Đội chuyên ngành đặt tại Nhà máy A.
+
+Phương án C. Nhà máy C có khoảng cách đúng bằng 3,0 km nên không đạt điều kiện 'không vượt quá 03 km'.
+
+Phương án D. Vì Nhà máy B và C đã nằm trong bán kính phục vụ nên không cần tổ chức lực lượng PCCC và CNCH tại chỗ</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">CHỈ A</div></div><div class="opt correct" data-correct="1"><div class="opt-key">B</div><div class="opt-text">CHỈ B</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">CHỈ C</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">CHỈ D</div></div></div>
+</div>
+</div>
+  <div id="noResult" class="no-result" style="display:none">
+    <div class="icon">🔍</div>
+    <p>Không tìm thấy câu hỏi nào phù hợp</p>
+  </div>
+  <div class="back-note">📚 Tài liệu ôn tập ATVSLĐ – Đáp án đúng được tô xanh</div>
+</div>
+
+<script>
+const cards = document.querySelectorAll('.q-card');
+const noResult = document.getElementById('noResult');
+const statsBar = document.getElementById('statsBar');
+
+function doSearch() {
+  const kw = document.getElementById('searchBox').value.toLowerCase().trim();
+  let visible = 0;
+  cards.forEach(card => {
+    const text = card.textContent.toLowerCase();
+    const show = !kw || text.includes(kw);
+    card.style.display = show ? '' : 'none';
+    if(show) visible++;
+  });
+  noResult.style.display = visible === 0 ? 'block' : 'none';
+  statsBar.textContent = kw ? `${visible}/60 câu` : '60 câu hỏi';
+}
+</script>
+</body>
+</html>

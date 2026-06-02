@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>An toàn vệ sinh viên – Tài liệu ATVSLĐ VSH</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Roboto,sans-serif;background:#eef2f7;color:#1e293b}
+.header{background:linear-gradient(135deg,#fffde7,#fff9c4);border-bottom:3px solid #f0c000;padding:14px 16px;text-align:center;position:sticky;top:0;z-index:99;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.company{font-size:13px;font-weight:800;color:#dc2626;text-transform:uppercase}
+.title{font-size:18px;font-weight:900;color:#1e3a8a;margin:4px 0 2px}
+.subtitle{font-size:12px;color:#92400e;font-weight:700}
+.toolbar{background:#1e3a8a;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;position:sticky;top:72px;z-index:98}
+.search-box{flex:1;min-width:200px;padding:8px 14px;border-radius:20px;border:none;font-size:14px;outline:none}
+.stats-bar{color:rgba(255,255,255,.85);font-size:12px;font-weight:600;white-space:nowrap}
+.content{max-width:900px;margin:0 auto;padding:16px}
+.q-card{background:white;border-radius:14px;padding:16px 18px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.05);border-left:4px solid #1e3a8a;transition:.2s}
+.q-card:hover{box-shadow:0 4px 14px rgba(30,58,138,.12)}
+.q-header{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.q-num{background:#1e3a8a;color:white;border-radius:6px;padding:2px 10px;font-size:12px;font-weight:800;white-space:nowrap}
+.q-text{font-size:14px;font-weight:700;line-height:1.6;color:#0f3b4c;margin-bottom:12px}
+.opts{display:flex;flex-direction:column;gap:6px}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:8px 12px;border-radius:8px;font-size:13px;background:#f8fafc;border:1px solid #e2e8f0}
+.opt.correct{background:#dcfce7;border-color:#16a34a;font-weight:700}
+.opt-key{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;flex-shrink:0;background:#e2e8f0;color:#475569}
+.opt.correct .opt-key{background:#16a34a;color:white}
+.opt-text{flex:1;line-height:1.45}
+.no-result{text-align:center;padding:60px 20px;color:#94a3b8}
+.no-result .icon{font-size:48px;margin-bottom:12px}
+.back-note{text-align:center;padding:20px;font-size:12px;color:#94a3b8;border-top:1px solid #e2e8f0;margin-top:8px}
+@media(max-width:600px){.content{padding:10px}.q-card{padding:14px 14px}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="company">Công ty Cổ phần Thủy điện Vĩnh Sơn – Sông Hinh</div>
+  <div class="title">🦺 An toàn vệ sinh viên</div>
+  <div class="subtitle">Tài liệu ôn tập – 30 câu hỏi & đáp án</div>
+</div>
+
+<div class="toolbar">
+  <input class="search-box" id="searchBox" type="text" placeholder="🔍 Tìm kiếm câu hỏi..." oninput="doSearch()">
+  <span class="stats-bar" id="statsBar">30 câu hỏi</span>
+</div>
+
+<div class="content">
+  <div id="cardList"><div class="q-card" data-idx="1">
+  <div class="q-header">
+    <span class="q-num">Câu 1/30</span>
+  </div>
+  <div class="q-text">Luật an toàn vệ sinh lao động 2015 quy định an toàn vệ sinh viên phải có những tiêu chuẩn nào sau đây?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Người có kiến thức đầy đủ về an toàn vệ sinh lao động, được chủ doanh nghiệp tín nhiệm.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Người có thâm niên công tác từ 5 năm trở lên và phải có kiến thức về an toàn vệ sinh lao động, nhiệt tình với công việc.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Là người lao động có trình độ chuyên môn cao, nhiệt tình, gương mẫu và có kiến thức đầy đủ về an toàn vệ sinh lao động.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">D</div><div class="opt-text">Là người lao động trực tiếp sản xuất, am hiểu chuyên môn, kỹ thuật an toàn vệ sinh lao động, tự nguyện, gương mẫu trong việc chấp hành các quy định về an toàn vệ sinh lao động và được người lao động trong tổ bầu ra.</div></div></div>
+</div>
+<div class="q-card" data-idx="2">
+  <div class="q-header">
+    <span class="q-num">Câu 2/30</span>
+  </div>
+  <div class="q-text">Luật an toàn vệ sinh lao động 2015 quy định mỗi tổ sản xuất trong các cơ sở sản xuất, kinh doanh phải có ít nhất bao nhiêu an toàn vệ sinh viên kiêm nhiệm trong giờ làm việc?</div>
+  <div class="opts"><div class="opt correct" data-correct="1"><div class="opt-key">A</div><div class="opt-text">01 An toàn vệ sinh viên.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">02 An toàn vệ sinh viên.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">03 An toàn vệ sinh viên.</div></div></div>
+</div>
+<div class="q-card" data-idx="3">
+  <div class="q-header">
+    <span class="q-num">Câu 3/30</span>
+  </div>
+  <div class="q-text">Luật an toàn vệ sinh lao động 2015, khi ra quyết định thành lập mạng lưới an toàn vệ sinh viên người sử dụng lao động có phải lấy ý kiến Ban Chấp hành công đoàn cơ sở không?</div>
+  <div class="opts"><div class="opt correct" data-correct="1"><div class="opt-key">A</div><div class="opt-text">Có.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Không.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Nếu thấy cần thiết.</div></div></div>
+</div>
+<div class="q-card" data-idx="4">
+  <div class="q-header">
+    <span class="q-num">Câu 4/30</span>
+  </div>
+  <div class="q-text">Luật an toàn vệ sinh lao động 2015 quy định An toàn vệ sinh viên hoạt động dưới sự quản lý và hướng dẫn của ai?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Người sử dụng lao động.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">B</div><div class="opt-text">Ban chấp hành công đoàn cơ sở.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Hội đồng an toàn, vệ sinh lao động cơ sở.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Người sử dụng lao động và BCH công đoàn cơ sở.</div></div></div>
+</div>
+<div class="q-card" data-idx="5">
+  <div class="q-header">
+    <span class="q-num">Câu 5/30</span>
+  </div>
+  <div class="q-text">Luật an toàn vệ sinh lao động 2015, quy định An toàn vệ sinh viên có quyền gì sau đây về an toàn, vệ sinh lao động?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Được học tập, bồi dưỡng nâng cao trình độ chuyên môn, nghiệp vụ, phương pháp hoạt động.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Được cung cấp thông tin đầy đủ về biện pháp bảo đảm an toàn, vệ sinh lao động tại nơi làm việc.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Được yêu cầu người lao động trong tổ ngừng làm việc nếu thấy có nguy cơ trực tiếp gây sự cố, tai nạn lao động.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">D</div><div class="opt-text">Tất cả các quyền trên.</div></div></div>
+</div>
+<div class="q-card" data-idx="6">
+  <div class="q-header">
+    <span class="q-num">Câu 6/30</span>
+  </div>
+  <div class="q-text">An toàn vệ sinh viên không có quyền nào sau đây về an toàn, vệ sinh lao động?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Được dành một phần thời gian làm việc để thực hiện các nhiệm vụ của an toàn, vệ sinh viên.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Được hưởng phụ cấp trách nhiệm.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Được trả lương cho thời gian thực hiện nhiệm vụ của an toàn, vệ sinh viên.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">D</div><div class="opt-text">Được yêu cầu công đoàn cơ sở trang bị phương tiện bảo vệ cá nhân cho người lao động.</div></div></div>
+</div>
+<div class="q-card" data-idx="7">
+  <div class="q-header">
+    <span class="q-num">Câu 7/30</span>
+  </div>
+  <div class="q-text">Theo Luật an toàn vệ sinh lao động 2015 quy định An toàn vệ sinh viên có bao nhiêu nghĩa vụ?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Có 3 nghĩa vụ.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Có 4 nghĩa vụ.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">C</div><div class="opt-text">Có 5 nghĩa vụ.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Có 6 nghĩa vụ.</div></div></div>
+</div>
+<div class="q-card" data-idx="8">
+  <div class="q-header">
+    <span class="q-num">Câu 8/30</span>
+  </div>
+  <div class="q-text">Theo Luật an toàn vệ sinh lao động 2015 quy định An toàn vệ sinh viên có bao nhiêu quyền?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Có 3 quyền.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">B</div><div class="opt-text">Có 4 quyền.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Có 5 quyền.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Có 6 quyền.</div></div></div>
+</div>
+<div class="q-card" data-idx="9">
+  <div class="q-header">
+    <span class="q-num">Câu 9/30</span>
+  </div>
+  <div class="q-text">Theo Luật an toàn vệ sinh lao động 2015 quy định An toàn vệ sinh viên có nghĩa vụ nào sau đây?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Báo cáo với tổ chức công đoàn hoặc thanh tra lao động khi phát hiện vi phạm về an toàn, vệ sinh lao động tại nơi làm việc.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Kiến nghị với tổ trưởng hoặc cấp trên thực hiện đầy đủ các chế độ bảo hộ lao động, biện pháp bảo đảm an toàn, vệ sinh lao động.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Tham gia xây dựng kế hoạch an toàn vệ sinh lao động hàng năm.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">D</div><div class="opt-text">Tất cả các nghĩa vụ trên.</div></div></div>
+</div>
+<div class="q-card" data-idx="10">
+  <div class="q-header">
+    <span class="q-num">Câu 10/30</span>
+  </div>
+  <div class="q-text">Nhiệm vụ nào không phải là nhiệm vụ của An toàn vệ sinh viên?</div>
+  <div class="opts"><div class="opt correct" data-correct="1"><div class="opt-key">A</div><div class="opt-text">Tổ chức kiểm tra định kỳ về công tác an toàn vệ sinh lao động tại doanh nghiệp.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Đôn đốc, nhắc nhở người lao động trong tổ, đội chấp hành các quy tắc về an toàn vệ sinh lao động.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Hướng dẫn người lao động sử dụng phương tiện bảo vệ cá nhân.</div></div></div>
+</div>
+<div class="q-card" data-idx="11">
+  <div class="q-header">
+    <span class="q-num">Câu 11/30</span>
+  </div>
+  <div class="q-text">Ai ban hành Quyết định thành lập và Quy chế hoạt động của mạng lưới An toàn vệ sinh viên?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Ban chấp hành công đoàn cơ sở.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Ban chấp hành công đoàn cơ sở thống nhất với người sử dụng lao động.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">C</div><div class="opt-text">Người sử dụng lao động thống nhất ý kiến với Ban chấp hành công đoàn cơ sở (nếu cơ sở sản xuất, kinh doanh đã thành lập Ban chấp hành công đoàn cơ sở).</div></div></div>
+</div>
+<div class="q-card" data-idx="12">
+  <div class="q-header">
+    <span class="q-num">Câu 12/30</span>
+  </div>
+  <div class="q-text">Luật an toàn vệ sinh lao động 2015 quy định mức phụ cấp trách nhiệm hàng tháng cho an toàn vệ sinh viên như thế nào?</div>
+  <div class="opts"><div class="opt correct" data-correct="1"><div class="opt-key">A</div><div class="opt-text">Do người sử dụng lao động và Ban chấp hành công đoàn cơ sở thống nhất thỏa thuận và được ghi trong quy chế hoạt động của mạng lưới an toàn vệ sinh viên.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Mức tối thiểu phải bằng 10% tiền lương cở sở.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Mức tối thiểu phải bằng 10% tiền lương tối thiểu vùng.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Mức tương đương với phụ cấp của tổ trưởng tổ sản xuất.</div></div></div>
+</div>
+<div class="q-card" data-idx="13">
+  <div class="q-header">
+    <span class="q-num">Câu 13/30</span>
+  </div>
+  <div class="q-text">Phụ cấp trách nhiệm cho an toàn vệ sinh viên do ai chi trả?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Do Công đoàn cơ sở chi trả.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">B</div><div class="opt-text">Do người sử dụng lao động chi trả.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Do người sử dụng lao động và công đoàn cơ sở cùng chi trả.</div></div></div>
+</div>
+<div class="q-card" data-idx="14">
+  <div class="q-header">
+    <span class="q-num">Câu 14/30</span>
+  </div>
+  <div class="q-text">Nghị định 44/2016/NĐ-CP của Chính phủ ngày 15/5/2016 quy định An toàn vệ sinh viên thuộc đối tượng huấn luyện nhóm nào?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Nhóm 1.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Nhóm 2.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Nhóm 5.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">D</div><div class="opt-text">Nhóm 6.</div></div></div>
+</div>
+<div class="q-card" data-idx="15">
+  <div class="q-header">
+    <span class="q-num">Câu 15/30</span>
+  </div>
+  <div class="q-text">Nghị định 44/2016/NĐ-CP của Chính phủ ngày 15/5/2016 quy định thời gian huấn luyện lần đầu cho an toàn, vệ sinh viên (ngoài nội dung đã huấn luyện về an toàn, vệ sinh lao động) được quy định như thế nào?</div>
+  <div class="opts"><div class="opt correct" data-correct="1"><div class="opt-key">A</div><div class="opt-text">Ít nhất là 4 giờ.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Ít nhất là 8 giờ.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Ít nhất là 16 giờ.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Ít nhất là 24 giờ.</div></div></div>
+</div>
+<div class="q-card" data-idx="16">
+  <div class="q-header">
+    <span class="q-num">Câu 16/30</span>
+  </div>
+  <div class="q-text">Phương pháp hoạt động của An toàn vệ sinh viên là?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Hàng ngày bám sát, nắm chắc tình hình an toàn, vệ sinh lao động của máy, thiết bị. Phát hiện và xử lý kịp thời các vi phạm về an toàn, vệ sinh lao động.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Kết hợp biện pháp vận động, thuyết phục, ngăn chặn kịp thời các hiện tượng làm bừa, làm ẩu.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Gương mẫu chấp hành các yêu cầu về an toàn, vệ sinh lao động để làm gương cho tập thể.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">D</div><div class="opt-text">Tất cả các phương pháp trên.</div></div></div>
+</div>
+<div class="q-card" data-idx="17">
+  <div class="q-header">
+    <span class="q-num">Câu 17/30</span>
+  </div>
+  <div class="q-text">Nghị định 44/2016/NĐ-CP của Chính phủ ngày 15/5/2016 quy định An toàn vệ sinh viên tham gia lớp huấn luyện về An toàn vệ sinh lao động và tham gia lớp bổ sung về kỹ năng, phương pháp hoạt động của an toàn vệ sinh viên sau khi kiểm tra, sát hạch đạt yêu cầu thì được cấp?</div>
+  <div class="opts"><div class="opt correct" data-correct="1"><div class="opt-key">A</div><div class="opt-text">Giấy chứng nhận huấn luyện.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Thẻ an toàn.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Danh sách huấn luyện.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Cả 3 đáp án trên.</div></div></div>
+</div>
+<div class="q-card" data-idx="18">
+  <div class="q-header">
+    <span class="q-num">Câu 18/30</span>
+  </div>
+  <div class="q-text">Hoạt động của Mạng lưới an toàn vệ sinh viên nhằm:</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Giúp Ban Chấp hành công đoàn cơ sở thực hiện tốt công tác an toàn vệ sinh lao động.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Giúp người sử dụng lao động thực hiện tốt công tác an toàn vệ sinh lao động.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Đẩy mạnh phong trào "Xanh - Sạch - Đẹp, Bảo đảm an toàn vệ sinh lao động" tại doanh nghiệp.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">D</div><div class="opt-text">Cả 3 câu a,b,c đều đúng.</div></div></div>
+</div>
+<div class="q-card" data-idx="19">
+  <div class="q-header">
+    <span class="q-num">Câu 19/30</span>
+  </div>
+  <div class="q-text">Nội dung sinh hoạt định kỳ của mạng lưới An toàn vệ sinh viên?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Trao đổi, báo cáo các ý kiến, kiến nghị, đề xuất của người lao động trong tổ về tình hình công tác an toàn vệ sinh lao động trong tại doanh nghiệp.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Thông tin về các vụ tai nạn lao động, các sự cố xảy ra trong doanh nghiệp.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Trao đổi, đề xuất các biện pháp bảo đảm an toàn vệ sinh lao động trong doanh nghiệp.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">D</div><div class="opt-text">Cả 3 nội dung trên.</div></div></div>
+</div>
+<div class="q-card" data-idx="20">
+  <div class="q-header">
+    <span class="q-num">Câu 20/30</span>
+  </div>
+  <div class="q-text">Hội thi An toàn vệ sinh viên giỏi ở cơ sở nhằm?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Nâng cao nhận thức về an toàn vệ sinh lao động cho An toàn vệ sinh viên</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Đẩy mạnh hoạt động tuyên truyền về an toàn vệ sinh lao động.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Biểu dương, khen thưởng kịp thời.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">D</div><div class="opt-text">Tất cả các nội dung trên.</div></div></div>
+</div>
+<div class="q-card" data-idx="21">
+  <div class="q-header">
+    <span class="q-num">Câu 21/30</span>
+  </div>
+  <div class="q-text">An toàn vệ sinh viên được quy định trong Điều nào của Luật An toàn, vệ sinh lao động năm 2015?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Điều 73 Luật An toàn, vệ sinh lao động năm 2015.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">B</div><div class="opt-text">Điều 74 Luật An toàn, vệ sinh lao động năm 2015.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Điều 75 Luật An toàn, vệ sinh lao động năm 2015.</div></div></div>
+</div>
+<div class="q-card" data-idx="22">
+  <div class="q-header">
+    <span class="q-num">Câu 22/30</span>
+  </div>
+  <div class="q-text">Nội dung hoạt động hàng ngày trước ca làm việc của mạng lưới An toàn vệ sinh viên?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Kiểm tra điều kiện môi trường làm việc.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Nhắc nhở người lao động trong tổ sử dụng đầy đủ phương tiện bảo vệ cá nhân.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">C</div><div class="opt-text">Cả 2 nội dung trên.</div></div></div>
+</div>
+<div class="q-card" data-idx="23">
+  <div class="q-header">
+    <span class="q-num">Câu 23/30</span>
+  </div>
+  <div class="q-text">An toàn, vệ sinh viên có phải được huấn luyện những nội dung thuộc nhóm 3 không?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Không phải huấn luyện.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Bắt buộc phải được huấn luyện</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Tùy theo từng trường hợp.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">D</div><div class="opt-text">Có phải huấn luyện, đối với trường hợp an toàn vệ sinh viên làm công việc có yêu cầu nghiêm ngặt về an toàn, vệ sinh lao động.</div></div></div>
+</div>
+<div class="q-card" data-idx="24">
+  <div class="q-header">
+    <span class="q-num">Câu 24/30</span>
+  </div>
+  <div class="q-text">Tham gia với người sử dụng lao động xây dựng kế hoạch an toàn, vệ sinh lao động; tham gia hướng dẫn biện pháp làm việc an toàn đối với người lao động mới đến làm việc ở tổ là quyền, trách nhiệm của cơ quan/bộ phận nào?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Bộ phận y tế.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Tổ chức công đoàn.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">C</div><div class="opt-text">An toàn, vệ sinh viên.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Cả 3 đáp án trên đều sai.</div></div></div>
+</div>
+<div class="q-card" data-idx="25">
+  <div class="q-header">
+    <span class="q-num">Câu 25/30</span>
+  </div>
+  <div class="q-text">Giám sát việc thực hiện tiêu chuẩn, quy chuẩn, quy trình, nội quy an toàn, vệ sinh lao động, phát hiện những thiếu sót, vi phạm về an toàn, vệ sinh lao động, những trường hợp mất an toàn, vệ sinh của máy, thiết bị, vật tư, chất và nơi làm việc là quyền, trách nhiệm của cơ quan/bộ phận nào?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Bộ phận y tế.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">B</div><div class="opt-text">An toàn, vệ sinh viên.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Công đoàn cơ sở.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Cả 3 đáp án trên đều đúng.</div></div></div>
+</div>
+<div class="q-card" data-idx="26">
+  <div class="q-header">
+    <span class="q-num">Câu 26/30</span>
+  </div>
+  <div class="q-text">Yêu cầu người lao động trong tổ ngừng làm việc để thực hiện các biện pháp bảo đảm an toàn, vệ sinh lao động, nếu thấy có nguy cơ trực tiếp gây sự cố, tai nạn lao động và chịu trách nhiệm về quyết định đó là quyền, trách nhiệm của cơ quan/bộ phận nào?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Bộ phận y tế.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">B</div><div class="opt-text">An toàn, vệ sinh viên.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Tổ chức Công đoàn.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Hội đồng an toàn vệ sinh lao động cơ sở.</div></div></div>
+</div>
+<div class="q-card" data-idx="27">
+  <div class="q-header">
+    <span class="q-num">Câu 27/30</span>
+  </div>
+  <div class="q-text">Ai có nghĩa vụ chính trong việc xây dựng, ban hành và tổ chức thực hiện nội quy, quy trình bảo đảm an toàn, vệ sinh lao động?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Ban Chấp hành công đoàn cơ sở.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Tổ trưởng tổ sản xuất.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Cán bộ An toàn, vệ sinh viên.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">D</div><div class="opt-text">Người sử dụng lao động.</div></div></div>
+</div>
+<div class="q-card" data-idx="28">
+  <div class="q-header">
+    <span class="q-num">Câu 28/30</span>
+  </div>
+  <div class="q-text">An toàn vệ sinh viên được dành một phần thời gian làm việc để thực hiện các nhiệm vụ của an toàn vệ sinh viên nhưng vẫn được trả lương cho thời gian thực hiện nhiệm vụ, như vậy đúng hay sai?</div>
+  <div class="opts"><div class="opt correct" data-correct="1"><div class="opt-key">A</div><div class="opt-text">Đúng</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Sai</div></div></div>
+</div>
+<div class="q-card" data-idx="29">
+  <div class="q-header">
+    <span class="q-num">Câu 29/30</span>
+  </div>
+  <div class="q-text">An toàn vệ sinh viên phối hợp với người làm công tác an toàn vệ sinh lao động, người làm công tác y tế tại cơ sở để thực hiện tốt công tác an toàn vệ sinh lao động tại cơ sở, như vậy đúng hay sai?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Sai</div></div><div class="opt correct" data-correct="1"><div class="opt-key">B</div><div class="opt-text">Đúng</div></div></div>
+</div>
+<div class="q-card" data-idx="30">
+  <div class="q-header">
+    <span class="q-num">Câu 30/30</span>
+  </div>
+  <div class="q-text">Mạng lưới An toàn vệ sinh viên của doanh nghiệp sinh hoạt định kỳ ít nhất?</div>
+  <div class="opts"><div class="opt correct" data-correct="1"><div class="opt-key">A</div><div class="opt-text">1 tháng 1 lần.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">2 tháng 1 lần.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">3 tháng 1 lần.</div></div></div>
+</div>
+</div>
+  <div id="noResult" class="no-result" style="display:none">
+    <div class="icon">🔍</div>
+    <p>Không tìm thấy câu hỏi nào phù hợp</p>
+  </div>
+  <div class="back-note">📚 Tài liệu ôn tập ATVSLĐ – Đáp án đúng được tô xanh</div>
+</div>
+
+<script>
+const cards = document.querySelectorAll('.q-card');
+const noResult = document.getElementById('noResult');
+const statsBar = document.getElementById('statsBar');
+
+function doSearch() {
+  const kw = document.getElementById('searchBox').value.toLowerCase().trim();
+  let visible = 0;
+  cards.forEach(card => {
+    const text = card.textContent.toLowerCase();
+    const show = !kw || text.includes(kw);
+    card.style.display = show ? '' : 'none';
+    if(show) visible++;
+  });
+  noResult.style.display = visible === 0 ? 'block' : 'none';
+  statsBar.textContent = kw ? `${visible}/30 câu` : '30 câu hỏi';
+}
+</script>
+</body>
+</html>

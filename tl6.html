@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Văn bản – Quy chế – Hướng dẫn – Tài liệu ATVSLĐ VSH</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Roboto,sans-serif;background:#eef2f7;color:#1e293b}
+.header{background:linear-gradient(135deg,#fffde7,#fff9c4);border-bottom:3px solid #f0c000;padding:14px 16px;text-align:center;position:sticky;top:0;z-index:99;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.company{font-size:13px;font-weight:800;color:#dc2626;text-transform:uppercase}
+.title{font-size:18px;font-weight:900;color:#1e3a8a;margin:4px 0 2px}
+.subtitle{font-size:12px;color:#92400e;font-weight:700}
+.toolbar{background:#1e3a8a;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;position:sticky;top:72px;z-index:98}
+.search-box{flex:1;min-width:200px;padding:8px 14px;border-radius:20px;border:none;font-size:14px;outline:none}
+.stats-bar{color:rgba(255,255,255,.85);font-size:12px;font-weight:600;white-space:nowrap}
+.content{max-width:900px;margin:0 auto;padding:16px}
+.q-card{background:white;border-radius:14px;padding:16px 18px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.05);border-left:4px solid #1e3a8a;transition:.2s}
+.q-card:hover{box-shadow:0 4px 14px rgba(30,58,138,.12)}
+.q-header{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.q-num{background:#1e3a8a;color:white;border-radius:6px;padding:2px 10px;font-size:12px;font-weight:800;white-space:nowrap}
+.q-text{font-size:14px;font-weight:700;line-height:1.6;color:#0f3b4c;margin-bottom:12px}
+.opts{display:flex;flex-direction:column;gap:6px}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:8px 12px;border-radius:8px;font-size:13px;background:#f8fafc;border:1px solid #e2e8f0}
+.opt.correct{background:#dcfce7;border-color:#16a34a;font-weight:700}
+.opt-key{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;flex-shrink:0;background:#e2e8f0;color:#475569}
+.opt.correct .opt-key{background:#16a34a;color:white}
+.opt-text{flex:1;line-height:1.45}
+.no-result{text-align:center;padding:60px 20px;color:#94a3b8}
+.no-result .icon{font-size:48px;margin-bottom:12px}
+.back-note{text-align:center;padding:20px;font-size:12px;color:#94a3b8;border-top:1px solid #e2e8f0;margin-top:8px}
+@media(max-width:600px){.content{padding:10px}.q-card{padding:14px 14px}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="company">Công ty Cổ phần Thủy điện Vĩnh Sơn – Sông Hinh</div>
+  <div class="title">📋 Văn bản – Quy chế – Hướng dẫn</div>
+  <div class="subtitle">Tài liệu ôn tập – 23 câu hỏi & đáp án</div>
+</div>
+
+<div class="toolbar">
+  <input class="search-box" id="searchBox" type="text" placeholder="🔍 Tìm kiếm câu hỏi..." oninput="doSearch()">
+  <span class="stats-bar" id="statsBar">23 câu hỏi</span>
+</div>
+
+<div class="content">
+  <div id="cardList"><div class="q-card" data-idx="1">
+  <div class="q-header">
+    <span class="q-num">Câu 1/23</span>
+  </div>
+  <div class="q-text">Mục tiêu của phong trào 'Xanh - Sạch - Đẹp, Bảo đảm an toàn vệ sinh lao động' là gì?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Cơ quan, đơn vị ngày càng xanh, sạch và đẹp.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Đảm bảo cho điều kiện và môi trường khu vực sản xuất được cải thiện hơn, bớt ô nhiễm.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Nâng cao văn hóa an toàn trong sản xuất, giúp cho người lao động càng thêm yêu mến, gắn bó với đơn vị cơ sở, phấn khởi nâng cao năng suất lao động, chất lượng sản phẩm và hiệu quả công tác.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">D</div><div class="opt-text">Tất cả các mục tiêu trên.</div></div></div>
+</div>
+<div class="q-card" data-idx="2">
+  <div class="q-header">
+    <span class="q-num">Câu 2/23</span>
+  </div>
+  <div class="q-text">Nội dung nào được bổ sung trong Chỉ thị số 04/CT-TLĐ ngày 03/3/2017 của Đoàn Chủ tịch Tổng Liên đoàn về việc tiếp tục đẩy mạnh phong trào 'Xanh - Sạch - Đẹp, Bảo đảm an toàn vệ sinh lao động' trong tình hình mới?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Tuyên truyền và giáo dục cho công nhân lao động thấy được sự cần thiết phải làm cho môi trường xanh, sạch, đẹp, đảm bảo ATVSLĐ.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">B</div><div class="opt-text">Xây dựng văn hóa an toàn lao động tại nơi làm việc; bảo đảm ATVSLĐ gắn với bảo vệ môi trường, thúc đẩy việc thực hiện Tăng trưởng xanh, thích ứng với biến đổi khí hậu.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Vận động mọi người giữ gìn an toàn, vệ sinh lao động, làm cho nơi làm việc, nhà xưởng phong quang, gọn sạch.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Thực hiện thường xuyên chế độ kiểm tra an toàn, vệ sinh lao động.</div></div></div>
+</div>
+<div class="q-card" data-idx="3">
+  <div class="q-header">
+    <span class="q-num">Câu 3/23</span>
+  </div>
+  <div class="q-text">Chủ đề Tháng hành động về ATVSLĐ năm 2026 là:</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Thúc đẩy công tác huấn luyện an toàn, vệ sinh lao động để phòng ngừa các tai nạn lao động và bệnh nghề nghiệp.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Đổi mới quản lý và chủ động phòng ngừa và kiểm soát các yếu tố nguy hiểm, có hại tại nơi làm việc để hạn chế tai nạn lao động, bệnh nghề nghiệp và nâng cao hiệu quả công tác an toàn, vệ sinh lao động trong kỷ nguyên số.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Đẩy mạnh cải thiện điều kiện lao động và kiểm soát các nguy cơ rủi ro về an toàn; nâng cao hiệu quả công tác an toàn, vệ sinh lao động trong kỷ nguyên số.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">D</div><div class="opt-text">Đổi mới quản lý và nâng cao hiệu quả công tác an toàn, vệ sinh lao động trong kỷ nguyên số.</div></div></div>
+</div>
+<div class="q-card" data-idx="4">
+  <div class="q-header">
+    <span class="q-num">Câu 4/23</span>
+  </div>
+  <div class="q-text">Kế hoạch số 11562/KH-BNV của Bộ Nội vụ ngày 04/12/2025 triển khai Tháng hành động về An toàn, vệ sinh lao động năm 2026 có bao nhiêu Khẩu hiệu?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">10</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">13</div></div><div class="opt correct" data-correct="1"><div class="opt-key">C</div><div class="opt-text">15</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">17</div></div></div>
+</div>
+<div class="q-card" data-idx="5">
+  <div class="q-header">
+    <span class="q-num">Câu 5/23</span>
+  </div>
+  <div class="q-text">Kế hoạch số 11562/KH-BNV triển khai Tháng hành động về ATVSLĐ năm 2026 nội dung 'Đổi mới' gì?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Đổi mới quản lý ATVSLĐ trong kỷ nguyên số, Đổi mới toàn diện công tác ATVSLĐ trong kỷ nguyên số.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Đổi mới quản lý ATVSLĐ trong kỷ nguyên số, Đổi mới trong công tác Huấn luyện, nâng cao kỹ năng làm việc an toàn để bảo đảm an toàn, sức khỏe của mỗi người lao động.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">C</div><div class="opt-text">Đổi mới quản lý, chủ động phòng ngừa và kiểm soát các yếu tố nguy hiểm, có hại tại nơi làm việc để hạn chế tai nạn lao động, bệnh nghề nghiệp và nâng cao hiệu quả công tác an toàn, vệ sinh lao động trong kỷ nguyên số.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Đối mới sáng tạo đẩy mạnh cải thiện điều kiện lao động và kiểm soát các nguy cơ rủi ro về an toàn; nâng cao hiệu quả công tác an toàn, vệ sinh lao động trong kỷ nguyên số.</div></div></div>
+</div>
+<div class="q-card" data-idx="6">
+  <div class="q-header">
+    <span class="q-num">Câu 6/23</span>
+  </div>
+  <div class="q-text">Kế hoạch số 11562/KH-BNV triển khai tháng hành động về ATVSLĐ năm 2026 nội dung 'Chủ động' gì?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Chủ động trong công tác An toàn để sản xuất - Sản xuất, Chủ động phòng ngừa, đánh giá, kiểm soát các nguy cơ rủi ro về ATVSLĐ.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">B</div><div class="opt-text">Chủ động để an toàn - An toàn để phát triển, Chủ động phòng ngừa, đánh giá, kiểm soát các nguy cơ rủi ro về ATVSLĐ.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Chủ động phòng ngừa, đánh giá, kiểm soát các nguy cơ rủi ro về ATVSLĐ, Chủ động là trách nhiệm doanh nghiệp - An toàn cho người lao động - Phát triển bền vững cho tương lai.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Chủ động để đổi mới sáng tạo đẩy mạnh cải thiện điều kiện lao động và kiểm soát các nguy cơ rủi ro về an toàn; nâng cao hiệu quả công tác an toàn, vệ sinh lao động trong kỷ nguyên số.</div></div></div>
+</div>
+<div class="q-card" data-idx="7">
+  <div class="q-header">
+    <span class="q-num">Câu 7/23</span>
+  </div>
+  <div class="q-text">Kế hoạch số 11562/KH-BNV triển khai tháng hành động về ATVSLĐ năm 2026 nội dung 'An toàn' gì?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">An toàn để sản xuất - Sản xuất phải đảm bảo an toàn, Sản xuất phải đảm bảo An toàn.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">An toàn lao động là hạnh phúc gia đình, đánh giá, An toàn để sản xuất.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">C</div><div class="opt-text">An toàn để sản xuất - Sản xuất phải đảm bảo an toàn, An toàn lao động là hạnh phúc gia đình.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">An toàn cho người lao động - Phát triển bền vững cho tương lai, An toàn lao động là hạnh phúc gia đình.</div></div></div>
+</div>
+<div class="q-card" data-idx="8">
+  <div class="q-header">
+    <span class="q-num">Câu 8/23</span>
+  </div>
+  <div class="q-text">Tháng hành động về ATVSLĐ tổ chức vào tháng nào hàng năm?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Tháng 3</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Tháng 4</div></div><div class="opt correct" data-correct="1"><div class="opt-key">C</div><div class="opt-text">Tháng 5</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Tháng 6</div></div></div>
+</div>
+<div class="q-card" data-idx="9">
+  <div class="q-header">
+    <span class="q-num">Câu 9/23</span>
+  </div>
+  <div class="q-text">Tháng hành động về ATVSLĐ bắt đầu tổ chức từ năm nào?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Năm 2015</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Năm 2016</div></div><div class="opt correct" data-correct="1"><div class="opt-key">C</div><div class="opt-text">Năm 2017</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Năm 2018</div></div></div>
+</div>
+<div class="q-card" data-idx="10">
+  <div class="q-header">
+    <span class="q-num">Câu 10/23</span>
+  </div>
+  <div class="q-text">Đối tượng tập thể được xét tặng Bằng khen chuyên đề 'Xanh - Sạch - Đẹp, Bảo đảm ATVSLĐ' của Tổng Liên đoàn hàng năm là:</div>
+  <div class="opts"><div class="opt correct" data-correct="1"><div class="opt-key">A</div><div class="opt-text">Công đoàn cơ sở.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Công đoàn cấp trên trực tiếp cơ sở.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Liên đoàn Lao động tỉnh, thành phố trực thuộc trung ương.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Công đoàn ngành Trung ương, Công đoàn Tổng Công ty trực thuộc TLĐ.</div></div></div>
+</div>
+<div class="q-card" data-idx="11">
+  <div class="q-header">
+    <span class="q-num">Câu 11/23</span>
+  </div>
+  <div class="q-text">Để tổ chức cho người lao động tham gia hoạt động cải thiện điều kiện lao động, xây dựng văn hóa an toàn lao động tại nơi làm việc, người sử dụng lao động phải phối hợp với ai?</div>
+  <div class="opts"><div class="opt correct" data-correct="1"><div class="opt-key">A</div><div class="opt-text">Ban Chấp hành Công đoàn cơ sở.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Hội đồng an toàn vệ sinh lao động cơ sở.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Người làm công tác an toàn vệ sinh lao động.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Mạng lưới an toàn vệ sinh viên.</div></div></div>
+</div>
+<div class="q-card" data-idx="12">
+  <div class="q-header">
+    <span class="q-num">Câu 12/23</span>
+  </div>
+  <div class="q-text">Đối thoại với người sử dụng lao động để giải quyết các vấn đề liên quan đến quyền, nghĩa vụ của người lao động, người sử dụng lao động về an toàn, vệ sinh lao động là quyền và trách nhiệm của ai?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Bộ phận y tế.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">B</div><div class="opt-text">Công đoàn cơ sở.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Bộ phận an toàn, vệ sinh lao động.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Mạng lưới an toàn, vệ sinh viên.</div></div></div>
+</div>
+<div class="q-card" data-idx="13">
+  <div class="q-header">
+    <span class="q-num">Câu 13/23</span>
+  </div>
+  <div class="q-text">Khi phát hiện nơi làm việc có nguy cơ gây nguy hiểm đến sức khỏe, tính mạng của người lao động thì CĐCS thực hiện ngay việc gì sau đây?</div>
+  <div class="opts"><div class="opt correct" data-correct="1"><div class="opt-key">A</div><div class="opt-text">Yêu cầu người có trách nhiệm thực hiện ngay biện pháp bảo đảm ATVSLĐ, kể cả trường hợp phải tạm ngừng hoạt động nếu cần thiết.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Báo với công đoàn cấp trên trực tiếp.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Báo với Ủy ban nhân dân cấp xã/tỉnh.</div></div></div>
+</div>
+<div class="q-card" data-idx="14">
+  <div class="q-header">
+    <span class="q-num">Câu 14/23</span>
+  </div>
+  <div class="q-text">Theo Hướng dẫn số 747/HD-CĐĐVN ngày 15/11/2024 của Công đoàn Điện lực Việt Nam, những điều kiện, tiêu chuẩn nào đủ điều kiện xét tặng Bằng khen thưởng chuyên đề 'Xanh - Sạch - Đẹp, Bảo đảm ATVSLĐ' hàng năm của Tổng Liên đoàn đối với CĐCS?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Là Công đoàn cơ sở tiêu biểu nhất.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Trong 02 năm liên tục không xảy ra TNLĐ chết người, TNLĐ nặng, sự cố kỹ thuật, cháy nổ nghiêm trọng, không tăng BNN.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Hai năm liên tục hoàn thành tốt nhiệm vụ trở lên, trong đó có ít nhất 01 năm xuất sắc.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Một trong hai năm liền kề đã được tặng Bằng khen toàn diện hoặc chuyên đề.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">E</div><div class="opt-text">Cả 04 tiêu chí trên.</div></div></div>
+</div>
+<div class="q-card" data-idx="15">
+  <div class="q-header">
+    <span class="q-num">Câu 15/23</span>
+  </div>
+  <div class="q-text">Theo Hướng dẫn 747/HD-CĐĐVN, điều kiện xét tặng Bằng khen chuyên đề đối với cá nhân?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Có thành tích tiêu biểu nhất.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Hai năm liên tục hoàn thành tốt nhiệm vụ, trong đó có 01 năm xuất sắc hoặc Chiến sĩ thi đua cơ sở, có 01 sáng kiến được công nhận.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Một trong hai năm liền kề đã được tặng Bằng khen toàn diện hoặc chuyên đề.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">D</div><div class="opt-text">Cả 03 tiêu chí trên.</div></div></div>
+</div>
+<div class="q-card" data-idx="16">
+  <div class="q-header">
+    <span class="q-num">Câu 16/23</span>
+  </div>
+  <div class="q-text">Trong các chỉ tiêu dưới đây, chỉ tiêu nào thuộc chỉ tiêu của Nghị quyết 10c/NQ-BCH ngày 12/01/2017?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">100% doanh nghiệp nhà nước, đơn vị sự nghiệp công và 50% trở lên số doanh nghiệp ngoài nhà nước hưởng ứng phong trào.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">100% các vụ TNLĐ nặng và chết người được báo cáo, điều tra và có đại diện công đoàn tham gia.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">C</div><div class="opt-text">Tất cả các chỉ tiêu trên.</div></div></div>
+</div>
+<div class="q-card" data-idx="17">
+  <div class="q-header">
+    <span class="q-num">Câu 17/23</span>
+  </div>
+  <div class="q-text">Người sử dụng lao động có thể sử dụng người lao động cao tuổi làm nghề, công việc nặng nhọc, độc hại, nguy hiểm không quá bao nhiêu năm?</div>
+  <div class="opts"><div class="opt correct" data-correct="1"><div class="opt-key">A</div><div class="opt-text">5 năm</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">6 năm</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">7 năm</div></div></div>
+</div>
+<div class="q-card" data-idx="18">
+  <div class="q-header">
+    <span class="q-num">Câu 18/23</span>
+  </div>
+  <div class="q-text">Chỉ thị số 01/CT-TLĐ ngày 19/11/2012 quy định các Liên đoàn Lao động tỉnh, thành phố; Công đoàn ngành Trung ương, Công đoàn Tổng Công ty tổng hợp tình hình TNLĐ định kỳ báo cáo về Tổng Liên đoàn?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Hàng tháng</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">3 tháng, cả năm</div></div><div class="opt correct" data-correct="1"><div class="opt-key">C</div><div class="opt-text">6 tháng, cả năm</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Cả 4 phương án trên</div></div></div>
+</div>
+<div class="q-card" data-idx="19">
+  <div class="q-header">
+    <span class="q-num">Câu 19/23</span>
+  </div>
+  <div class="q-text">Chương trình Quốc gia về ATVSLĐ giai đoạn 2021-2025 đề ra mục tiêu đến năm 2025 có bao nhiêu phần trăm số người làm công tác y tế cơ sở được huấn luyện về ATVSLĐ?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Trên 70%</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Trên 75%</div></div><div class="opt correct" data-correct="1"><div class="opt-key">C</div><div class="opt-text">Trên 80%</div></div></div>
+</div>
+<div class="q-card" data-idx="20">
+  <div class="q-header">
+    <span class="q-num">Câu 20/23</span>
+  </div>
+  <div class="q-text">Tại Chỉ thị Liên tịch 3395/CTLT-GENCO3-CĐ, thời gian định kỳ cấp Tổng Công ty tổ chức tổng kết, đánh giá kết quả hoạt động của mạng lưới ATVSV?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">6 tháng/01 lần</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">01 năm/01 lần</div></div><div class="opt correct" data-correct="1"><div class="opt-key">C</div><div class="opt-text">05 năm/02 lần</div></div></div>
+</div>
+<div class="q-card" data-idx="21">
+  <div class="q-header">
+    <span class="q-num">Câu 21/23</span>
+  </div>
+  <div class="q-text">Tại Chỉ thị Liên tịch 3395/CTLT-GENCO3-CĐ, thời gian định kỳ cấp Công đoàn cơ sở tổ chức tổng kết, đánh giá kết quả hoạt động của mạng lưới ATVSV?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">6 tháng/01 lần</div></div><div class="opt correct" data-correct="1"><div class="opt-key">B</div><div class="opt-text">01 năm/01 lần</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">02 năm/ 01 lần</div></div></div>
+</div>
+<div class="q-card" data-idx="22">
+  <div class="q-header">
+    <span class="q-num">Câu 22/23</span>
+  </div>
+  <div class="q-text">Theo Thỏa ước lao động tập thể số 4369/TU-GENCO3-CĐGENCO3, những đối tượng nào sau đây được khám sức khỏe, khám chuyên khoa, chuyên sâu ít nhất 6 tháng 01 lần?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">NLĐ làm công việc nặng nhọc, độc hại</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">NLĐ khuyết tật</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">NLĐ từ đủ 60 tuổi đối với nam, 55 tuổi đối với nữ</div></div><div class="opt correct" data-correct="1"><div class="opt-key">D</div><div class="opt-text">Cả 03 đối tượng trên</div></div></div>
+</div>
+<div class="q-card" data-idx="23">
+  <div class="q-header">
+    <span class="q-num">Câu 23/23</span>
+  </div>
+  <div class="q-text">Theo Bộ Luật lao động số 45/2019-QH14 những đối tượng nào phải bảo đảm an toàn, vệ sinh tại nơi làm việc?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Người sử dụng lao động</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Người lao động</div></div><div class="opt correct" data-correct="1"><div class="opt-key">C</div><div class="opt-text">Cả 02 đối tượng trên.</div></div></div>
+</div>
+</div>
+  <div id="noResult" class="no-result" style="display:none">
+    <div class="icon">🔍</div>
+    <p>Không tìm thấy câu hỏi nào phù hợp</p>
+  </div>
+  <div class="back-note">📚 Tài liệu ôn tập ATVSLĐ – Đáp án đúng được tô xanh</div>
+</div>
+
+<script>
+const cards = document.querySelectorAll('.q-card');
+const noResult = document.getElementById('noResult');
+const statsBar = document.getElementById('statsBar');
+
+function doSearch() {
+  const kw = document.getElementById('searchBox').value.toLowerCase().trim();
+  let visible = 0;
+  cards.forEach(card => {
+    const text = card.textContent.toLowerCase();
+    const show = !kw || text.includes(kw);
+    card.style.display = show ? '' : 'none';
+    if(show) visible++;
+  });
+  noResult.style.display = visible === 0 ? 'block' : 'none';
+  statsBar.textContent = kw ? `${visible}/23 câu` : '23 câu hỏi';
+}
+</script>
+</body>
+</html>

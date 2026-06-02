@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kỹ thuật vệ sinh lao động – Tài liệu ATVSLĐ VSH</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Roboto,sans-serif;background:#eef2f7;color:#1e293b}
+.header{background:linear-gradient(135deg,#fffde7,#fff9c4);border-bottom:3px solid #f0c000;padding:14px 16px;text-align:center;position:sticky;top:0;z-index:99;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.company{font-size:13px;font-weight:800;color:#dc2626;text-transform:uppercase}
+.title{font-size:18px;font-weight:900;color:#1e3a8a;margin:4px 0 2px}
+.subtitle{font-size:12px;color:#92400e;font-weight:700}
+.toolbar{background:#1e3a8a;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;position:sticky;top:72px;z-index:98}
+.search-box{flex:1;min-width:200px;padding:8px 14px;border-radius:20px;border:none;font-size:14px;outline:none}
+.stats-bar{color:rgba(255,255,255,.85);font-size:12px;font-weight:600;white-space:nowrap}
+.content{max-width:900px;margin:0 auto;padding:16px}
+.q-card{background:white;border-radius:14px;padding:16px 18px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.05);border-left:4px solid #1e3a8a;transition:.2s}
+.q-card:hover{box-shadow:0 4px 14px rgba(30,58,138,.12)}
+.q-header{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.q-num{background:#1e3a8a;color:white;border-radius:6px;padding:2px 10px;font-size:12px;font-weight:800;white-space:nowrap}
+.q-text{font-size:14px;font-weight:700;line-height:1.6;color:#0f3b4c;margin-bottom:12px}
+.opts{display:flex;flex-direction:column;gap:6px}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:8px 12px;border-radius:8px;font-size:13px;background:#f8fafc;border:1px solid #e2e8f0}
+.opt.correct{background:#dcfce7;border-color:#16a34a;font-weight:700}
+.opt-key{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;flex-shrink:0;background:#e2e8f0;color:#475569}
+.opt.correct .opt-key{background:#16a34a;color:white}
+.opt-text{flex:1;line-height:1.45}
+.no-result{text-align:center;padding:60px 20px;color:#94a3b8}
+.no-result .icon{font-size:48px;margin-bottom:12px}
+.back-note{text-align:center;padding:20px;font-size:12px;color:#94a3b8;border-top:1px solid #e2e8f0;margin-top:8px}
+@media(max-width:600px){.content{padding:10px}.q-card{padding:14px 14px}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="company">Công ty Cổ phần Thủy điện Vĩnh Sơn – Sông Hinh</div>
+  <div class="title">🏭 Kỹ thuật vệ sinh lao động</div>
+  <div class="subtitle">Tài liệu ôn tập – 28 câu hỏi & đáp án</div>
+</div>
+
+<div class="toolbar">
+  <input class="search-box" id="searchBox" type="text" placeholder="🔍 Tìm kiếm câu hỏi..." oninput="doSearch()">
+  <span class="stats-bar" id="statsBar">28 câu hỏi</span>
+</div>
+
+<div class="content">
+  <div id="cardList"><div class="q-card" data-idx="1">
+  <div class="q-header">
+    <span class="q-num">Câu 1/28</span>
+  </div>
+  <div class="q-text">Vệ sinh lao động là gì?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Vệ sinh lao động là giải pháp phòng, chống tác động của các yếu tố nguy hiểm nhằm bảo đảm không xảy ra thương tật, tử vong đối với con người trong quá trình lao động.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Vệ sinh lao động là giải pháp an toàn nhất trong quá trình lao động.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">C</div><div class="opt-text">Vệ sinh lao động là giải pháp phòng, chống tác động của yếu tố có hại gây bệnh tật, làm suy giảm sức khỏe cho con người trong quá trình lao động.</div></div></div>
+</div>
+<div class="q-card" data-idx="2">
+  <div class="q-header">
+    <span class="q-num">Câu 2/28</span>
+  </div>
+  <div class="q-text">Yếu tố có hại là gì?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Yếu tố có hại là yếu tố gây mất an toàn, làm tổn thương hoặc gây tử vong cho con người trong quá trình lao động.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">B</div><div class="opt-text">Yếu tố có hại là yếu tố gây bệnh tật, làm suy giảm sức khỏe con người trong quá trình lao động.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Yếu tố có hại là yếu tố tác động làm người lao động bị bệnh nghề nghiệp sau quá trình lao động.</div></div></div>
+</div>
+<div class="q-card" data-idx="3">
+  <div class="q-header">
+    <span class="q-num">Câu 3/28</span>
+  </div>
+  <div class="q-text">Bệnh nghề nghiệp là gì?</div>
+  <div class="opts"><div class="opt correct" data-correct="1"><div class="opt-key">A</div><div class="opt-text">Là bệnh phát sinh do điều kiện lao động có hại của nghề nghiệp tác động đối với người lao động.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Là sự suy giảm sức khỏe do các yếu tố độc hại trong môi trường lao động.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Là một hiện tượng bệnh lý do các yếu tố có hại, yếu tố nguy hiểm trong sản xuất gây ra.</div></div></div>
+</div>
+<div class="q-card" data-idx="4">
+  <div class="q-header">
+    <span class="q-num">Câu 4/28</span>
+  </div>
+  <div class="q-text">Quan trắc môi trường lao động là gì?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Kiểm tra, đo đạc và theo dõi thường xuyên mang tính định kì thông qua các chỉ tiêu về tính chất vật lý và hóa học của thành phần môi trường.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Đo đạc, đánh giá các chỉ số vật lý, hóa học trong không khí.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">C</div><div class="opt-text">Thu thập, phân tích, đánh giá số liệu đo lường các yếu tố trong môi trường lao động tại nơi làm việc để có biện pháp giảm thiểu tác hại đối với sức khỏe, phòng chống bệnh nghề nghiệp.</div></div></div>
+</div>
+<div class="q-card" data-idx="5">
+  <div class="q-header">
+    <span class="q-num">Câu 5/28</span>
+  </div>
+  <div class="q-text">Một số yếu tố có hại liên quan đến quá trình sản xuất là?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Tiếng ồn và rung động.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Bụi và các hóa chất độc hại trong sản xuất.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Điều kiện vi khí hậu trong sản xuất không đảm bảo như: nhiệt độ, độ ẩm, bức xạ nhiệt,...</div></div><div class="opt correct" data-correct="1"><div class="opt-key">D</div><div class="opt-text">Cả a, b và c</div></div></div>
+</div>
+<div class="q-card" data-idx="6">
+  <div class="q-header">
+    <span class="q-num">Câu 6/28</span>
+  </div>
+  <div class="q-text">Những yếu tố có hại nào dưới đây có nguy cơ gây bệnh nghề nghiệp trong lao động, sản xuất?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Các yếu tố vì khí hậu, ánh sáng, tiếng ồn, rung động không đảm bảo tiêu chuẩn vệ sinh; các loại bụi.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Bức xạ và phóng xạ; các hóa chất độc; vi sinh vật có hại; các yếu tố về cường độ lao động, tư thế lao động không hợp lý.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">C</div><div class="opt-text">Cả a và b.</div></div></div>
+</div>
+<div class="q-card" data-idx="7">
+  <div class="q-header">
+    <span class="q-num">Câu 7/28</span>
+  </div>
+  <div class="q-text">Các yếu tố nào sau đây là yếu tố có hại có thể gây bệnh nghề nghiệp cho người lao động trong quá trình sản xuất?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Bức xạ và phóng xạ.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Tiếng ồn và nguồn nhiệt.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">C</div><div class="opt-text">Tiếng ồn và độ rung.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Cả a và c</div></div></div>
+</div>
+<div class="q-card" data-idx="8">
+  <div class="q-header">
+    <span class="q-num">Câu 8/28</span>
+  </div>
+  <div class="q-text">Người lao động làm các nghề, công việc nào sau đây có thể bị bệnh bụi phổi silic?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Khai thác, chế biến quặng và đá có chứa Silic tự do.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Luyện kim, đúc có tiếp xúc với bụi cát; đánh bóng, mài nhẵn bằng cát.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Chế tạo, thủy tinh, đồ sành sứ, đồ gốm, gạch chịu lửa.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">D</div><div class="opt-text">Cả a, b, c.</div></div></div>
+</div>
+<div class="q-card" data-idx="9">
+  <div class="q-header">
+    <span class="q-num">Câu 9/28</span>
+  </div>
+  <div class="q-text">Người lao động làm các nghề, công việc nào sau đây có thể bị bệnh bụi phổi bông?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Trồng, thu hoạch, chế biến bông, đay, lanh gai.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Sản xuất sợi, chỉ, dệt vải, may mặc.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">C</div><div class="opt-text">Cả a, b</div></div></div>
+</div>
+<div class="q-card" data-idx="10">
+  <div class="q-header">
+    <span class="q-num">Câu 10/28</span>
+  </div>
+  <div class="q-text">Người lao động làm các nghề, công việc nào sau đây có thể bị bệnh bụi phổi than?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Khai thác, chế biến than.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Sử dụng than trong các lò nung, lò luyện, lò hơi, sản xuất điện cực than.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Khai thác graphit.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">D</div><div class="opt-text">Cả a, b, c.</div></div></div>
+</div>
+<div class="q-card" data-idx="11">
+  <div class="q-header">
+    <span class="q-num">Câu 11/28</span>
+  </div>
+  <div class="q-text">Người lao động làm các nghề, công việc nào sau đây có thể bị bệnh điếc do tiếng ồn?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Làm việc tại sân bay.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Khai khoáng, mỏ, luyện cán thép, cơ khí, xây dựng, dệt.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Bộ đội tăng, thiết giáp, pháo binh.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">D</div><div class="opt-text">Cả a, b, c.</div></div></div>
+</div>
+<div class="q-card" data-idx="12">
+  <div class="q-header">
+    <span class="q-num">Câu 12/28</span>
+  </div>
+  <div class="q-text">Người lao động làm các nghề, công việc nào sau đây có thể bị bệnh bụi phổi amiăng?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Khai thác, chế biến quặng hoặc đá có chứa amiăng; chải sợi, kéo sợi và dệt vải amiăng; làm cách nhiệt bằng amiăng.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Sản xuất, xử lý tấm lợp amiăng - ximăng, các gioăng bằng amiăng và cao su; má phanh bằng amiăng; bìa các-tông và giấy có amiăng.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Sản xuất phân lân, thợ sửa chữa ô tô, xe máy.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">D</div><div class="opt-text">Cả a, b, c.</div></div></div>
+</div>
+<div class="q-card" data-idx="13">
+  <div class="q-header">
+    <span class="q-num">Câu 13/28</span>
+  </div>
+  <div class="q-text">Hãy nêu một số biện pháp tổ chức lao động đảm bảo ATVSLĐ?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Bố trí mặt bằng nhà xưởng, đường đi lại và vận chuyển; sắp xếp nguyên vật liệu, bán thành phẩm và thành phẩm bảo đảm an toàn.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Bố trí không gian làm việc rộng rãi, tư thế thao tác thoải mái.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Huấn luyện ATVSLĐ cho người lao động.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">D</div><div class="opt-text">Cả a, b và c.</div></div></div>
+</div>
+<div class="q-card" data-idx="14">
+  <div class="q-header">
+    <span class="q-num">Câu 14/28</span>
+  </div>
+  <div class="q-text">Theo QCVN 24:2016/BYT, mức tiếp xúc cho phép với tiếng ồn của người lao động tại nơi làm việc bình thường trong 8 giờ tại các cơ sở sản xuất không được vượt quá bao nhiêu decibel (dBA)?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">80dBA</div></div><div class="opt correct" data-correct="1"><div class="opt-key">B</div><div class="opt-text">85dBA</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">90dB</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">95dB</div></div></div>
+</div>
+<div class="q-card" data-idx="15">
+  <div class="q-header">
+    <span class="q-num">Câu 15/28</span>
+  </div>
+  <div class="q-text">Tác hại của tiếng ồn đối với người lao động trong sản xuất là:</div>
+  <div class="opts"><div class="opt correct" data-correct="1"><div class="opt-key">A</div><div class="opt-text">Gây đau đầu và ù tai, giảm sự tập trung, giảm năng suất lao động, gây rối loạn nhịp tim, ảnh hưởng đến bệnh cao huyết áp, gây điếc nghề nghiệp.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Tăng nguy cơ mắc các bệnh mạn tính như về xương khớp, hô hấp và tiêu hoá.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Gây nhiễm độc, làm giảm khả năng miễn dịch, gây ung thư và một số bệnh mạn tính khác.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Tất cả các tác hại trên.</div></div></div>
+</div>
+<div class="q-card" data-idx="16">
+  <div class="q-header">
+    <span class="q-num">Câu 16/28</span>
+  </div>
+  <div class="q-text">Biện pháp nào dưới đây giúp làm giảm tác hại của tiếng ồn tại nơi làm việc?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Thay đổi thiết bị công nghệ và sử dụng các biện pháp kỹ thuật giảm ồn.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Dùng phương tiện bảo vệ cá nhân chống ồn.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Bố trí hợp lý thời gian làm việc ở nơi có nguồn ồn.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">D</div><div class="opt-text">Cả a, b, c.</div></div></div>
+</div>
+<div class="q-card" data-idx="17">
+  <div class="q-header">
+    <span class="q-num">Câu 17/28</span>
+  </div>
+  <div class="q-text">Theo quy định, người lao động làm việc trong điều kiện có yếu tố nặng nhọc, độc hại, nguy hiểm thì được:</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Giảm thời giờ làm việc.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Khám sức khỏe ít nhất 6 tháng/1 lần.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Bồi dưỡng bằng hiện vật nếu có yếu tố độc hại vượt tiêu chuẩn cho phép.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">D</div><div class="opt-text">Cả a, b, c.</div></div></div>
+</div>
+<div class="q-card" data-idx="18">
+  <div class="q-header">
+    <span class="q-num">Câu 18/28</span>
+  </div>
+  <div class="q-text">Khi cấp cứu người bị say nắng, say nóng; biện pháp đầu tiên cần phải thực hiện là?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Chườm bằng nước mát để nhiệt độ giảm từ từ.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">B</div><div class="opt-text">Đưa nạn nhân vào chỗ râm mát hoặc ra khỏi môi trường nóng.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Nới lỏng quần áo hoặc cởi hết quần áo ngoài, Quạt cho thoáng mát.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Cả a,b,c.</div></div></div>
+</div>
+<div class="q-card" data-idx="19">
+  <div class="q-header">
+    <span class="q-num">Câu 19/28</span>
+  </div>
+  <div class="q-text">Việc đầu tiên khi tiến hành sơ cứu ban đầu do bị bỏng nhiệt, ta nên thực hiện biện pháp nào?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Dùng kem đánh răng bôi vào vùng vị bỏng.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">B</div><div class="opt-text">Ngâm rửa hoặc tưới rửa phần da bị bỏng bằng nước mát.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Băng kín vùng bị bỏng.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Tất cả các biện pháp trên.</div></div></div>
+</div>
+<div class="q-card" data-idx="20">
+  <div class="q-header">
+    <span class="q-num">Câu 20/28</span>
+  </div>
+  <div class="q-text">Khi cấp cứu người bị bỏng do hóa chất, cần làm theo trình tự nào sau đây?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Cởi bỏ quần áo dính hóa chất, lau và rửa sạch vết thương dưới vòi nước sạch, nhanh chóng vận chuyển nạn nhân ra khỏi hiện trường.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">B</div><div class="opt-text">Nhanh chóng vận chuyển nạn nhân ra khỏi hiện trường, cởi bỏ quần áo dính hóa chất, lau và rửa sạch vết thương dưới vòi nước sạch.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Cởi bỏ quần áo dính hóa chất, lau và rửa sạch vết thương.</div></div><div class="opt" data-correct="0"><div class="opt-key">D</div><div class="opt-text">Nhanh chóng vận chuyển nạn nhân ra khỏi hiện trường, cởi bỏ quần áo dính hóa chất.</div></div></div>
+</div>
+<div class="q-card" data-idx="21">
+  <div class="q-header">
+    <span class="q-num">Câu 21/28</span>
+  </div>
+  <div class="q-text">Khi cần vào hầm chứa, thùng khoang kín để làm việc phải?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Sử dụng khẩu trang lọc bụi, sử dụng mặt nạ phòng độc.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Yêu cầu 1 người cộng tác, thông khí hầm chứa mang đầy đủ bảo hộ lao động và mặt nạ lọc độc.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Yêu cầu 1 người cộng tác mang đầy đủ bảo hộ lao động và mặt nạ phòng độc.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">D</div><div class="opt-text">Yêu cầu 1 người cộng tác, thông khí hầm chứa, mang đầy đủ phương tiện bảo vệ cá nhân theo quy định và mặt nạ cấp khí sạch.</div></div></div>
+</div>
+<div class="q-card" data-idx="22">
+  <div class="q-header">
+    <span class="q-num">Câu 22/28</span>
+  </div>
+  <div class="q-text">Khi làm việc trong không gian hạn chế, có thể tiềm ẩn các yếu tố nguy hiểm, có hại nào?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Hóa chất, khí độc hại</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Tiếng ồn, nhiệt, bức xạ</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Tư thế làm việc gò bó</div></div><div class="opt correct" data-correct="1"><div class="opt-key">D</div><div class="opt-text">Cả a, b, c</div></div></div>
+</div>
+<div class="q-card" data-idx="23">
+  <div class="q-header">
+    <span class="q-num">Câu 23/28</span>
+  </div>
+  <div class="q-text">Hóa chất xâm nhập vào cơ thể qua đường nào?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Hô hấp</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Tiêu hóa</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Qua da</div></div><div class="opt correct" data-correct="1"><div class="opt-key">D</div><div class="opt-text">Cả a, b, c</div></div></div>
+</div>
+<div class="q-card" data-idx="24">
+  <div class="q-header">
+    <span class="q-num">Câu 24/28</span>
+  </div>
+  <div class="q-text">Môi trường lao động lạnh thấp hơn tiêu chuẩn cho phép gây tác hại gì tới cơ thể?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Da bị xanh; làm giảm nhịp tim, nhịp thở.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Gây co thắt mạch, làm giảm khả năng vận động, đau cơ, viêm cơ, thấp khớp, viêm thần kinh ngoại biên.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Giảm sức đề kháng, giảm miễn dịch, gây viêm đường hô hấp trên.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">D</div><div class="opt-text">Cả a, b, c</div></div></div>
+</div>
+<div class="q-card" data-idx="25">
+  <div class="q-header">
+    <span class="q-num">Câu 25/28</span>
+  </div>
+  <div class="q-text">Môi trường lao động có nhiệt độ cao vượt tiêu chuẩn cho phép gây tác hại gì tới người lao động?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Mất nước, mất khoáng</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Chóng mặt, nhức đầu</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Giảm chú ý, mất tập trung</div></div><div class="opt correct" data-correct="1"><div class="opt-key">D</div><div class="opt-text">Cả a, b, c</div></div></div>
+</div>
+<div class="q-card" data-idx="26">
+  <div class="q-header">
+    <span class="q-num">Câu 26/28</span>
+  </div>
+  <div class="q-text">Tác hại của rung toàn thân đối với sức khỏe người lao động là gì?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Gây tổn thương cơ bắp.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Làm tổn thương hệ thần kinh, nội tạng.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Ảnh hưởng đến thị giác và tiền đình.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">D</div><div class="opt-text">Cả a, b, c</div></div></div>
+</div>
+<div class="q-card" data-idx="27">
+  <div class="q-header">
+    <span class="q-num">Câu 27/28</span>
+  </div>
+  <div class="q-text">Để phòng chống tác hại nghề nghiệp, có thể áp dụng các giải pháp nào sau đây?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Cơ khí hóa, tự động hóa các khâu độc hại, thay thế các chất độc hại bằng các chất không độc hại.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Thông gió, chống nóng, hút bụi, cách ly hoặc che chắn nguồn ồn, rung động, bức xạ.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Sử dụng phương tiện bảo vệ cá nhân.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">D</div><div class="opt-text">Cả a, b, c</div></div></div>
+</div>
+<div class="q-card" data-idx="28">
+  <div class="q-header">
+    <span class="q-num">Câu 28/28</span>
+  </div>
+  <div class="q-text">Tác hại của hóa chất đối với sức khỏe người lao động?</div>
+  <div class="opts"><div class="opt" data-correct="0"><div class="opt-key">A</div><div class="opt-text">Tổn thương mắt và da: mờ mắt, hỏng mắt, xạm da, nốt dầu.</div></div><div class="opt" data-correct="0"><div class="opt-key">B</div><div class="opt-text">Ảnh hưởng đến phổi, phế quản, tim mạch, tiêu hóa, thần kinh, di truyền, thành phần máu.</div></div><div class="opt" data-correct="0"><div class="opt-key">C</div><div class="opt-text">Gây ung thư.</div></div><div class="opt correct" data-correct="1"><div class="opt-key">D</div><div class="opt-text">Cả a, b, c.</div></div></div>
+</div>
+</div>
+  <div id="noResult" class="no-result" style="display:none">
+    <div class="icon">🔍</div>
+    <p>Không tìm thấy câu hỏi nào phù hợp</p>
+  </div>
+  <div class="back-note">📚 Tài liệu ôn tập ATVSLĐ – Đáp án đúng được tô xanh</div>
+</div>
+
+<script>
+const cards = document.querySelectorAll('.q-card');
+const noResult = document.getElementById('noResult');
+const statsBar = document.getElementById('statsBar');
+
+function doSearch() {
+  const kw = document.getElementById('searchBox').value.toLowerCase().trim();
+  let visible = 0;
+  cards.forEach(card => {
+    const text = card.textContent.toLowerCase();
+    const show = !kw || text.includes(kw);
+    card.style.display = show ? '' : 'none';
+    if(show) visible++;
+  });
+  noResult.style.display = visible === 0 ? 'block' : 'none';
+  statsBar.textContent = kw ? `${visible}/28 câu` : '28 câu hỏi';
+}
+</script>
+</body>
+</html>
