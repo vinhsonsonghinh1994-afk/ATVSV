@@ -277,7 +277,7 @@ nav{background:#1e3a8a;display:flex;justify-content:center}
 <header class="site-header">
   <div class="header-top">
     <div class="h-company">Công ty Cổ phần Thủy điện Vĩnh Sơn – Sông Hinh</div>
-    <div class="h-title">Hệ thống luyện thi ATVSLĐ</div>
+    <div class="h-title">PHẦN MỀM LUYỆN THI TRẮC NGHIỆM CHO AN TOÀN VỆ SINH VIÊN</div>
     <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
   </div>
 
@@ -729,8 +729,8 @@ function qtRenderCandidates() {
     </td>
     <td>
       <div style="display:flex;gap:6px;flex-wrap:wrap">
-        <button class="btn-tbl btn-tbl-blue" onclick="qtOpenReset(${c.id},'${c.full_name.replace(/'/g,'\\'')}')">🔑 Đặt lại MK</button>
-        <button class="btn-tbl btn-tbl-red" onclick="qtDeleteCandidate(${c.id},'${c.full_name.replace(/'/g,'\\'')}')">🗑️ Xóa</button>
+        <button class="btn-tbl btn-tbl-blue" onclick="qtOpenReset(${c.id}, this)" data-name="${c.full_name}">🔑 Đặt lại MK</button>
+        <button class="btn-tbl btn-tbl-red" onclick="qtDeleteCandidate(${c.id}, this)" data-name="${c.full_name}">🗑️ Xóa</button>
       </div>
     </td>
   </tr>`).join('');
@@ -791,7 +791,8 @@ async function qtToggleActive(id, current) {
   } catch(e) { alert('Lỗi kết nối.'); }
 }
 
-async function qtDeleteCandidate(id, name) {
+async function qtDeleteCandidate(id, btn) {
+  const name = btn.getAttribute ? btn.getAttribute('data-name') : btn;
   if(!confirm(`Bạn có chắc muốn XÓA thí sinh:\n"${name}"\n\nHành động này không thể hoàn tác!`)) return;
   try {
     const res = await fetch(`${SUPABASE_URL}/rest/v1/exam_candidates?id=eq.${id}`, {
@@ -807,7 +808,8 @@ async function qtDeleteCandidate(id, name) {
   } catch(e) { alert('Lỗi kết nối.'); }
 }
 
-function qtOpenReset(id, name) {
+function qtOpenReset(id, btn) {
+  const name = btn.getAttribute ? btn.getAttribute('data-name') : btn;
   qtResetTargetId = id;
   document.getElementById('qt-reset-label').textContent = `Thí sinh: ${name}`;
   document.getElementById('qt-reset-pass').value = '';
