@@ -49,6 +49,268 @@ nav{background:#1e3a8a;display:flex;justify-content:center}
   .h-company{font-size:13px}
   .h-title{font-size:16px}
 }
+
+/* ── TRANG CHỦ STYLES ── */
+
+
+
+        .tc-wrap .company-card {
+            max-width: 1280px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 48px 32px 48px 32px;
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.12), 0 8px 18px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+
+        .tc-wrap .hero {
+            background: linear-gradient(135deg, #003b5c, #0077b6);
+            padding: 2rem 2.5rem;
+            color: white;
+            border-bottom: 5px solid #ffcd3c;
+        }
+
+        .tc-wrap .hero h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+
+        .tc-wrap .hero .tc-wrap .eng-name {
+            font-size: 1rem;
+            font-weight: 400;
+            opacity: 0.9;
+            border-left: 3px solid #ffcd3c;
+            padding-left: 12px;
+            margin: 10px 0 8px 0;
+        }
+
+        .tc-wrap .hero .tc-wrap .badge {
+            display: inline-block;
+            background: rgba(255,255,240,0.2);
+            backdrop-filter: blur(4px);
+            padding: 6px 16px;
+            border-radius: 60px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-top: 12px;
+        }
+
+        .tc-wrap .content-inner {
+            padding: 2rem 2.5rem;
+        }
+
+        .tc-wrap .info-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            background: #f8fafc;
+            border-radius: 32px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid #e2edf2;
+        }
+
+        .tc-wrap .info-item {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .tc-wrap .info-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+            color: #2c6e9e;
+            margin-bottom: 6px;
+        }
+
+        .tc-wrap .info-value {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #0a2942;
+            word-break: break-word;
+        }
+
+        .tc-wrap .section-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin: 2rem 0 1rem 0;
+            position: relative;
+            display: inline-block;
+            color: #0a4c6e;
+        }
+
+        .tc-wrap .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 60%;
+            height: 3px;
+            background: #ffcd3c;
+            border-radius: 4px;
+        }
+
+        .tc-wrap .history-text {
+            margin: 1rem 0;
+            font-size: 1rem;
+            text-align: justify;
+            color: #2c3e44;
+        }
+
+        .tc-wrap .stats-banner {
+            background: #eef3fc;
+            border-radius: 28px;
+            padding: 1.5rem 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 20px;
+            margin: 2rem 0;
+            border-left: 6px solid #0077b6;
+        }
+
+        .tc-wrap .stat {
+            text-align: center;
+            flex: 1;
+        }
+
+        .tc-wrap .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #005f8c;
+            line-height: 1;
+        }
+
+        .tc-wrap .stat-label {
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            color: #2c5a74;
+        }
+
+        .tc-wrap .plant-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.2rem;
+            margin: 1.5rem 0;
+        }
+
+        .tc-wrap .plant-card {
+            background: #fefefe;
+            border-radius: 24px;
+            padding: 1.2rem 1.4rem;
+            border: 1px solid #daecf2;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+
+        .tc-wrap .plant-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.08);
+            border-color: #c0dfed;
+        }
+
+        .tc-wrap .plant-name {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #003f5c;
+            margin-bottom: 10px;
+            border-left: 4px solid #ffcd3c;
+            padding-left: 12px;
+        }
+
+        .tc-wrap .plant-address {
+            font-size: 0.85rem;
+            color: #4f6f7f;
+            margin: 6px 0;
+        }
+
+        /* Phần an toàn lao động - điểm nhấn */
+        .tc-wrap .safety-section {
+            background: linear-gradient(125deg, #f0f6fa 0%, #ffffff 100%);
+            border-radius: 32px;
+            padding: 1.8rem 2rem;
+            margin: 2rem 0 1.5rem 0;
+            border-left: 8px solid #e07c1f;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.04);
+        }
+
+        .tc-wrap .safety-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #b45f1b;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 1.2rem;
+        }
+
+        .tc-wrap .safety-title span {
+            background: #e07c1f20;
+            padding: 5px 12px;
+            border-radius: 60px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #c0641a;
+        }
+
+        .tc-wrap .safety-text {
+            font-size: 1rem;
+            text-align: justify;
+            color: #2a3b44;
+            line-height: 1.6;
+        }
+
+        .tc-wrap .contact-footer {
+            margin-top: 2rem;
+            background: #eef2f5;
+            border-radius: 28px;
+            padding: 1.2rem 1.8rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            border: 1px solid #d0e2ea;
+        }
+
+        .tc-wrap .contact-info {
+            font-weight: 500;
+        }
+
+        .tc-wrap .contact-phone {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #004e7c;
+        }
+
+        hr {
+            margin: 1rem 0;
+            border: none;
+            height: 1px;
+            background: linear-gradient(to right, #cbdde6, transparent);
+        }
+
+        @media (max-width: 680px) {
+            .tc-wrap .content-inner {
+                padding: 1.5rem;
+            }
+            .tc-wrap .hero h1 {
+                font-size: 1.5rem;
+            }
+            .tc-wrap .section-title {
+                font-size: 1.4rem;
+            }
+            .tc-wrap .safety-title {
+                font-size: 1.3rem;
+            }
+        }
+    
 </style>
 </head>
 <body>
@@ -61,6 +323,9 @@ nav{background:#1e3a8a;display:flex;justify-content:center}
 
   <nav>
     <div class="nav-item">
+      <button class="nav-tab" id="tab-trangchu" onclick="showSub('trangchu','tc-main')">🏠 Trang chủ</button>
+    </div>
+        <div class="nav-item">
       <button class="nav-tab" id="tab-tailieu">📄 Tài liệu <span class="nav-arrow">▾</span></button>
       <div class="dropdown">
         <div class="dd-item" onclick="showSub('tailieu','tl-atgt')">An toàn giao thông</div>
@@ -91,7 +356,8 @@ nav{background:#1e3a8a;display:flex;justify-content:center}
   </nav>
 
   <div class="mobile-nav" id="mobileNav">
-    <div class="mobile-section-title">📄 Tài liệu</div>
+    <div class="mobile-section-title" onclick="showSub('trangchu','tc-main');closeMobileMenu()" style="cursor:pointer">🏠 Trang chủ</div>
+        <div class="mobile-section-title">📄 Tài liệu</div>
     <div class="mobile-dd-item" onclick="showSub('tailieu','tl-atgt');closeMobileMenu()">An toàn giao thông</div>
     <div class="mobile-dd-item" onclick="showSub('tailieu','tl-pccc');closeMobileMenu()">Phòng cháy chữa cháy</div>
     <div class="mobile-dd-item" onclick="showSub('tailieu','tl-atvsv');closeMobileMenu()">An toàn vệ sinh viên</div>
@@ -114,6 +380,154 @@ nav{background:#1e3a8a;display:flex;justify-content:center}
 </header>
 
 <div class="content-wrap">
+
+  <!-- TRANG CHỦ -->
+  <div class="tab-panel" id="panel-trangchu">
+    <div id="sub-tc-main" style="overflow-y:auto;height:calc(100vh - 155px);background:linear-gradient(145deg,#eef2f5,#d9e2e8);padding:24px 16px">
+      <div class="tc-wrap">
+        
+<div class="hero">
+<h1>Công ty Cổ phần Thuỷ điện Vĩnh Sơn - Sông Hinh</h1>
+<div class="eng-name">Vinh Son - Song Hinh Hydropower Joint Stock Company</div>
+<div class="badge">Mã chứng khoán: VSH | Thành viên Tập đoàn Điện lực Việt Nam (EVN)</div>
+</div>
+<div class="content-inner">
+<!-- Thông tin liên lạc cơ bản -->
+<div class="info-grid">
+<div class="info-item">
+<div class="info-label">Tên viết tắt</div>
+<div class="info-value">VSH</div>
+</div>
+<div class="info-item">
+<div class="info-label">Trụ sở chính</div>
+<div class="info-value">21 Nguyễn Huệ, P. Quy Nhơn, Tỉnh Gia Lai</div>
+</div>
+<div class="info-item">
+<div class="info-label">Điện thoại</div>
+<div class="info-value">(84.0256) 3892.792</div>
+</div>
+<div class="info-item">
+<div class="info-label">Fax</div>
+<div class="info-value">(84.0256) 3891.975</div>
+</div>
+</div>
+<!-- Phần 1: Quá trình hình thành và phát triển (tóm tắt từ 2 hình) -->
+<div>
+<div class="section-title">Hành trình phát triển</div>
+<div class="history-text">
+<strong>Tiền thân</strong> là Nhà máy Thuỷ điện Vĩnh Sơn (thuộc Công ty Điện lực III), khởi công ngày 15/9/1991, 
+                chính thức phát điện hoà lưới quốc gia ngày <strong>04/12/1994</strong> với công suất 66 MW, sản lượng thiết kế 300 triệu kWh/năm. 
+                Đây là nhà máy thuỷ điện quy mô lớn đầu tiên tại miền Trung – Tây Nguyên.
+            </div>
+<div class="history-text">
+                Năm 1999, Tổng Công ty Điện lực Việt Nam giao Nhà máy Vĩnh Sơn quản lý vận hành dự án <strong>Nhà máy Thuỷ điện Sông Hinh</strong> 
+                (02 tổ máy, công suất 70 MW, sản lượng 350 triệu kWh/năm). Từ tháng 7/2000, đơn vị đổi tên thành Nhà máy Thuỷ điện Vĩnh Sơn – Sông Hinh.
+            </div>
+<div class="history-text">
+                Thực hiện cổ phần hóa theo Quyết định 219/QĐ-TTg của Thủ tướng Chính phủ, ngày <strong>02/12/2004</strong> Bộ Công nghiệp ban hành Quyết định 
+                151/2004/QĐ-BCN chuyển Nhà máy thành <strong>Công ty cổ phần Thuỷ điện Vĩnh Sơn - Sông Hinh</strong>. Ngày 04/05/2005, công ty chính thức 
+                hoạt động theo mô hình cổ phần – bước ngoặt chiến lược.
+            </div>
+<div class="history-text">
+                Mở rộng quy mô, ngày 27/9/2009 khởi công <strong>Nhà máy Thuỷ điện Thượng Kon Tum</strong> tại xã Ngọc Tem, huyện Kon Plông, tỉnh Kon Tum, 
+                gồm 02 tổ máy công suất 220 MW, sản lượng thiết kế 814 triệu kWh/năm. Nhà máy vận hành thương mại hoà lưới Quốc gia từ ngày 
+                <strong>01/4/2021</strong>, hiện là chi nhánh “Công ty Thuỷ điện Thượng Kon Tum – CN VSH”.
+            </div>
+<div class="history-text">
+                Ngày nay, VSH sở hữu <strong>03 nhà máy thuỷ điện</strong> vận hành ổn định với <strong>tổng công suất 356 MW</strong>, 
+                cung cấp khoảng <strong>2,1 tỷ kWh/năm</strong> cho lưới điện Quốc gia. Bên cạnh sản xuất điện, các nhà máy còn đảm nhiệm cấp nước hạ du mùa kiệt, 
+                đặc biệt Nhà máy Thuỷ điện Sông Hinh tưới cho hơn <strong>20.000 ha</strong> đất nông nghiệp.
+            </div>
+</div>
+<!-- Bảng chỉ số năng lực -->
+<div class="stats-banner">
+<div class="stat">
+<div class="stat-number">356 MW</div>
+<div class="stat-label">Tổng công suất</div>
+</div>
+<div class="stat">
+<div class="stat-number">~2,1 tỷ kWh</div>
+<div class="stat-label">Sản lượng điện/năm</div>
+</div>
+<div class="stat">
+<div class="stat-number">03</div>
+<div class="stat-label">Nhà máy thủy điện</div>
+</div>
+<div class="stat">
+<div class="stat-number">20.000+ ha</div>
+<div class="stat-label">Cấp nước tưới (Sông Hinh)</div>
+</div>
+</div>
+<!-- Danh sách các nhà máy trực thuộc -->
+<div>
+<div class="section-title">Các đơn vị trực thuộc</div>
+<div class="plant-list">
+<div class="plant-card">
+<div class="plant-name">🏢 Văn phòng Công ty</div>
+<div class="plant-address">📍 21 Nguyễn Huệ, Phường Quy Nhơn, Tỉnh Gia Lai</div>
+</div>
+<div class="plant-card">
+<div class="plant-name">⚡ Nhà máy Thuỷ điện Vĩnh Sơn</div>
+<div class="plant-address">📍 Làng Đăk Tra, xã Vĩnh Sơn, Tỉnh Gia Lai</div>
+<div class="plant-address">⚙️ Công suất 66 MW | Hoà lưới 1994</div>
+</div>
+<div class="plant-card">
+<div class="plant-name">💧 Nhà máy Thuỷ điện Sông Hinh</div>
+<div class="plant-address">📍 Thôn Nam Giang, xã Đức Bình, Tỉnh Đắk Lắk</div>
+<div class="plant-address">⚙️ Công suất 70 MW | Cấp nước tưới &gt;20.000ha</div>
+</div>
+<div class="plant-card">
+<div class="plant-name">🌊 Nhà máy Thuỷ điện Thượng Kon Tum</div>
+<div class="plant-address">📍 Thôn Điền Tem, xã Kon Plông, Tỉnh Quảng Ngãi</div>
+<div class="plant-address">⚙️ Công suất 220 MW | Vận hành thương mại 04/2021</div>
+<div class="plant-address">📌 Chi nhánh: Công ty Thuỷ điện Thượng Kon Tum – CN VSH</div>
+</div>
+</div>
+</div>
+<!-- *** PHẦN MỚI: CÔNG TÁC AN TOÀN VỆ SINH LAO ĐỘNG *** -->
+<div class="safety-section">
+<div class="safety-title">
+                🛡️ An toàn - Vệ sinh lao động 
+                <span>Ưu tiên hàng đầu</span>
+</div>
+<div class="safety-text">
+                Là đơn vị quản lý vận hành 03 nhà máy thủy điện với tổng công suất 356 MW, Công ty Cổ phần Thủy điện Vĩnh Sơn – Sông Hinh (VSH) luôn xác định 
+                công tác an toàn vệ sinh lao động (ATVSLĐ) là nhiệm vụ trọng tâm, then chốt, xuyên suốt trong mọi hoạt động sản xuất. Với đặc thù vận hành 
+                các tổ máy phát điện, đập, kênh dẫn nước và trạm biến áp, nguy cơ tai nạn lao động, sự cố kỹ thuật luôn tiềm ẩn, do đó công ty đã xây dựng 
+                hệ thống quản lý ATVSLĐ chặt chẽ, tuân thủ nghiêm ngặt các quy định của pháp luật và tiêu chuẩn ngành điện lực. Hàng năm, công ty tổ chức 
+                đào tạo, huấn luyện định kỳ về an toàn điện, an toàn trên cao, phòng chống cháy nổ và xử lý tình huống khẩn cấp cho toàn bộ cán bộ, công nhân viên. 
+                Đội ngũ vận hành, bảo trì được trang bị đầy đủ phương tiện bảo hộ cá nhân (quần áo cách điện, găng tay cao su, mũ bảo hiểm, giày cách điện…) 
+                và thiết bị kiểm tra an toàn chuyên dụng. Công ty thực hiện nghiêm túc chế độ kiểm định máy móc, thiết bị có yêu cầu nghiêm ngặt về an toàn 
+                như cầu trục, máy cắt, dao cách ly, hệ thống khí nén… Bên cạnh đó, VSH thường xuyên tổ chức diễn tập ứng phó sự cố đập, sự cố vỡ ống áp lực, 
+                cũng như xây dựng phương án phòng chống thiên tai, đảm bảo an toàn cho công trình và vùng hạ du. Nhờ sự quan tâm đúng mức từ ban lãnh đạo 
+                và ý thức tuân thủ của toàn thể người lao động, công ty đã duy trì thành tích an toàn liên tục nhiều năm, không xảy ra tai nạn lao động nghiêm trọng, 
+                góp phần ổn định sản xuất và bảo vệ sức khỏe, tính mạng người lao động.
+            </div>
+</div>
+<!-- Ghi chú địa danh (theo tài liệu) -->
+<div style="background: #f9fafc; border-radius: 20px; padding: 12px 20px; margin: 20px 0 8px 0; font-size: 0.8rem; color: #3d5e72; border: 1px solid #dce9f0;">
+<span>📌 <strong>Lưu ý địa danh:</strong> Văn phòng Công ty: 21 Nguyễn Huệ, P. Quy Nhơn, Tỉnh Gia Lai. Nhà máy Thượng Kon Tum: thôn Điền Tem, xã Kon Plông, tỉnh Quảng Ngãi. 
+            Nhà máy Vĩnh Sơn (Gia Lai), Nhà máy Sông Hinh (Đắk Lắk) – đúng theo hồ sơ doanh nghiệp.</span>
+</div>
+<!-- Liên hệ -->
+<div class="contact-footer">
+<div class="contact-info">
+<strong>Công ty Cổ phần Thuỷ điện Vĩnh Sơn - Sông Hinh (VSH)</strong><br/>
+                Giao dịch quốc tế: Vinh Son - Song Hinh Hydropower Joint Stock Company
+            </div>
+<div class="contact-phone">
+                📞 (84.0256) 3892.792  |  📠 (84.0256) 3891.975
+            </div>
+</div>
+<hr/>
+<div style="text-align: center; font-size: 0.7rem; color: #5c7f8c; margin-top: 12px;">
+            © 2025 Công ty Cổ phần Thuỷ điện Vĩnh Sơn - Sông Hinh | Phát triển bền vững - An toàn là số 1
+        </div>
+</div>
+
+      </div>
+    </div>
+  </div>
 
   <!-- TÀI LIỆU -->
   <div class="tab-panel" id="panel-tailieu">
@@ -158,8 +572,9 @@ nav{background:#1e3a8a;display:flex;justify-content:center}
 </div>
 
 <script>
-const TABS = ['tailieu','luyenthi','kythi'];
+const TABS = ['trangchu','tailieu','luyenthi','kythi'];
 const SUBS = {
+  trangchu: ['tc-main'],
   tailieu:  ['tl-welcome','tl-atgt','tl-pccc','tl-atvsv','tl-ktatld','tl-ktvsld','tl-vbqc','tl-pl'],
   luyenthi: ['lt-welcome','lt-de1','lt-de2','lt-de3','lt-de4','lt-de5','lt-de6','lt-de7','lt-de8'],
   kythi:    ['kt-main']
@@ -190,8 +605,8 @@ function toggleMobileMenu() {
 function closeMobileMenu() {
   document.getElementById('mobileNav').classList.remove('open');
 }
-// Default: show kỳ thi
-showSub('kythi','kt-main');
+// Default: show trang chủ
+showSub('trangchu','tc-main');
 </script>
 </body>
 </html>
