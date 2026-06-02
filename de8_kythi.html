@@ -22,6 +22,31 @@ body{font-family:'Segoe UI',Roboto,sans-serif;background:#eef2f7;padding:16px;co
 .btn-login{width:100%;background:#1e3a8a;color:white;border:none;padding:12px;border-radius:10px;font-size:15px;font-weight:800;cursor:pointer;margin-top:4px}
 .btn-login:hover{background:#1e40af}
 .login-err{color:#dc2626;font-size:13px;font-weight:600;margin-top:10px;min-height:20px}
+.login-links{display:flex;justify-content:center;margin-top:14px}
+.link-btn{background:none;border:none;color:#1e3a8a;font-size:13px;font-weight:700;cursor:pointer;text-decoration:underline;padding:0}
+.link-btn:hover{color:#1e40af}
+/* USER BAR */
+.user-bar{display:flex;align-items:center;justify-content:space-between;background:#eff6ff;border-radius:12px;padding:10px 16px;margin-bottom:20px;flex-wrap:wrap;gap:8px}
+.user-name{font-size:14px;font-weight:800;color:#1e3a8a}
+.user-actions{display:flex;gap:8px}
+.btn-sm{border:none;padding:7px 14px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer}
+.btn-logout{background:#fee2e2;color:#dc2626}.btn-logout:hover{background:#fecaca}
+.btn-chpass{background:#fef9c3;color:#92400e}.btn-chpass:hover{background:#fef08a}
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal{background:white;border-radius:20px;padding:28px 24px;max-width:380px;width:90%;box-shadow:0 20px 40px rgba(0,0,0,.2)}
+.modal h3{font-size:16px;font-weight:800;color:#1e3a8a;margin-bottom:18px;text-align:center}
+.modal-field{margin-bottom:12px;text-align:left}
+.modal-field label{display:block;font-size:12px;font-weight:700;color:#374151;margin-bottom:4px}
+.modal-field input{width:100%;padding:10px 12px;border:2px solid #cbd5e1;border-radius:8px;font-size:14px;outline:none}
+.modal-field input:focus{border-color:#1e3a8a}
+.modal-actions{display:flex;gap:10px;margin-top:16px}
+.btn-modal-ok{flex:1;background:#1e3a8a;color:white;border:none;padding:11px;border-radius:9px;font-size:14px;font-weight:800;cursor:pointer}
+.btn-modal-ok:hover{background:#1e40af}
+.btn-modal-cancel{flex:1;background:#f1f5f9;color:#374151;border:none;padding:11px;border-radius:9px;font-size:14px;font-weight:700;cursor:pointer}
+.modal-msg{font-size:13px;font-weight:600;margin-top:10px;text-align:center;min-height:18px}
+.modal-msg.ok{color:#16a34a}.modal-msg.err{color:#dc2626}
 /* START */
 .start-screen{text-align:center;padding:28px 20px}
 .welcome-badge{background:#eff6ff;border-radius:12px;padding:12px 20px;margin-bottom:20px;font-size:15px;font-weight:700;color:#1e3a8a}
@@ -130,11 +155,20 @@ tr:last-child td{border-bottom:none}
     </div>
     <button class="btn-login" onclick="doLogin()">Đăng nhập</button>
     <div class="login-err" id="loginErr"></div>
+    <div class="login-links">
+      <button class="link-btn" onclick="openChangePass()">🔑 Đổi mật khẩu</button>
+    </div>
   </div>
 
   <!-- START -->
   <div id="startScreen" style="display:none" class="start-screen">
-    <div class="welcome-badge">👤 Xin chào, <span id="welcomeName"></span>!</div>
+    <div class="user-bar">
+      <span class="user-name">👤 <span id="welcomeName"></span></span>
+      <div class="user-actions">
+        <button class="btn-sm btn-chpass" onclick="openChangePass()">🔑 Đổi mật khẩu</button>
+        <button class="btn-sm btn-logout" onclick="doLogout()">🚪 Đăng xuất</button>
+      </div>
+    </div>
     <div class="start-info">
       <h2>📋 Thông tin kỳ thi</h2>
       <div class="info-row"><span class="info-label">Số câu hỏi</span><span class="info-val">50 câu</span></div>
@@ -465,6 +499,130 @@ function retakeExam(){
   ['resultScreen','reviewScreen','examScreen'].forEach(id=>document.getElementById(id).style.display='none');
   document.getElementById('startScreen').style.display='block';
 }
+
+// ── ĐĂNG XUẤT ──
+function doLogout(){
+  if(!confirm('Bạn có chắc muốn đăng xuất không?')) return;
+  currentUser=null;
+  ['startScreen','examScreen','resultScreen','reviewScreen'].forEach(id=>document.getElementById(id).style.display='none');
+  document.getElementById('loginScreen').style.display='block';
+  document.getElementById('inputName').value='';
+  document.getElementById('inputPass').value='';
+  document.getElementById('loginErr').textContent='';
+}
+
+// ── ĐỔI MẬT KHẨU ──
+function openChangePass(){
+  // Nếu đang đăng nhập thì điền sẵn tên
+  if(currentUser) document.getElementById('cpName').value=currentUser.full_name;
+  document.getElementById('cpOldPass').value='';
+  document.getElementById('cpNewPass').value='';
+  document.getElementById('cpConfirmPass').value='';
+  document.getElementById('cpMsg').textContent='';
+  document.getElementById('cpMsg').className='modal-msg';
+  document.getElementById('changePassModal').classList.add('open');
+}
+function closeChangePass(){
+  document.getElementById('changePassModal').classList.remove('open');
+}
+async function doChangePass(){
+  const name    = document.getElementById('cpName').value.trim();
+  const oldPass = document.getElementById('cpOldPass').value.trim();
+  const newPass = document.getElementById('cpNewPass').value.trim();
+  const confirm2= document.getElementById('cpConfirmPass').value.trim();
+  const msgEl   = document.getElementById('cpMsg');
+
+  msgEl.className='modal-msg';
+  if(!name||!oldPass||!newPass||!confirm2){
+    msgEl.textContent='Vui lòng điền đầy đủ tất cả các ô.';
+    msgEl.className='modal-msg err'; return;
+  }
+  if(newPass.length < 4){
+    msgEl.textContent='Mật khẩu mới phải có ít nhất 4 ký tự.';
+    msgEl.className='modal-msg err'; return;
+  }
+  if(newPass !== confirm2){
+    msgEl.textContent='Mật khẩu mới và xác nhận không khớp.';
+    msgEl.className='modal-msg err'; return;
+  }
+  if(newPass === oldPass){
+    msgEl.textContent='Mật khẩu mới phải khác mật khẩu hiện tại.';
+    msgEl.className='modal-msg err'; return;
+  }
+
+  msgEl.textContent='Đang kiểm tra...';
+  try {
+    // Kiểm tra tên + mật khẩu cũ
+    const checkRes = await fetch(
+      `${SUPABASE_URL}/rest/v1/exam_candidates?full_name=eq.${encodeURIComponent(name)}&password=eq.${encodeURIComponent(oldPass)}&is_active=eq.true&select=id`,
+      {headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${SUPABASE_KEY}`}}
+    );
+    const checkData = await checkRes.json();
+    if(!checkData || checkData.length===0){
+      msgEl.textContent='❌ Họ tên hoặc mật khẩu hiện tại không đúng.';
+      msgEl.className='modal-msg err'; return;
+    }
+    const userId = checkData[0].id;
+    // Cập nhật mật khẩu mới
+    const updateRes = await fetch(
+      `${SUPABASE_URL}/rest/v1/exam_candidates?id=eq.${userId}`,
+      {
+        method:'PATCH',
+        headers:{
+          'Content-Type':'application/json',
+          'apikey':SUPABASE_KEY,
+          'Authorization':`Bearer ${SUPABASE_KEY}`,
+          'Prefer':'return=minimal'
+        },
+        body: JSON.stringify({password: newPass})
+      }
+    );
+    if(updateRes.ok){
+      msgEl.textContent='✅ Đổi mật khẩu thành công!';
+      msgEl.className='modal-msg ok';
+      setTimeout(()=>closeChangePass(), 2000);
+    } else {
+      msgEl.textContent='⚠️ Không thể cập nhật. Vui lòng thử lại.';
+      msgEl.className='modal-msg err';
+    }
+  } catch(e){
+    msgEl.textContent='⚠️ Lỗi kết nối. Vui lòng thử lại.';
+    msgEl.className='modal-msg err';
+  }
+}
+// Đóng modal khi click ra ngoài
+document.getElementById('changePassModal').addEventListener('click', function(e){
+  if(e.target===this) closeChangePass();
+});
 </script>
+
+<!-- MODAL ĐỔI MẬT KHẨU -->
+<div class="modal-overlay" id="changePassModal">
+  <div class="modal">
+    <h3>🔑 Đổi mật khẩu</h3>
+    <div class="modal-field">
+      <label>Họ tên thí sinh</label>
+      <input type="text" id="cpName" placeholder="Nhập đầy đủ họ tên...">
+    </div>
+    <div class="modal-field">
+      <label>Mật khẩu hiện tại</label>
+      <input type="password" id="cpOldPass" placeholder="Nhập mật khẩu hiện tại...">
+    </div>
+    <div class="modal-field">
+      <label>Mật khẩu mới</label>
+      <input type="password" id="cpNewPass" placeholder="Nhập mật khẩu mới (ít nhất 4 ký tự)...">
+    </div>
+    <div class="modal-field">
+      <label>Xác nhận mật khẩu mới</label>
+      <input type="password" id="cpConfirmPass" placeholder="Nhập lại mật khẩu mới...">
+    </div>
+    <div class="modal-msg" id="cpMsg"></div>
+    <div class="modal-actions">
+      <button class="btn-modal-cancel" onclick="closeChangePass()">Hủy</button>
+      <button class="btn-modal-ok" onclick="doChangePass()">Xác nhận</button>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
