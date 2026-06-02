@@ -217,7 +217,7 @@ tr:last-child td{border-bottom:none}
       <button class="btn-action btn-blue" onclick="showReview()">📖 Xem nội dung thi</button>
       <button class="btn-action btn-green" onclick="exportReviewPDF()">📋 Xuất nội dung thi</button>
       <button class="btn-action btn-green2" onclick="exportResultPDF()">📄 Xuất kết quả thi</button>
-      <button class="btn-action btn-gray" onclick="retakeExamWithTimer()">🔄 Thi lại</button>
+      <button class="btn-action btn-gray" onclick="retakeExam()">🔄 Thi lại</button>
     </div>
 
     <!-- LEADERBOARD -->
@@ -240,7 +240,7 @@ tr:last-child td{border-bottom:none}
     <div class="no-print" style="margin-bottom:14px;display:flex;gap:8px;flex-wrap:wrap">
       <button class="btn-action btn-blue" onclick="document.getElementById('reviewScreen').style.display='none';document.getElementById('resultScreen').style.display='block'">← Quay lại kết quả</button>
       <button class="btn-action btn-green" onclick="exportReviewPDF()">📋 Xuất nội dung thi</button>
-      <button class="btn-action btn-gray" onclick="retakeExamWithTimer()">🔄 Thi lại</button>
+      <button class="btn-action btn-gray" onclick="retakeExam()">🔄 Thi lại</button>
     </div>
     <div id="reviewCards"></div>
   </div>
@@ -594,55 +594,6 @@ async function doChangePass(){
 document.getElementById('changePassModal').addEventListener('click', function(e){
   if(e.target===this) closeChangePass();
 });
-
-// ── Cảnh báo khi rời trang trong lúc đang thi ──
-window.addEventListener('beforeunload', function(e) {
-  const examEl = document.getElementById('examScreen');
-  const isExamRunning = !submitted && examEl && examEl.style.display !== 'none';
-  if(isExamRunning && Object.keys(userAnswers).length > 0) {
-    e.preventDefault();
-    e.returnValue = 'Bài thi đang làm dở sẽ bị mất. Bạn có chắc muốn rời khỏi trang?';
-    return e.returnValue;
-  }
-});
-
-// ── Tự động đăng xuất sau 5 phút không thao tác (sau khi nộp bài xong) ──
-let _postExamTimer = null;
-
-function startPostExamTimer() {
-  clearTimeout(_postExamTimer);
-  _postExamTimer = setTimeout(() => {
-    if(submitted && currentUser) {
-      alert('⏰ Phiên làm việc đã hết hạn (5 phút không thao tác). Hệ thống sẽ đăng xuất.');
-      currentUser = null;
-      submitted = false;
-      clearTimeout(_postExamTimer);
-      ['resultScreen','reviewScreen','examScreen','startScreen'].forEach(
-        id => document.getElementById(id).style.display='none'
-      );
-      document.getElementById('loginScreen').style.display='block';
-      document.getElementById('inputName').value='';
-      document.getElementById('inputPass').value='';
-      document.getElementById('loginErr').textContent='';
-    }
-  }, 5 * 60 * 1000);
-}
-
-// Gọi startPostExamTimer ngay sau khi submitExam hoàn thành
-const _origSubmitExam = submitExam;
-submitExam = function() {
-  _origSubmitExam();
-  startPostExamTimer();
-};
-
-// Hủy timer nếu thí sinh nhấn Thi lại
-function retakeExamWithTimer() {
-  clearTimeout(_postExamTimer);
-  ['resultScreen','reviewScreen','examScreen'].forEach(
-    id => document.getElementById(id).style.display='none'
-  );
-  document.getElementById('startScreen').style.display='block';
-}
 </script>
 
 <!-- MODAL ĐỔI MẬT KHẨU -->
