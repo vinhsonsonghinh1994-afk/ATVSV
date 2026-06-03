@@ -597,6 +597,18 @@ const SUBS = {
 let adminLoggedIn = false;
 
 function showSub(tab, sub) {
+  // Rời khỏi tab KỲ THI → báo iframe đăng xuất thí sinh ngay
+  if(tab !== 'kythi') {
+    try {
+      const kyThiFrame = document.querySelector('#sub-kt-main iframe');
+      if(kyThiFrame && kyThiFrame.contentWindow &&
+         typeof kyThiFrame.contentWindow.forceLogoutExam === 'function') {
+        kyThiFrame.contentWindow.forceLogoutExam(
+          '⚠️ Phiên thi bị hủy vì bạn đã rời khỏi trang thi. Vui lòng đăng nhập lại.'
+        );
+      }
+    } catch(e) { /* bỏ qua lỗi cross-origin */ }
+  }
   // Rời khỏi tab QUẢN TRỊ → đăng xuất admin ngay
   if(tab !== 'quantri' && adminLoggedIn) {
     adminForceLogout('');
