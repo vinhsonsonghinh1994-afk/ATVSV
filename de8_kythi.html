@@ -596,78 +596,105 @@ document.getElementById('changePassModal').addEventListener('click', function(e)
 });
 
 // ══════════════════════════════════════════════════════
-// BẢO MẬT THI CỬ — Tự động đăng xuất khi rời khỏi trang
+// BẢO MẬT THI CỬ — Tự động đăng xuất khi rời trang
+// Hoạt động cả standalone lẫn trong <iframe>
 // ══════════════════════════════════════════════════════
 
-// Hàm đăng xuất cưỡng bức (không hỏi xác nhận)
+// Hàm đăng xuất cưỡng bức — gọi được từ index.html qua iframe
 function forceLogoutExam(reason) {
-  if(!currentUser) return; // Chưa đăng nhập → bỏ qua
-  const name = currentUser ? currentUser.full_name : '';
+  if(!currentUser) return;
   currentUser = null;
-  submitted = false;
+  submitted   = false;
   clearInterval(timerInterval);
 
-  // Ẩn tất cả màn hình
   ['startScreen','examScreen','resultScreen','reviewScreen'].forEach(id => {
     const el = document.getElementById(id);
     if(el) el.style.display = 'none';
   });
 
-  // Về màn hình login, hiện thông báo lý do
   const loginEl = document.getElementById('loginScreen');
   if(loginEl) loginEl.style.display = 'block';
 
   const errEl = document.getElementById('loginErr');
   if(errEl) {
-    errEl.style.color = '#dc2626';
+    errEl.style.color      = '#dc2626';
     errEl.style.fontWeight = '700';
-    errEl.textContent = reason || '⚠️ Phiên thi đã bị hủy.';
+    errEl.textContent      = reason || '⚠️ Phiên thi đã bị hủy.';
   }
-
-  // Xóa input
   const u = document.getElementById('inputName');
   const p = document.getElementById('inputPass');
   if(u) u.value = '';
   if(p) p.value = '';
 }
 
-// ── 1. Chuyển tab / thu nhỏ / ẩn cửa sổ (visibilitychange) ──
-document.addEventListener('visibilitychange', function() {
-  if(document.hidden && currentUser) {
-    // Chỉ xử lý khi đang trong màn hình THI hoặc BẮT ĐẦU
-    const examVisible  = document.getElementById('examScreen')  && document.getElementById('examScreen').style.display  !== 'none';
-    const startVisible = document.getElementById('startScreen') && document.getElementById('startScreen').style.display !== 'none';
-    if(examVisible || startVisible) {
-      forceLogoutExam('⚠️ Phiên thi bị hủy do chuyển tab hoặc thu nhỏ cửa sổ. Vui lòng đăng nhập lại để thi.');
-    }
-  }
-});
+// Kiểm tra thí sinh đang ở màn hình thi
+function isExamActive() {
+  if(!currentUser) return false;
+  const exam  = document.getElementById('examScreen');
+  const start = document.getElementById('startScreen');
+  return (exam  && exam.style.display  !== 'none') ||
+         (start && start.style.display !== 'none');
+}
 
-// ── 2. Đóng tab / trình duyệt (beforeunload) ──
-window.addEventListener('beforeunload', function() {
-  if(currentUser) {
-    currentUser = null; // Xóa session
-  }
-});
+// Đăng ký tất cả security listeners
+// Dùng window.top để bắt được sự kiện kể cả khi chạy trong <iframe>
+(function setupSecurityListeners() {
+  const topWin = (function() {
+    try { return window.top || window; } catch(e) { return window; }
+  })();
+  const topDoc = (function() {
+    try { return topWin.document || document; } catch(e) { return document; }
+  })();
 
-// ── 3. Mất focus cửa sổ (window blur) ──
-// Bắt khi người dùng Alt+Tab sang cửa sổ khác
-window.addEventListener('blur', function() {
-  if(currentUser) {
-    const examVisible = document.getElementById('examScreen') &&
-                        document.getElementById('examScreen').style.display !== 'none';
-    const startVisible = document.getElementById('startScreen') &&
-                         document.getElementById('startScreen').style.display !== 'none';
-    if(examVisible || startVisible) {
-      // Delay nhỏ để tránh false positive khi click trong trang
+  // 1. Chuyển tab trình duyệt / thu nhỏ / ẩn cửa sổ
+  try {
+    topDoc.addEventListener('visibilitychange', function() {
+      if(topDoc.hidden && isExamActive()) {
+        forceLogoutExam('⚠️ Phiên thi bị hủy vì bạn đã chuyển tab hoặc thu nhỏ trình duyệt. Vui lòng đăng nhập lại.');
+      }
+    });
+  } catch(e) {
+    // Fallback nếu cross-origin: lắng nghe trên document hiện tại
+    document.addEventListener('visibilitychange', function() {
+      if(document.hidden && isExamActive()) {
+        forceLogoutExam('⚠️ Phiên thi bị hủy vì bạn đã chuyển tab. Vui lòng đăng nhập lại.');
+      }
+    });
+  }
+
+  // 2. Alt+Tab / chuyển sang ứng dụng / cửa sổ khác
+  try {
+    topWin.addEventListener('blur', function() {
       setTimeout(function() {
-        if(!document.hasFocus() && currentUser) {
-          forceLogoutExam('⚠️ Phiên thi bị hủy do chuyển sang cửa sổ khác. Vui lòng đăng nhập lại để thi.');
+        if(isExamActive()) {
+          forceLogoutExam('⚠️ Phiên thi bị hủy vì bạn đã rời khỏi cửa sổ thi. Vui lòng đăng nhập lại.');
         }
-      }, 300);
-    }
+      }, 200);
+    });
+  } catch(e) {
+    window.addEventListener('blur', function() {
+      setTimeout(function() {
+        if(isExamActive()) {
+          forceLogoutExam('⚠️ Phiên thi bị hủy vì bạn đã rời khỏi cửa sổ thi. Vui lòng đăng nhập lại.');
+        }
+      }, 200);
+    });
   }
-});
+
+  // 3. Đóng tab hoặc trình duyệt
+  try {
+    topWin.addEventListener('beforeunload', function() {
+      if(currentUser) currentUser = null;
+    });
+    topWin.addEventListener('pagehide', function() {
+      if(currentUser) currentUser = null;
+    });
+  } catch(e) {
+    window.addEventListener('beforeunload', function() {
+      if(currentUser) currentUser = null;
+    });
+  }
+})();
 
 </script>
 
