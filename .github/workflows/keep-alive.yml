@@ -2,25 +2,93 @@ name: Keep Supabase Alive
 
 on:
   schedule:
-    - cron: '0 0 */5 * *'
-  workflow_dispatch:
+    - cron: '0 0 */3 * *'   # chạy mỗi 3 ngày — an toàn hơn mốc pause 7 ngày của Supabase free tier
+  workflow_dispatch:        # cho phép bấm "Run workflow" để test bằng tay
 
 jobs:
   ping-supabase:
     runs-on: ubuntu-latest
     steps:
+      # ────────────────────────────────────────────────
+      # Bước 1: Chuẩn hóa và kiểm tra SUPABASE_URL
+      # Tự động thêm "https://" nếu thiếu, tự bỏ "/" dư ở cuối
+      # → tránh lỗi exit code 6 "Could not resolve host" nếu secret
+      #   bị lưu sai dạng (vd: chỉ lưu Project ID thay vì URL đầy đủ)
+      # ────────────────────────────────────────────────
+      - name: Chuẩn hóa và kiểm tra SUPABASE_URL
+        id: prep
+        run: |
+          url="${SUPABASE_URL}"
+
+          # Nếu thiếu https:// ở đầu thì tự thêm vào
+          if [[ "$url" != http://* && "$url" != https://* ]]; then
+            echo "::warning::SUPABASE_URL thiếu 'https://' — đang tự thêm vào"
+            url="https://${url}"
+          fi
+
+          # Nếu chưa có .supabase.co thì tự thêm (trường hợp secret chỉ lưu Project ID)
+          if [[ "$url" != *.supabase.co* ]]; then
+            echo "::warning::SUPABASE_URL có vẻ chỉ là Project ID — đang tự ghép thành domain đầy đủ"
+            project_id=$(echo "$url" | sed -E 's#https?://##')
+            url="https://${project_id}.supabase.co"
+          fi
+
+          # Bỏ dấu / dư ở cuối
+          url="${url%/}"
+
+          echo "URL cuối cùng dùng để gọi: $url"
+          echo "Độ dài: ${#url} ký tự"
+
+          if [ -z "$SUPABASE_ANON_KEY" ]; then
+            echo "::error::SUPABASE_ANON_KEY đang trống — kiểm tra lại GitHub Secrets"
+            exit 1
+          fi
+
+          echo "final_url=$url" >> "$GITHUB_OUTPUT"
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+
+      # ────────────────────────────────────────────────
+      # Bước 2: Ping bảng exam_candidates
+      # ────────────────────────────────────────────────
       - name: Ping exam_candidates
         run: |
-          curl -s \
-            -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
-            -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}" \
-            "${{ secrets.SUPABASE_URL }}/rest/v1/exam_candidates?select=id&limit=1"
-          echo "Ping exam_candidates thanh cong!"
+          response=$(curl -s -o /tmp/body1.txt -w "%{http_code}" \
+            -H "apikey: ${SUPABASE_ANON_KEY}" \
+            -H "Authorization: Bearer ${SUPABASE_ANON_KEY}" \
+            "${SUPABASE_URL}/rest/v1/exam_candidates?select=id&limit=1")
 
+          echo "HTTP status: $response"
+          cat /tmp/body1.txt
+
+          if [ "$response" -ge 400 ] || [ "$response" -eq 0 ]; then
+            echo "::error::Ping exam_candidates thất bại với status $response"
+            exit 1
+          fi
+          echo "✅ Ping exam_candidates thành công!"
+        env:
+          SUPABASE_URL: ${{ steps.prep.outputs.final_url }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+
+      # ────────────────────────────────────────────────
+      # Bước 3: Ping bảng exam_results
+      # ────────────────────────────────────────────────
       - name: Ping exam_results
         run: |
-          curl -s \
-            -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
-            -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}" \
-            "${{ secrets.SUPABASE_URL }}/rest/v1/exam_results?select=id&limit=1"
-          echo "Ping exam_results thanh cong!"
+          response=$(curl -s -o /tmp/body2.txt -w "%{http_code}" \
+            -H "apikey: ${SUPABASE_ANON_KEY}" \
+            -H "Authorization: Bearer ${SUPABASE_ANON_KEY}" \
+            "${SUPABASE_URL}/rest/v1/exam_results?select=id&limit=1")
+
+          echo "HTTP status: $response"
+          cat /tmp/body2.txt
+
+          if [ "$response" -ge 400 ] || [ "$response" -eq 0 ]; then
+            echo "::error::Ping exam_results thất bại với status $response"
+            exit 1
+          fi
+          echo "✅ Ping exam_results thành công!"
+        env:
+          SUPABASE_URL: ${{ steps.prep.outputs.final_url }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
