@@ -23,14 +23,18 @@
   /* thanh dieu huong */
   .bar{
     background:linear-gradient(120deg,var(--deep-1),var(--deep-2)); color:#fff;
-    padding:12px 20px; display:flex; align-items:center; gap:14px;
-    position:sticky; top:0; z-index:10;
+    padding:10px 20px; display:flex; align-items:center; gap:16px;
+    position:sticky; top:0; z-index:10; flex-wrap:wrap;
   }
   .bar .mark{width:36px; height:36px; border-radius:9px; background:rgba(255,255,255,.12);
     display:grid; place-items:center; flex:0 0 36px}
   .bar .mark svg{width:22px;height:22px}
   .bar .sys{font-weight:700; font-size:14px; line-height:1.1}
   .bar .sub{font-size:11px; color:#a7c6d4; margin-top:2px}
+  .nav{display:flex; gap:4px}
+  .nav a{color:#bcd4df; text-decoration:none; font-size:13px; font-weight:600; padding:7px 12px; border-radius:8px}
+  .nav a:hover{background:rgba(255,255,255,.1); color:#fff}
+  .nav a.active{background:rgba(255,255,255,.15); color:#fff}
   .bar .grow{flex:1}
   .who{text-align:right; line-height:1.2; margin-right:2px}
   .who .n{font-size:13px; font-weight:600}
@@ -142,6 +146,7 @@
     h1{font-size:20px}
     .btn span.lbl{display:none}
     .btn{padding:0 13px}
+    .bar .sub{display:none}
   }
 </style>
 </head>
@@ -157,6 +162,10 @@
     <div class="sys">Mạng lưới ATVSV</div>
     <div class="sub">Danh sách An toàn vệ sinh viên</div>
   </div>
+  <nav class="nav">
+    <a href="atvsv.html" class="active">Danh sách ATVSV</a>
+    <a href="kien_nghi.html">Sổ kiến nghị</a>
+  </nav>
   <div class="grow"></div>
   <div class="who">
     <div class="n" id="uTen">—</div>
