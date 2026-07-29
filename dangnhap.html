@@ -200,7 +200,7 @@ const TEN_DON_VI = { VS:'Vĩnh Sơn', SH:'Sông Hinh', TKT:'Thượng Kon Tum' }
 const TEN_VAI_TRO = { quan_tri:'Quản trị hệ thống', quan_ly_dv:'Quản lý đơn vị', atvsv:'ATVSV' };
 
 let sb = null;
-if (window.supabase && SUPABASE_ANON_KEY !== 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxhc2J4ZGhleHhjenpmcmZrZXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAyOTAwMzcsImV4cCI6MjA5NTg2NjAzN30.YQD7CPkdG7kGz6qxUF4JJPz_Eb0IKsyq0KNcZ2lAtoA') {
+if (window.supabase && SUPABASE_ANON_KEY.startsWith('eyJ')) {
   sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 }
 
