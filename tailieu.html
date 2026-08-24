@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Danh sách ATVSV — Mạng lưới ATVSV</title>
+<title>Thư viện tài liệu — Mạng lưới ATVSV</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -44,7 +44,7 @@
     font-weight:600; cursor:pointer}
   .btn-out:hover{background:rgba(255,255,255,.12)}
 
-  .container{max-width:1120px; margin:0 auto; padding:22px 18px 60px}
+  .container{max-width:1160px; margin:0 auto; padding:22px 18px 60px}
   .head{display:flex; align-items:flex-end; gap:12px; flex-wrap:wrap; margin-bottom:18px}
   h1{font-size:22px; font-weight:700; margin:0; letter-spacing:-.01em}
   .count{color:var(--muted); font-size:13px; font-weight:500; padding-bottom:2px}
@@ -68,11 +68,13 @@
   .btn-primary:hover{background:var(--accent-d)}
   .btn-ghost{background:#fff; color:var(--ink); border-color:var(--line)}
   .btn-ghost:hover{background:var(--field)}
+  .btn-danger{background:var(--danger); color:#fff}
+  .btn-danger:hover{background:var(--danger-d)}
 
   /* bang */
   .panel{background:var(--card); border:1px solid var(--line); border-radius:14px; overflow:hidden}
   .scroll{overflow-x:auto}
-  table{width:100%; border-collapse:collapse; min-width:720px}
+  table{width:100%; border-collapse:collapse; min-width:820px}
   thead th{background:#f4f8f9; text-align:left; font-size:12px; font-weight:700;
     color:#41525d; text-transform:uppercase; letter-spacing:.03em; padding:12px 14px;
     border-bottom:1px solid var(--line); white-space:nowrap}
@@ -81,9 +83,7 @@
   tbody tr:hover{background:#fafcfc}
   td.stt{color:var(--muted); font-variant-numeric:tabular-nums; width:44px}
   td.ten{font-weight:600}
-  .badge{display:inline-block; font-size:12px; font-weight:600; padding:4px 10px; border-radius:999px}
-  .b-on{background:var(--ok-bg); color:var(--ok)}
-  .b-off{background:#eef1f3; color:#7c8a94}
+  td.nd{max-width:280px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:#33434e}
   .acts{display:flex; gap:6px; justify-content:flex-end}
   .icon-btn{width:32px; height:32px; border-radius:8px; border:1px solid var(--line);
     background:#fff; cursor:pointer; display:grid; place-items:center}
@@ -91,6 +91,11 @@
   .icon-btn:hover{background:var(--field)}
   .icon-btn.del:hover{background:var(--danger-bg); border-color:#f2d2cd}
   .icon-btn.del svg{stroke:var(--danger)}
+  .link-btn{display:inline-flex; align-items:center; gap:5px; height:30px; padding:0 12px;
+    border-radius:8px; background:var(--accent-soft); color:var(--accent-d); text-decoration:none;
+    font-size:12.5px; font-weight:700; white-space:nowrap}
+  .link-btn:hover{background:#d8eef0}
+  .link-off{color:var(--muted); font-size:12.5px}
 
   .state{padding:48px 20px; text-align:center; color:var(--muted)}
   .state .big{font-size:15px; font-weight:600; color:#41525d; margin-bottom:4px}
@@ -121,6 +126,7 @@
   .fld textarea{height:auto; min-height:64px; padding:10px 12px; resize:vertical}
   .fld input:focus, .fld select:focus, .fld textarea:focus{outline:none;
     border-color:var(--accent); background:#fff; box-shadow:0 0 0 3px rgba(14,125,138,.14)}
+  .hint{font-size:11.5px; color:var(--muted); margin-top:5px}
   .lock{height:42px; display:flex; align-items:center; padding:0 12px; border-radius:10px;
     background:#eef2f4; color:#41525d; font-weight:600; font-size:14px}
   .modal-err{display:none; background:var(--danger-bg); color:var(--danger); font-size:13px;
@@ -137,8 +143,6 @@
   .confirm .warn svg{width:26px;height:26px;stroke:var(--danger)}
   .confirm h3{margin:0 0 6px;font-size:17px}
   .confirm p{margin:0;color:var(--muted);font-size:13.5px;line-height:1.5}
-  .btn-danger{background:var(--danger);color:#fff}
-  .btn-danger:hover{background:var(--danger-d)}
 
   @media (max-width:640px){
     .grid{grid-template-columns:1fr}
@@ -147,6 +151,7 @@
     .btn span.lbl{display:none}
     .btn{padding:0 13px}
     .bar .sub{display:none}
+    td.nd{max-width:160px}
   }
 </style>
 </head>
@@ -160,11 +165,12 @@
   </div>
   <div>
     <div class="sys">Mạng lưới ATVSV</div>
-    <div class="sub">Danh sách An toàn vệ sinh viên</div>
+    <div class="sub" id="subDeMuc">Thư viện tài liệu</div>
   </div>
   <nav class="nav">
-    <a href="atvsv.html" class="active">Danh sách ATVSV</a>
+    <a href="atvsv.html">Danh sách ATVSV</a>
     <a href="kien_nghi.html">Sổ kiến nghị</a>
+    <a href="tailieu.html" class="active">Thư viện tài liệu</a>
   </nav>
   <div class="grow"></div>
   <div class="who">
@@ -176,14 +182,14 @@
 
 <div class="container">
   <div class="head">
-    <h1>Danh sách ATVSV</h1>
+    <h1 id="tieuDeTrang">Thư viện tài liệu</h1>
     <span class="count" id="soLuong"></span>
   </div>
 
   <div class="toolbar">
     <div class="search">
       <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3" stroke-linecap="round"/></svg>
-      <input id="oTimKiem" placeholder="Tìm theo tên, tổ/đội, chức vụ, số QĐ…">
+      <input id="oTimKiem" placeholder="Tìm theo tiêu đề, mô tả, người tải…">
     </div>
     <select class="filt" id="locDonVi" style="display:none">
       <option value="">Tất cả đơn vị</option>
@@ -191,13 +197,9 @@
       <option value="SH">Sông Hinh</option>
       <option value="TKT">Thượng Kon Tum</option>
     </select>
-    <button class="btn btn-ghost" id="nutXuat">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0 4-4m-4 4-4-4"/><path d="M4 17v2a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-2"/></svg>
-      <span class="lbl">Xuất Excel</span>
-    </button>
     <button class="btn btn-primary" id="nutThem" style="display:none">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
-      <span class="lbl">Thêm ATVSV</span>
+      <span class="lbl">Thêm tài liệu</span>
     </button>
   </div>
 
@@ -216,14 +218,23 @@
 <div class="overlay" id="modalForm">
   <div class="modal">
     <div class="modal-h">
-      <h3 id="tieuDeForm">Thêm ATVSV</h3>
+      <h3 id="tieuDeForm">Thêm tài liệu</h3>
       <button class="x" data-dong>×</button>
     </div>
     <div class="modal-b">
       <div class="grid">
         <div class="fld full">
-          <label>Họ và tên <span class="req">*</span></label>
-          <input id="f_ho_ten" placeholder="Nguyễn Văn A">
+          <label>Tiêu đề <span class="req">*</span></label>
+          <input id="f_tieu_de" placeholder="Ví dụ: Bản tin an toàn điện tháng 8/2026">
+        </div>
+        <div class="fld full">
+          <label>Mô tả</label>
+          <textarea id="f_mo_ta" placeholder="Mô tả ngắn về nội dung tài liệu (nếu có)"></textarea>
+        </div>
+        <div class="fld full">
+          <label>Link Google Drive <span class="req">*</span></label>
+          <input id="f_link_file" placeholder="https://drive.google.com/...">
+          <div class="hint">Dán link chia sẻ từ Google Drive (bắt đầu bằng http:// hoặc https://). Nhớ bật chia sẻ "Bất kỳ ai có link" trước khi dán.</div>
         </div>
         <div class="fld">
           <label>Đơn vị <span class="req">*</span></label>
@@ -233,45 +244,6 @@
             <option value="TKT">Thượng Kon Tum</option>
           </select>
           <div class="lock" id="f_don_vi_khoa" style="display:none"></div>
-        </div>
-        <div class="fld">
-          <label>Trạng thái</label>
-          <select id="f_trang_thai">
-            <option value="true">Đang hoạt động</option>
-            <option value="false">Đã nghỉ</option>
-          </select>
-        </div>
-        <div class="fld">
-          <label>Tổ / Đội</label>
-          <input id="f_to_doi" placeholder="Tổ vận hành">
-        </div>
-        <div class="fld">
-          <label>Chức vụ</label>
-          <input id="f_chuc_vu" placeholder="Trực chính">
-        </div>
-        <div class="fld">
-          <label>Số quyết định</label>
-          <input id="f_so_qd" placeholder="123/QĐ-…">
-        </div>
-        <div class="fld">
-          <label>Ngày quyết định</label>
-          <input id="f_ngay_qd" type="date">
-        </div>
-        <div class="fld">
-          <label>Ngày bắt đầu</label>
-          <input id="f_ngay_bat_dau" type="date">
-        </div>
-        <div class="fld">
-          <label>Điện thoại</label>
-          <input id="f_dien_thoai" inputmode="tel" placeholder="09xx xxx xxx">
-        </div>
-        <div class="fld full">
-          <label>Email</label>
-          <input id="f_email" type="email" placeholder="ten@vsh.com.vn">
-        </div>
-        <div class="fld full">
-          <label>Ghi chú</label>
-          <textarea id="f_ghi_chu" placeholder="Ghi chú thêm (nếu có)"></textarea>
         </div>
       </div>
       <div class="modal-err" id="loiForm"></div>
@@ -288,7 +260,7 @@
   <div class="modal confirm">
     <div class="modal-b">
       <div class="warn"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4m0 4h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg></div>
-      <h3>Xóa ATVSV</h3>
+      <h3>Xóa tài liệu</h3>
       <p id="xoaNoiDung">Bạn có chắc muốn xóa?</p>
     </div>
     <div class="modal-f" style="justify-content:center">
@@ -299,13 +271,25 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script>
-/* ===== CẤU HÌNH (giống trang đăng nhập) ===== */
+/* =========================================================================
+   NHÂN BẢN TRANG CHO DANH MỤC KHÁC:
+   chỉ cần đổi 2 hằng số dưới đây (và lưu file với tên khác), phần còn lại
+   của trang tự chạy theo danh mục mới.
+   ========================================================================= */
+const DANH_MUC       = 'atd_tin_tuc';
+const TIEU_DE_TRANG  = 'Tin tức – Tài liệu An toàn điện';
+/* ========================================================================= */
+
+/* ===== CẤU HÌNH (giống các trang khác) ===== */
 const SUPABASE_URL = 'https://lasbxdhexxczzfrfkexn.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxhc2J4ZGhleHhjenpmcmZrZXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAyOTAwMzcsImV4cCI6MjA5NTg2NjAzN30.YQD7CPkdG7kGz6qxUF4JJPz_Eb0IKsyq0KNcZ2lAtoA';
 const TRANG_DANG_NHAP = 'dangnhap.html';
 /* ============================================ */
+
+document.title = TIEU_DE_TRANG + ' — Mạng lưới ATVSV';
+document.getElementById('tieuDeTrang').textContent = TIEU_DE_TRANG;
+document.getElementById('subDeMuc').textContent = TIEU_DE_TRANG;
 
 const TEN_DON_VI = { VS:'Vĩnh Sơn', SH:'Sông Hinh', TKT:'Thượng Kon Tum' };
 const TEN_VAI_TRO = { quan_tri:'Quản trị hệ thống', quan_ly_dv:'Quản lý đơn vị', atvsv:'ATVSV' };
@@ -315,13 +299,21 @@ if (window.supabase && SUPABASE_ANON_KEY.startsWith('eyJ'))
   sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 const $ = id => document.getElementById(id);
-let hoSo = null;            // ho so nguoi dang nhap
-let danhSachGoc = [];       // toan bo ATVSV tai ve
+let hoSo = null, nguoiDungId = null;
+let danhSachGoc = [];
 let dangSua = null;         // id dang sua, null = them moi
 let coTheSua = false, coTheXoa = false, laQuanTri = false;
 
-function fmtNgay(d){ if(!d) return '—'; const [y,m,dd]=d.split('-'); return `${dd}/${m}/${y}`; }
 function esc(s){ return (s??'').toString().replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function fmtNgayGio(iso){
+  if(!iso) return '—';
+  const d = new Date(iso);
+  if (isNaN(d)) return '—';
+  const dd=String(d.getDate()).padStart(2,'0'), mm=String(d.getMonth()+1).padStart(2,'0');
+  const hh=String(d.getHours()).padStart(2,'0'), mi=String(d.getMinutes()).padStart(2,'0');
+  return `${dd}/${mm}/${d.getFullYear()} ${hh}:${mi}`;
+}
+function linkHopLe(u){ return typeof u==='string' && /^https?:\/\//i.test(u.trim()) ? u.trim() : null; }
 
 /* ---------- KHỞI TẠO ---------- */
 async function khoiTao(){
@@ -329,9 +321,10 @@ async function khoiTao(){
   let session;
   try{ session = (await sb.auth.getSession()).data.session; }catch(e){}
   if (!session){ location.href = TRANG_DANG_NHAP; return; }
+  nguoiDungId = session.user.id;
 
   const r = await sb.from('nguoi_dung')
-    .select('ho_ten, don_vi, vai_tro, dang_hoat_dong').eq('id', session.user.id).single();
+    .select('ho_ten, don_vi, vai_tro, dang_hoat_dong').eq('id', nguoiDungId).single();
   if (r.error || !r.data || !r.data.dang_hoat_dong){
     await sb.auth.signOut(); location.href = TRANG_DANG_NHAP; return;
   }
@@ -351,14 +344,12 @@ function apDungQuyen(){
   if (coTheSua) $('nutThem').style.display = '';
   if (laQuanTri) $('locDonVi').style.display = '';
 
-  // cot tieu de
-  const cols = ['STT','Họ và tên'];
+  const cols = ['STT','Tiêu đề','Mô tả'];
   if (laQuanTri) cols.push('Đơn vị');
-  cols.push('Tổ/Đội','Chức vụ','Số QĐ','Ngày QĐ','Trạng thái');
+  cols.push('Người tải','Ngày tải','Tài liệu');
   if (coTheSua || coTheXoa) cols.push('');
   $('hangTieuDe').innerHTML = cols.map(c=>`<th>${c}</th>`).join('');
 
-  // khoa o don vi neu khong phai quan tri
   if (!laQuanTri){
     $('f_don_vi').style.display = 'none';
     const k = $('f_don_vi_khoa'); k.style.display=''; k.textContent = TEN_DON_VI[hoSo.don_vi];
@@ -366,7 +357,8 @@ function apDungQuyen(){
 }
 
 async function napDanhSach(){
-  const r = await sb.from('atvsv').select('*').order('don_vi').order('ho_ten');
+  const r = await sb.from('tai_lieu').select('*')
+    .eq('danh_muc', DANH_MUC).order('ngay_tai', {ascending:false});
   if (r.error){
     $('trangThai').innerHTML = 'Không tải được danh sách. Thử tải lại trang.';
     return;
@@ -382,13 +374,13 @@ function loc(){
   let ds = danhSachGoc.filter(x=>{
     if (dv && x.don_vi !== dv) return false;
     if (!tu) return true;
-    return [x.ho_ten,x.to_doi,x.chuc_vu,x.so_qd].some(v=>(v||'').toLowerCase().includes(tu));
+    return [x.tieu_de,x.mo_ta,x.nguoi_tai].some(v=>(v||'').toLowerCase().includes(tu));
   });
   veBang(ds);
 }
 
 function veBang(ds){
-  $('soLuong').textContent = danhSachGoc.length ? `${ds.length} người` : '';
+  $('soLuong').textContent = danhSachGoc.length ? `${ds.length} tài liệu` : '';
   $('trangThai').style.display = 'none';
   $('khungBang').style.display = '';
 
@@ -396,24 +388,24 @@ function veBang(ds){
     $('khungBang').style.display = 'none';
     $('trangThai').style.display = '';
     $('trangThai').innerHTML = danhSachGoc.length
-      ? '<div class="big">Không tìm thấy</div>Không có ATVSV nào khớp bộ lọc.'
-      : '<div class="big">Chưa có dữ liệu</div>' + (coTheSua ? 'Bấm “Thêm ATVSV” để thêm người đầu tiên.' : 'Danh sách đang trống.');
+      ? '<div class="big">Không tìm thấy</div>Không có tài liệu nào khớp bộ lọc.'
+      : '<div class="big">Chưa có tài liệu</div>' + (coTheSua ? 'Bấm “Thêm tài liệu” để đăng tài liệu đầu tiên.' : 'Danh mục đang trống.');
     return;
   }
 
   const hienAct = coTheSua || coTheXoa;
   $('thanBang').innerHTML = ds.map((x,i)=>{
+    const href = linkHopLe(x.link_file);
     let h = `<tr>`;
     h += `<td class="stt">${i+1}</td>`;
-    h += `<td class="ten">${esc(x.ho_ten)}</td>`;
+    h += `<td class="ten">${esc(x.tieu_de)}</td>`;
+    h += `<td class="nd" title="${esc(x.mo_ta)}">${esc(x.mo_ta)||'—'}</td>`;
     if (laQuanTri) h += `<td>${TEN_DON_VI[x.don_vi]||esc(x.don_vi)}</td>`;
-    h += `<td>${esc(x.to_doi)||'—'}</td>`;
-    h += `<td>${esc(x.chuc_vu)||'—'}</td>`;
-    h += `<td>${esc(x.so_qd)||'—'}</td>`;
-    h += `<td>${fmtNgay(x.ngay_qd)}</td>`;
-    h += `<td>${x.dang_hoat_dong
-      ? '<span class="badge b-on">Đang hoạt động</span>'
-      : '<span class="badge b-off">Đã nghỉ</span>'}</td>`;
+    h += `<td>${esc(x.nguoi_tai)||'—'}</td>`;
+    h += `<td>${fmtNgayGio(x.ngay_tai)}</td>`;
+    h += `<td>${href
+      ? `<a class="link-btn" href="${esc(href)}" target="_blank" rel="noopener noreferrer">Mở/Tải</a>`
+      : '<span class="link-off">Link không hợp lệ</span>'}</td>`;
     if (hienAct){
       h += `<td><div class="acts">`;
       if (coTheSua) h += `<button class="icon-btn" data-sua="${x.id}" title="Sửa"><svg viewBox="0 0 24 24" fill="none" stroke="#41525d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></button>`;
@@ -431,54 +423,47 @@ function veBang(ds){
 function moForm(id){
   dangSua = id || null;
   $('loiForm').classList.remove('show');
-  $('tieuDeForm').textContent = id ? 'Sửa thông tin ATVSV' : 'Thêm ATVSV';
+  $('tieuDeForm').textContent = id ? 'Sửa tài liệu' : 'Thêm tài liệu';
   const x = id ? danhSachGoc.find(r=>r.id===id) : {};
-  $('f_ho_ten').value = x.ho_ten || '';
+  $('f_tieu_de').value = x.tieu_de || '';
+  $('f_mo_ta').value = x.mo_ta || '';
+  $('f_link_file').value = x.link_file || '';
   $('f_don_vi').value = x.don_vi || (laQuanTri ? 'VS' : hoSo.don_vi);
-  $('f_to_doi').value = x.to_doi || '';
-  $('f_chuc_vu').value = x.chuc_vu || '';
-  $('f_so_qd').value = x.so_qd || '';
-  $('f_ngay_qd').value = x.ngay_qd || '';
-  $('f_ngay_bat_dau').value = x.ngay_bat_dau || '';
-  $('f_dien_thoai').value = x.dien_thoai || '';
-  $('f_email').value = x.email || '';
-  $('f_ghi_chu').value = x.ghi_chu || '';
-  $('f_trang_thai').value = (x.dang_hoat_dong===false) ? 'false' : 'true';
   $('modalForm').classList.add('show');
-  $('f_ho_ten').focus();
+  $('f_tieu_de').focus();
 }
 function dongForm(){ $('modalForm').classList.remove('show'); }
 
 async function luu(){
-  const ten = $('f_ho_ten').value.trim();
-  if (!ten){ baoLoiForm('Vui lòng nhập họ và tên.'); return; }
+  const tieuDe = $('f_tieu_de').value.trim();
+  const link = $('f_link_file').value.trim();
+  if (!tieuDe){ baoLoiForm('Vui lòng nhập tiêu đề tài liệu.'); return; }
+  if (!/^https?:\/\//i.test(link)){ baoLoiForm('Link tài liệu phải bắt đầu bằng http:// hoặc https:// (dán link chia sẻ từ Google Drive).'); return; }
 
   const ban = {
-    ho_ten: ten,
+    tieu_de: tieuDe,
+    mo_ta: $('f_mo_ta').value.trim() || null,
+    link_file: link,
     don_vi: laQuanTri ? $('f_don_vi').value : hoSo.don_vi,
-    to_doi: $('f_to_doi').value.trim() || null,
-    chuc_vu: $('f_chuc_vu').value.trim() || null,
-    so_qd: $('f_so_qd').value.trim() || null,
-    ngay_qd: $('f_ngay_qd').value || null,
-    ngay_bat_dau: $('f_ngay_bat_dau').value || null,
-    dien_thoai: $('f_dien_thoai').value.trim() || null,
-    email: $('f_email').value.trim() || null,
-    ghi_chu: $('f_ghi_chu').value.trim() || null,
-    dang_hoat_dong: $('f_trang_thai').value === 'true',
   };
+  if (!dangSua){
+    ban.danh_muc = DANH_MUC;
+    ban.nguoi_tai = hoSo.ho_ten;
+    ban.nguoi_tai_id = nguoiDungId;
+  }
 
   $('nutLuu').disabled = true; $('nutLuu').textContent = 'Đang lưu…';
   let err;
   if (dangSua){
-    ({ error:err } = await sb.from('atvsv').update(ban).eq('id', dangSua));
+    ({ error:err } = await sb.from('tai_lieu').update(ban).eq('id', dangSua));
   } else {
-    ({ error:err } = await sb.from('atvsv').insert(ban));
+    ({ error:err } = await sb.from('tai_lieu').insert(ban));
   }
   $('nutLuu').disabled = false; $('nutLuu').textContent = 'Lưu';
 
   if (err){
     baoLoiForm(/row-level security|permission/i.test(err.message)
-      ? 'Bạn không có quyền lưu dữ liệu cho đơn vị này.'
+      ? 'Bạn không có quyền lưu tài liệu cho đơn vị này.'
       : 'Không lưu được: ' + err.message);
     return;
   }
@@ -492,56 +477,29 @@ let idXoa = null;
 function hoiXoa(id){
   idXoa = id;
   const x = danhSachGoc.find(r=>r.id===id);
-  $('xoaNoiDung').innerHTML = `Xóa <b>${esc(x.ho_ten)}</b> khỏi danh sách? Thao tác này không thể hoàn tác.`;
+  $('xoaNoiDung').innerHTML = `Xóa tài liệu <b>${esc(x.tieu_de)}</b>? Thao tác này không thể hoàn tác.`;
   $('modalXoa').classList.add('show');
 }
 async function xacNhanXoa(){
   if (!idXoa) return;
   $('nutXacNhanXoa').disabled = true; $('nutXacNhanXoa').textContent = 'Đang xóa…';
-  const { error } = await sb.from('atvsv').delete().eq('id', idXoa);
+  const { error } = await sb.from('tai_lieu').delete().eq('id', idXoa);
   $('nutXacNhanXoa').disabled = false; $('nutXacNhanXoa').textContent = 'Xóa';
   $('modalXoa').classList.remove('show');
-  if (error){ alert('Không xóa được: ' + error.message); return; }
+  if (error){
+    alert(/row-level security|permission/i.test(error.message)
+      ? 'Bạn không có quyền xóa tài liệu này.'
+      : 'Không xóa được: ' + error.message);
+    return;
+  }
   idXoa = null;
   await napDanhSach();
-}
-
-/* ---------- XUẤT EXCEL ---------- */
-function xuatExcel(){
-  const tu = $('oTimKiem').value.trim().toLowerCase();
-  const dv = $('locDonVi').value;
-  const ds = danhSachGoc.filter(x=>{
-    if (dv && x.don_vi !== dv) return false;
-    if (!tu) return true;
-    return [x.ho_ten,x.to_doi,x.chuc_vu,x.so_qd].some(v=>(v||'').toLowerCase().includes(tu));
-  });
-  if (!ds.length){ alert('Không có dữ liệu để xuất.'); return; }
-  const rows = ds.map((x,i)=>({
-    'STT': i+1,
-    'Họ và tên': x.ho_ten,
-    'Đơn vị': TEN_DON_VI[x.don_vi]||x.don_vi,
-    'Tổ/Đội': x.to_doi||'',
-    'Chức vụ': x.chuc_vu||'',
-    'Số QĐ': x.so_qd||'',
-    'Ngày QĐ': fmtNgay(x.ngay_qd).replace('—',''),
-    'Điện thoại': x.dien_thoai||'',
-    'Email': x.email||'',
-    'Trạng thái': x.dang_hoat_dong ? 'Đang hoạt động' : 'Đã nghỉ',
-    'Ghi chú': x.ghi_chu||'',
-  }));
-  const ws = XLSX.utils.json_to_sheet(rows);
-  ws['!cols'] = [{wch:5},{wch:22},{wch:16},{wch:16},{wch:14},{wch:14},{wch:12},{wch:13},{wch:22},{wch:15},{wch:20}];
-  const wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, 'ATVSV');
-  const ngay = new Date().toISOString().slice(0,10);
-  XLSX.writeFile(wb, `Danh_sach_ATVSV_${ngay}.xlsx`);
 }
 
 /* ---------- SỰ KIỆN ---------- */
 $('nutDangXuat').onclick = async ()=>{ if(sb) await sb.auth.signOut(); location.href = TRANG_DANG_NHAP; };
 $('nutThem').onclick = ()=>moForm(null);
 $('nutLuu').onclick = luu;
-$('nutXuat').onclick = xuatExcel;
 $('nutXacNhanXoa').onclick = xacNhanXoa;
 $('oTimKiem').oninput = loc;
 $('locDonVi').onchange = loc;
