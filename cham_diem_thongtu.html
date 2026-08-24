@@ -73,6 +73,15 @@
   .icon-btn:hover{background:var(--field)}
   .icon-btn.del:hover{background:var(--danger-bg); border-color:#f2d2cd}
   .icon-btn.del svg{stroke:var(--danger)}
+  .icon-btn.xn{border-color:var(--ok)}
+  .icon-btn.xn svg{stroke:var(--ok)}
+  .icon-btn.xn:hover{background:var(--ok-bg)}
+  .icon-btn.xn.on{background:var(--ok); border-color:var(--ok)}
+  .icon-btn.xn.on svg{stroke:#fff}
+  .badge-xn{display:inline-flex; align-items:center; gap:4px; font-size:12px; font-weight:700;
+    padding:4px 10px; border-radius:999px; white-space:nowrap}
+  .badge-xn.ok{background:var(--ok-bg); color:var(--ok)}
+  .badge-xn.cho{background:#f1f5f9; color:#7c8a94}
   .link-btn{display:inline-flex; align-items:center; gap:5px; height:30px; padding:0 12px;
     border-radius:8px; background:var(--accent-soft); color:var(--accent-d); text-decoration:none;
     font-size:12.5px; font-weight:700; white-space:nowrap}
@@ -400,13 +409,14 @@ async function xuLyDoiMK(){
   if (moi !== moi2){ baoLoi('loiDoiMK','Mật khẩu mới nhập lại không khớp.'); return; }
 
   $('nutDoiMKXacNhan').disabled = true;
-  const kt = await sb.from('atvsv').select('id').eq('id', phien.id).eq('mat_khau', hienTai).maybeSingle();
+  const bang = phien.loai || 'atvsv';
+  const kt = await sb.from(bang).select('id').eq('id', phien.id).eq('mat_khau', hienTai).maybeSingle();
   if (kt.error || !kt.data){
     $('nutDoiMKXacNhan').disabled = false;
     baoLoi('loiDoiMK','Mật khẩu hiện tại không đúng.');
     return;
   }
-  const { error } = await sb.from('atvsv').update({ mat_khau: moi }).eq('id', phien.id);
+  const { error } = await sb.from(bang).update({ mat_khau: moi }).eq('id', phien.id);
   $('nutDoiMKXacNhan').disabled = false;
   if (error){ baoLoi('loiDoiMK','Không đổi được mật khẩu: ' + error.message); return; }
   $('okDoiMK').classList.add('show');
@@ -416,7 +426,7 @@ function baoLoi(idOh,m){ const e=$(idOh); e.textContent=m; e.classList.add('show
 
 /* ---------- KHỞI TẠO ---------- */
 async function khoiTao(){
-  const cols = ['STT','Tiêu đề','Mô tả','Đơn vị','Người nộp','Ngày tải','Tài liệu',''];
+  const cols = ['STT','Tiêu đề','Mô tả','Đơn vị','Người nộp','Ngày tải','Tài liệu','Trạng thái',''];
   $('hangTieuDe').innerHTML = cols.map(c=>`<th>${c}</th>`).join('');
   napPhien();
   await Promise.all([napDsAtvsvChoDangNhap(), napDanhSach()]);
@@ -459,9 +469,12 @@ function veBang(ds){
     return;
   }
 
+  const coQuyenDuyet = laNhanVienDuyet();
   $('thanBang').innerHTML = ds.map((x,i)=>{
     const href = linkHopLe(x.link_file);
     const laChuDong = phien && x.nguoi_tai_id === phien.id;
+    const coTheSuaDong = coQuyenDuyet || (laChuDong && !x.da_xac_nhan);
+    const lyDoKhoa = x.da_xac_nhan ? 'File đã được xác nhận, không tự sửa/xóa được nữa' : 'Chỉ chủ file mới sửa/xóa được';
     let h = `<tr>`;
     h += `<td class="stt">${i+1}</td>`;
     h += `<td class="ten">${esc(x.tieu_de)}</td>`;
@@ -472,15 +485,33 @@ function veBang(ds){
     h += `<td>${href
       ? `<a class="link-btn" href="${esc(href)}" target="_blank" rel="noopener noreferrer">Mở/Tải</a>`
       : '<span class="link-off">Link không hợp lệ</span>'}</td>`;
+    h += `<td>${x.da_xac_nhan
+      ? `<span class="badge-xn ok" title="Xác nhận bởi ${esc(x.nguoi_xac_nhan)||'—'} · ${fmtNgayGio(x.ngay_xac_nhan)}">✅ Đã xác nhận</span>`
+      : `<span class="badge-xn cho">⏳ Chưa xác nhận</span>`}</td>`;
     h += `<td><div class="acts">`;
-    h += `<button class="icon-btn" data-sua="${x.id}" title="${laChuDong?'Sửa':'Chỉ chủ file mới sửa được'}"${laChuDong?'':' disabled style="opacity:.35;cursor:default"'}><svg viewBox="0 0 24 24" fill="none" stroke="#41525d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></button>`;
-    h += `<button class="icon-btn del" data-xoa="${x.id}" title="${laChuDong?'Xóa':'Chỉ chủ file mới xóa được'}"${laChuDong?'':' disabled style="opacity:.35;cursor:default"'}><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2m1 0-1 14a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1L6 6"/></svg></button>`;
+    if (coQuyenDuyet) h += `<button class="icon-btn xn${x.da_xac_nhan?' on':''}" data-xn="${x.id}" data-xn-val="${x.da_xac_nhan?'0':'1'}" title="${x.da_xac_nhan?'Bỏ xác nhận':'Xác nhận'}"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button>`;
+    h += `<button class="icon-btn" data-sua="${x.id}" title="${coTheSuaDong?'Sửa':lyDoKhoa}"${coTheSuaDong?'':' disabled style="opacity:.35;cursor:default"'}><svg viewBox="0 0 24 24" fill="none" stroke="#41525d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></button>`;
+    h += `<button class="icon-btn del" data-xoa="${x.id}" title="${coTheSuaDong?'Xóa':lyDoKhoa}"${coTheSuaDong?'':' disabled style="opacity:.35;cursor:default"'}><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2m1 0-1 14a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1L6 6"/></svg></button>`;
     h += `</div></td>`;
     return h + `</tr>`;
   }).join('');
 
   $('thanBang').querySelectorAll('[data-sua]:not([disabled])').forEach(b=>b.onclick=()=>ycMoForm(b.dataset.sua));
   $('thanBang').querySelectorAll('[data-xoa]:not([disabled])').forEach(b=>b.onclick=()=>ycHoiXoa(b.dataset.xoa));
+  $('thanBang').querySelectorAll('[data-xn]').forEach(b=>b.onclick=()=>xuLyXacNhan(b.dataset.xn, b.dataset.xnVal==='1'));
+}
+
+function laNhanVienDuyet(){ return !!phien && (phien.vai_tro==='ky_su_an_toan' || phien.vai_tro==='quan_tri'); }
+
+async function xuLyXacNhan(id, moi){
+  napPhien();
+  if (!laNhanVienDuyet()) return;
+  const ban = moi
+    ? { da_xac_nhan:true, nguoi_xac_nhan:phien.ho_ten, ngay_xac_nhan:new Date().toISOString() }
+    : { da_xac_nhan:false, nguoi_xac_nhan:null, ngay_xac_nhan:null };
+  const { error } = await sb.from('tai_lieu').update(ban).eq('id', Number(id));
+  if (error){ alert('Không cập nhật được: ' + error.message); return; }
+  await napDanhSach();
 }
 
 /* ---------- YÊU CẦU CÓ ĐĂNG NHẬP TRƯỚC KHI THÊM/SỬA/XÓA ---------- */
@@ -498,7 +529,11 @@ function ycHoiXoa(id){
 /* ---------- FORM THÊM / SỬA ---------- */
 function moForm(id){
   const x = id ? danhSachGoc.find(r=>r.id===Number(id)) : null;
-  if (id && (!x || x.nguoi_tai_id !== phien.id)){ alert('Bạn chỉ có thể sửa file chấm điểm của chính mình.'); return; }
+  const coQuyen = laNhanVienDuyet() || (x && x.nguoi_tai_id === phien.id && !x.da_xac_nhan);
+  if (id && (!x || !coQuyen)){
+    alert(x && x.da_xac_nhan ? 'File đã được xác nhận, không tự sửa được nữa.' : 'Bạn chỉ có thể sửa file chấm điểm của chính mình.');
+    return;
+  }
   dangSua = id || null;
   $('loiForm').classList.remove('show');
   $('tieuDeForm').textContent = id ? 'Sửa file chấm điểm' : 'Nộp file chấm điểm';
@@ -553,7 +588,11 @@ function baoLoiForm(m){ const e=$('loiForm'); e.textContent=m; e.classList.add('
 let idXoa = null;
 function hoiXoa(id){
   const x = danhSachGoc.find(r=>r.id===Number(id));
-  if (!x || x.nguoi_tai_id !== phien.id){ alert('Bạn chỉ có thể xóa file chấm điểm của chính mình.'); return; }
+  const coQuyen = laNhanVienDuyet() || (x && x.nguoi_tai_id === phien.id && !x.da_xac_nhan);
+  if (!x || !coQuyen){
+    alert(x && x.da_xac_nhan ? 'File đã được xác nhận, không tự xóa được nữa.' : 'Bạn chỉ có thể xóa file chấm điểm của chính mình.');
+    return;
+  }
   idXoa = id;
   $('xoaNoiDung').innerHTML = `Xóa file chấm điểm <b>${esc(x.tieu_de)}</b>? Thao tác này không thể hoàn tác.`;
   $('modalXoa').classList.add('show');
