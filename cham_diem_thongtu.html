@@ -307,7 +307,7 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 document.title = TIEU_DE_TRANG + ' — Mạng lưới ATVSV';
 
 const TEN_DON_VI = { VS:'Vĩnh Sơn', SH:'Sông Hinh', TKT:'Thượng Kon Tum', TT_DVTV:'TT DVTV' };
-const KHOA_PHIEN = 'atvsv_phien_dangnhap';
+const KHOA_PHIEN = 'phien_dangnhap'; // dung chung voi trang dangnhap.html trung tam
 
 let sb = null;
 if (window.supabase && SUPABASE_ANON_KEY.startsWith('eyJ'))
@@ -376,7 +376,7 @@ async function xuLyDangNhap(){
     baoLoi('loiDangNhap','Mật khẩu không đúng, hoặc tài khoản của bạn chưa được cấp mật khẩu — liên hệ quản trị viên.');
     return;
   }
-  luuPhien(r.data);
+  luuPhien({ loai:'atvsv', vai_tro:'atvsv', ...r.data });
   $('modalDangNhap').classList.remove('show');
   const chay = hanhDongCho; hanhDongCho = null;
   if (chay) chay();
@@ -485,10 +485,12 @@ function veBang(ds){
 
 /* ---------- YÊU CẦU CÓ ĐĂNG NHẬP TRƯỚC KHI THÊM/SỬA/XÓA ---------- */
 function ycMoForm(id){
+  napPhien(); // doc lai phien phong khi da dang nhap o tab Dang nhap sau khi trang nay da tai
   if (!phien){ moDangNhap(()=>moForm(id)); return; }
   moForm(id);
 }
 function ycHoiXoa(id){
+  napPhien();
   if (!phien){ moDangNhap(()=>hoiXoa(id)); return; }
   hoiXoa(id);
 }
@@ -586,6 +588,10 @@ document.querySelectorAll('[data-dong-xoa]').forEach(b=>b.onclick=()=>$('modalXo
 document.querySelectorAll('[data-dong-dn]').forEach(b=>b.onclick=dongDangNhap);
 document.querySelectorAll('[data-dong-mk]').forEach(b=>b.onclick=dongDoiMK);
 [$('modalForm'),$('modalXoa'),$('modalDangNhap'),$('modalDoiMK')].forEach(o=>o.onclick=e=>{ if(e.target===o) o.classList.remove('show'); });
+
+// Goi tu trang index.html moi khi chuyen vao tab nay, de nhan dien phien
+// dang nhap moi tao o tab Dang nhap trung tam (trang nay tai 1 lan duy nhat).
+window.lamMoiKhiHienThi = function(){ napPhien(); loc(); };
 
 khoiTao();
 </script>

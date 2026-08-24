@@ -369,7 +369,7 @@ const TEN_MUC_DO = { thap:'Thấp', trung_binh:'Trung bình', cao:'Cao', khan_ca
 const CLASS_MUC_DO = { thap:'m-thap', trung_binh:'m-tb', cao:'m-cao', khan_cap:'m-khan' };
 const TEN_TRANG_THAI = { chua_xu_ly:'Chưa xử lý', dang_xu_ly:'Đang xử lý', da_xu_ly:'Đã xử lý', khong_thuc_hien:'Không thực hiện' };
 const CLASS_TRANG_THAI = { chua_xu_ly:'t-chua', dang_xu_ly:'t-dang', da_xu_ly:'t-xong', khong_thuc_hien:'t-khong' };
-const KHOA_PHIEN = 'atvsv_phien_dangnhap';
+const KHOA_PHIEN = 'phien_dangnhap'; // dung chung voi trang dangnhap.html trung tam
 
 let sb = null;
 if (window.supabase && SUPABASE_ANON_KEY.startsWith('eyJ'))
@@ -411,7 +411,7 @@ async function xuLyDangNhap(){
     baoLoi('loiDangNhap','Mật khẩu không đúng, hoặc tài khoản của bạn chưa được cấp mật khẩu — liên hệ quản trị viên.');
     return;
   }
-  luuPhien(r.data);
+  luuPhien({ loai:'atvsv', vai_tro:'atvsv', ...r.data });
   $('modalDangNhap').classList.remove('show');
   const chay=hanhDongCho; hanhDongCho=null;
   if(chay) chay();
@@ -511,6 +511,7 @@ function veBang(ds){
 
 /* ---------- GỬI KIẾN NGHỊ ---------- */
 function ycMoThem(){
+  napPhien(); // doc lai phien phong khi da dang nhap o tab Dang nhap sau khi trang nay da tai
   if(!phien){ moDangNhap(moThem); return; }
   moThem();
 }
@@ -655,6 +656,10 @@ document.querySelectorAll('[data-dong-xoa]').forEach(b=>b.onclick=()=>$('modalXo
 document.querySelectorAll('[data-dong-dn]').forEach(b=>b.onclick=dongDangNhap);
 document.querySelectorAll('[data-dong-mk]').forEach(b=>b.onclick=dongDoiMK);
 [$('modalThem'),$('modalChiTiet'),$('modalXoa'),$('modalDangNhap'),$('modalDoiMK')].forEach(o=>o.onclick=e=>{if(e.target===o)o.classList.remove('show')});
+
+// Goi tu trang index.html moi khi chuyen vao tab nay, de nhan dien phien
+// dang nhap moi tao o tab Dang nhap trung tam (trang nay tai 1 lan duy nhat).
+window.lamMoiKhiHienThi = function(){ napPhien(); };
 
 khoiTao();
 </script>
