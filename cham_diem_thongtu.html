@@ -165,7 +165,7 @@
   <div class="toolbar">
     <div class="search">
       <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3" stroke-linecap="round"/></svg>
-      <input id="oTimKiem" placeholder="Tìm theo tiêu đề, mô tả, người tải…">
+      <input id="oTimKiem" placeholder="Tìm theo tiêu đề, mô tả, người nộp…">
     </div>
     <select class="filt" id="locDonVi">
       <option value="">Tất cả đơn vị</option>
@@ -175,7 +175,7 @@
     </select>
     <button class="btn btn-primary" id="nutThem">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
-      <span class="lbl">Thêm tài liệu</span>
+      <span class="lbl">Nộp file chấm điểm</span>
     </button>
   </div>
 
@@ -194,7 +194,7 @@
 <div class="overlay" id="modalForm">
   <div class="modal">
     <div class="modal-h">
-      <h3 id="tieuDeForm">Thêm tài liệu</h3>
+      <h3 id="tieuDeForm">Nộp file chấm điểm</h3>
       <button class="x" data-dong>×</button>
     </div>
     <div class="modal-b">
@@ -221,7 +221,7 @@
           </select>
         </div>
         <div class="fld">
-          <label>Người tải</label>
+          <label>Người nộp</label>
           <input id="f_nguoi_tai" placeholder="Họ tên (không bắt buộc)">
         </div>
       </div>
@@ -239,7 +239,7 @@
   <div class="modal confirm">
     <div class="modal-b">
       <div class="warn"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4m0 4h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg></div>
-      <h3>Xóa tài liệu</h3>
+      <h3>Xóa file chấm điểm</h3>
       <p id="xoaNoiDung">Bạn có chắc muốn xóa?</p>
     </div>
     <div class="modal-f" style="justify-content:center">
@@ -256,8 +256,8 @@
    chỉ cần đổi 2 hằng số dưới đây (và lưu file với tên khác), phần còn lại
    của trang tự chạy theo danh mục mới.
    ========================================================================= */
-const DANH_MUC       = 'atd_tin_tuc';
-const TIEU_DE_TRANG  = 'Tin tức – Tài liệu An toàn điện';
+const DANH_MUC       = 'cham_diem_thong_tu';
+const TIEU_DE_TRANG  = 'Chấm điểm thông tư';
 /* ========================================================================= */
 
 /* ===== CẤU HÌNH (giống các trang khác) ===== */
@@ -291,7 +291,7 @@ function linkHopLe(u){ return typeof u==='string' && /^https?:\/\//i.test(u.trim
 
 /* ---------- KHỞI TẠO ---------- */
 async function khoiTao(){
-  const cols = ['STT','Tiêu đề','Mô tả','Đơn vị','Người tải','Ngày tải','Tài liệu',''];
+  const cols = ['STT','Tiêu đề','Mô tả','Đơn vị','Người nộp','Ngày tải','Tài liệu',''];
   $('hangTieuDe').innerHTML = cols.map(c=>`<th>${c}</th>`).join('');
   await napDanhSach();
 }
@@ -328,8 +328,8 @@ function veBang(ds){
     $('khungBang').style.display = 'none';
     $('trangThai').style.display = '';
     $('trangThai').innerHTML = danhSachGoc.length
-      ? '<div class="big">Không tìm thấy</div>Không có tài liệu nào khớp bộ lọc.'
-      : '<div class="big">Chưa có tài liệu</div>Bấm “Thêm tài liệu” để đăng tài liệu đầu tiên.';
+      ? '<div class="big">Không tìm thấy</div>Không có file nào khớp bộ lọc.'
+      : '<div class="big">Chưa có file chấm điểm</div>Bấm “Nộp file chấm điểm” để nộp file đầu tiên.';
     return;
   }
 
@@ -360,7 +360,7 @@ function veBang(ds){
 function moForm(id){
   dangSua = id || null;
   $('loiForm').classList.remove('show');
-  $('tieuDeForm').textContent = id ? 'Sửa tài liệu' : 'Thêm tài liệu';
+  $('tieuDeForm').textContent = id ? 'Sửa file chấm điểm' : 'Nộp file chấm điểm';
   const x = id ? danhSachGoc.find(r=>r.id===id) : {};
   $('f_tieu_de').value = x.tieu_de || '';
   $('f_mo_ta').value = x.mo_ta || '';
@@ -412,7 +412,7 @@ let idXoa = null;
 function hoiXoa(id){
   idXoa = id;
   const x = danhSachGoc.find(r=>r.id===id);
-  $('xoaNoiDung').innerHTML = `Xóa tài liệu <b>${esc(x.tieu_de)}</b>? Thao tác này không thể hoàn tác.`;
+  $('xoaNoiDung').innerHTML = `Xóa file chấm điểm <b>${esc(x.tieu_de)}</b>? Thao tác này không thể hoàn tác.`;
   $('modalXoa').classList.add('show');
 }
 async function xacNhanXoa(){

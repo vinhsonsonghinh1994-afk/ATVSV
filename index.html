@@ -286,6 +286,39 @@ nav{background:#1e3a8a;display:flex;justify-content:center}
       <button class="nav-tab" id="tab-trangchu" onclick="showSub('trangchu','tc-main')">🏠 Trang chủ</button>
     </div>
     <div class="nav-item">
+      <button class="nav-tab" id="tab-atvsv">🦺 An toàn vệ sinh viên <span class="nav-arrow">▾</span></button>
+      <div class="dropdown">
+        <div class="dd-item" onclick="showSub('atvsv','av-danhsach')">Danh sách</div>
+        <div class="dd-item" onclick="showSub('atvsv','av-chamdiem')">Chấm điểm thông tư</div>
+        <div class="dd-item" onclick="showSub('atvsv','av-kiennghi')">Kiến nghị - Phản hồi</div>
+      </div>
+    </div>
+    <div class="nav-item">
+      <button class="nav-tab" id="tab-atd">⚡ An toàn điện <span class="nav-arrow">▾</span></button>
+      <div class="dropdown">
+        <div class="dd-item" onclick="showSub('atd','atd-tintuc')">Tin tức - Tài liệu</div>
+        <div class="dd-item" onclick="showSub('atd','atd-huanluyen')">Huấn luyện ATĐ</div>
+      </div>
+    </div>
+    <div class="nav-item">
+      <button class="nav-tab" id="tab-pccc">🧯 Phòng cháy chữa cháy <span class="nav-arrow">▾</span></button>
+      <div class="dropdown">
+        <div class="dd-item" onclick="showSub('pccc','pccc-thietbi')">Danh mục thiết bị</div>
+        <div class="dd-item" onclick="showSub('pccc','pccc-phuongan')">Phương án diễn tập</div>
+        <div class="dd-item" onclick="showSub('pccc','pccc-ketqua')">Kết quả diễn tập</div>
+        <div class="dd-item" onclick="showSub('pccc','pccc-baocao')">Báo cáo định kỳ</div>
+      </div>
+    </div>
+    <div class="nav-item">
+      <button class="nav-tab" id="tab-kiemdinh">🔧 Kiểm định an toàn <span class="nav-arrow">▾</span></button>
+      <div class="dropdown">
+        <div class="dd-item" onclick="showSub('kiemdinh','kd-dungcu')">Dụng cụ an toàn</div>
+        <div class="dd-item" onclick="showSub('kiemdinh','kd-thietbi')">Thiết bị cần kiểm định</div>
+        <div class="dd-item" onclick="showSub('kiemdinh','kd-kehoach')">Kế hoạch kiểm định</div>
+        <div class="dd-item" onclick="showSub('kiemdinh','kd-bienban')">Biên bản kiểm định</div>
+      </div>
+    </div>
+    <div class="nav-item">
       <button class="nav-tab" id="tab-tailieu">📄 Tài liệu <span class="nav-arrow">▾</span></button>
       <div class="dropdown">
         <div class="dd-item" onclick="showSub('tailieu','tl-atgt')">An toàn giao thông</div>
@@ -324,6 +357,23 @@ nav{background:#1e3a8a;display:flex;justify-content:center}
 
   <div class="mobile-nav" id="mobileNav">
     <div class="mobile-section-title" onclick="showSub('trangchu','tc-main');closeMobileMenu()" style="cursor:pointer">🏠 Trang chủ</div>
+    <div class="mobile-section-title">🦺 An toàn vệ sinh viên</div>
+    <div class="mobile-dd-item" onclick="showSub('atvsv','av-danhsach');closeMobileMenu()">Danh sách</div>
+    <div class="mobile-dd-item" onclick="showSub('atvsv','av-chamdiem');closeMobileMenu()">Chấm điểm thông tư</div>
+    <div class="mobile-dd-item" onclick="showSub('atvsv','av-kiennghi');closeMobileMenu()">Kiến nghị - Phản hồi</div>
+    <div class="mobile-section-title">⚡ An toàn điện</div>
+    <div class="mobile-dd-item" onclick="showSub('atd','atd-tintuc');closeMobileMenu()">Tin tức - Tài liệu</div>
+    <div class="mobile-dd-item" onclick="showSub('atd','atd-huanluyen');closeMobileMenu()">Huấn luyện ATĐ</div>
+    <div class="mobile-section-title">🧯 Phòng cháy chữa cháy</div>
+    <div class="mobile-dd-item" onclick="showSub('pccc','pccc-thietbi');closeMobileMenu()">Danh mục thiết bị</div>
+    <div class="mobile-dd-item" onclick="showSub('pccc','pccc-phuongan');closeMobileMenu()">Phương án diễn tập</div>
+    <div class="mobile-dd-item" onclick="showSub('pccc','pccc-ketqua');closeMobileMenu()">Kết quả diễn tập</div>
+    <div class="mobile-dd-item" onclick="showSub('pccc','pccc-baocao');closeMobileMenu()">Báo cáo định kỳ</div>
+    <div class="mobile-section-title">🔧 Kiểm định an toàn</div>
+    <div class="mobile-dd-item" onclick="showSub('kiemdinh','kd-dungcu');closeMobileMenu()">Dụng cụ an toàn</div>
+    <div class="mobile-dd-item" onclick="showSub('kiemdinh','kd-thietbi');closeMobileMenu()">Thiết bị cần kiểm định</div>
+    <div class="mobile-dd-item" onclick="showSub('kiemdinh','kd-kehoach');closeMobileMenu()">Kế hoạch kiểm định</div>
+    <div class="mobile-dd-item" onclick="showSub('kiemdinh','kd-bienban');closeMobileMenu()">Biên bản kiểm định</div>
     <div class="mobile-section-title">📄 Tài liệu</div>
     <div class="mobile-dd-item" onclick="showSub('tailieu','tl-atgt');closeMobileMenu()">An toàn giao thông</div>
     <div class="mobile-dd-item" onclick="showSub('tailieu','tl-pccc');closeMobileMenu()">Phòng cháy chữa cháy</div>
@@ -439,6 +489,35 @@ nav{background:#1e3a8a;display:flex;justify-content:center}
 </div>
 </div>
     </div>
+  </div>
+
+  <!-- AN TOÀN VỆ SINH VIÊN -->
+  <div class="tab-panel" id="panel-atvsv">
+    <div id="sub-av-danhsach" class="iframe-container" style="display:none"><iframe data-src="atvsv_danhsach.html" title="Danh sách ATVSV"></iframe></div>
+    <div id="sub-av-chamdiem" class="iframe-container" style="display:none"><iframe data-src="cham_diem_thongtu.html" title="Chấm điểm thông tư"></iframe></div>
+    <div id="sub-av-kiennghi" class="iframe-container" style="display:none"><iframe data-src="kien_nghi.html" title="Kiến nghị - Phản hồi"></iframe></div>
+  </div>
+
+  <!-- AN TOÀN ĐIỆN -->
+  <div class="tab-panel" id="panel-atd">
+    <div id="sub-atd-tintuc" class="iframe-container" style="display:none"><iframe data-src="tailieu.html" title="Tin tức - Tài liệu An toàn điện"></iframe></div>
+    <div id="sub-atd-huanluyen" class="iframe-container" style="display:none"><iframe data-src="atd_huanluyen.html" title="Huấn luyện an toàn điện"></iframe></div>
+  </div>
+
+  <!-- PHÒNG CHÁY CHỮA CHÁY -->
+  <div class="tab-panel" id="panel-pccc">
+    <div id="sub-pccc-thietbi" class="iframe-container" style="display:none"><iframe data-src="pccc_thietbi.html" title="Danh mục thiết bị PCCC"></iframe></div>
+    <div id="sub-pccc-phuongan" class="iframe-container" style="display:none"><iframe data-src="pccc_phuongan.html" title="Phương án diễn tập PCCC"></iframe></div>
+    <div id="sub-pccc-ketqua" class="iframe-container" style="display:none"><iframe data-src="pccc_ketqua.html" title="Kết quả diễn tập PCCC"></iframe></div>
+    <div id="sub-pccc-baocao" class="iframe-container" style="display:none"><iframe data-src="pccc_baocao.html" title="Báo cáo định kỳ PCCC"></iframe></div>
+  </div>
+
+  <!-- KIỂM ĐỊNH AN TOÀN -->
+  <div class="tab-panel" id="panel-kiemdinh">
+    <div id="sub-kd-dungcu" class="iframe-container" style="display:none"><iframe data-src="kiemdinh_dungcu.html" title="Dụng cụ an toàn"></iframe></div>
+    <div id="sub-kd-thietbi" class="iframe-container" style="display:none"><iframe data-src="kiemdinh_thietbi.html" title="Thiết bị cần kiểm định"></iframe></div>
+    <div id="sub-kd-kehoach" class="iframe-container" style="display:none"><iframe data-src="kiemdinh_kehoach.html" title="Kế hoạch kiểm định"></iframe></div>
+    <div id="sub-kd-bienban" class="iframe-container" style="display:none"><iframe data-src="kiemdinh_bienban.html" title="Biên bản kiểm định"></iframe></div>
   </div>
 
   <!-- TÀI LIỆU -->
@@ -584,14 +663,21 @@ nav{background:#1e3a8a;display:flex;justify-content:center}
 const SUPABASE_URL = 'https://lasbxdhexxczzfrfkexn.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_eRMAip0BXZYzWQ98gwvqrA_udyYHxkR';
 
-const TABS = ['trangchu','tailieu','luyenthi','kythi','quantri'];
+const TABS = ['trangchu','atvsv','atd','pccc','kiemdinh','tailieu','luyenthi','kythi','quantri'];
 const SUBS = {
   trangchu: ['tc-main'],
+  atvsv:    ['av-danhsach','av-chamdiem','av-kiennghi'],
+  atd:      ['atd-tintuc','atd-huanluyen'],
+  pccc:     ['pccc-thietbi','pccc-phuongan','pccc-ketqua','pccc-baocao'],
+  kiemdinh: ['kd-dungcu','kd-thietbi','kd-kehoach','kd-bienban'],
   tailieu:  ['tl-welcome','tl-atgt','tl-pccc','tl-atvsv','tl-ktatld','tl-ktvsld','tl-vbqc','tl-pl'],
   luyenthi: ['lt-welcome','lt-de1','lt-de2','lt-de3','lt-de4','lt-de5','lt-de6','lt-de7','lt-de8'],
   kythi:    ['kt-main'],
   quantri:  ['qt-login','qt-thisinh','qt-ketqua']
 };
+// Tab nao dung iframe lazy-load (chi gan src khi mo lan dau, tranh 13 iframe
+// dang nhap Supabase Auth tu dong chay ngay khi tai index.html).
+const TABS_LAZY = ['atvsv','atd','pccc','kiemdinh'];
 
 // Khai báo sớm để showSub có thể dùng
 let adminLoggedIn = false;
@@ -630,7 +716,13 @@ function showSub(tab, sub) {
   });
   // Show target sub
   const target = document.getElementById('sub-'+sub);
-  if(target) target.style.display = '';
+  if(target){
+    target.style.display = '';
+    if(TABS_LAZY.includes(tab)){
+      const ifr = target.querySelector('iframe[data-src]');
+      if(ifr && !ifr.getAttribute('src')) ifr.src = ifr.dataset.src;
+    }
+  }
   // Highlight dropdown item
   document.querySelectorAll('.dd-item, .mobile-dd-item').forEach(el => el.classList.remove('active'));
   document.querySelectorAll(`[onclick*="'${sub}'"]`).forEach(el => el.classList.add('active'));
