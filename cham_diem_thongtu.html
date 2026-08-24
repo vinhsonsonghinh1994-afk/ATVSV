@@ -495,7 +495,7 @@ function ycHoiXoa(id){
 
 /* ---------- FORM THÊM / SỬA ---------- */
 function moForm(id){
-  const x = id ? danhSachGoc.find(r=>r.id===id) : null;
+  const x = id ? danhSachGoc.find(r=>r.id===Number(id)) : null;
   if (id && (!x || x.nguoi_tai_id !== phien.id)){ alert('Bạn chỉ có thể sửa file chấm điểm của chính mình.'); return; }
   dangSua = id || null;
   $('loiForm').classList.remove('show');
@@ -550,7 +550,7 @@ function baoLoiForm(m){ const e=$('loiForm'); e.textContent=m; e.classList.add('
 /* ---------- XÓA ---------- */
 let idXoa = null;
 function hoiXoa(id){
-  const x = danhSachGoc.find(r=>r.id===id);
+  const x = danhSachGoc.find(r=>r.id===Number(id));
   if (!x || x.nguoi_tai_id !== phien.id){ alert('Bạn chỉ có thể xóa file chấm điểm của chính mình.'); return; }
   idXoa = id;
   $('xoaNoiDung').innerHTML = `Xóa file chấm điểm <b>${esc(x.tieu_de)}</b>? Thao tác này không thể hoàn tác.`;

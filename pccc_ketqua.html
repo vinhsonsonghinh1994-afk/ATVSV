@@ -361,7 +361,7 @@ function moForm(id){
   dangSua = id || null;
   $('loiForm').classList.remove('show');
   $('tieuDeForm').textContent = id ? 'Sửa tài liệu' : 'Thêm tài liệu';
-  const x = id ? danhSachGoc.find(r=>r.id===id) : {};
+  const x = id ? danhSachGoc.find(r=>r.id===Number(id)) : {};
   $('f_tieu_de').value = x.tieu_de || '';
   $('f_mo_ta').value = x.mo_ta || '';
   $('f_link_file').value = x.link_file || '';
@@ -411,7 +411,7 @@ function baoLoiForm(m){ const e=$('loiForm'); e.textContent=m; e.classList.add('
 let idXoa = null;
 function hoiXoa(id){
   idXoa = id;
-  const x = danhSachGoc.find(r=>r.id===id);
+  const x = danhSachGoc.find(r=>r.id===Number(id));
   $('xoaNoiDung').innerHTML = `Xóa tài liệu <b>${esc(x.tieu_de)}</b>? Thao tác này không thể hoàn tác.`;
   $('modalXoa').classList.add('show');
 }
