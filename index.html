@@ -288,9 +288,6 @@ nav{background:#1e3a8a;display:flex;justify-content:center}
       <button class="nav-tab" id="tab-trangchu" onclick="showSub('trangchu','tc-main')">🏠 Trang chủ</button>
     </div>
     <div class="nav-item">
-      <button class="nav-tab" id="tab-dangnhap" onclick="showSub('dangnhap','dn-main')">🔐 Đăng nhập</button>
-    </div>
-    <div class="nav-item">
       <button class="nav-tab" id="tab-atvsv">🦺 An toàn vệ sinh viên <span class="nav-arrow">▾</span></button>
       <div class="dropdown">
         <div class="dd-item" onclick="showSub('atvsv','av-danhsach')">Danh sách</div>
@@ -353,11 +350,13 @@ nav{background:#1e3a8a;display:flex;justify-content:center}
         <div class="dd-item" onclick="showSub('quantri','qt-ketqua')">🏅 Quản lý kết quả thi</div>
       </div>
     </div>
+    <div class="nav-item">
+      <button class="nav-tab" id="tab-dangnhap" onclick="showSub('dangnhap','dn-main')">🔐 Đăng nhập</button>
+    </div>
   </nav>
 
   <div class="mobile-nav" id="mobileNav">
     <div class="mobile-section-title" onclick="showSub('trangchu','tc-main');closeMobileMenu()" style="cursor:pointer">🏠 Trang chủ</div>
-    <div class="mobile-section-title" onclick="showSub('dangnhap','dn-main');closeMobileMenu()" style="cursor:pointer">🔐 Đăng nhập</div>
     <div class="mobile-section-title">🦺 An toàn vệ sinh viên</div>
     <div class="mobile-dd-item" onclick="showSub('atvsv','av-danhsach');closeMobileMenu()">Danh sách</div>
     <div class="mobile-dd-item" onclick="showSub('atvsv','av-chamdiem');closeMobileMenu()">Chấm điểm thông tư</div>
@@ -395,6 +394,7 @@ nav{background:#1e3a8a;display:flex;justify-content:center}
     <div class="mobile-section-title">⚙️ Quản trị</div>
     <div class="mobile-dd-item" onclick="showSub('quantri','qt-thisinh');closeMobileMenu()">👥 Quản lý thí sinh kỳ thi</div>
     <div class="mobile-dd-item" onclick="showSub('quantri','qt-ketqua');closeMobileMenu()">🏅 Quản lý kết quả thi</div>
+    <div class="mobile-section-title" onclick="showSub('dangnhap','dn-main');closeMobileMenu()" style="cursor:pointer">🔐 Đăng nhập</div>
   </div>
 </header>
 
