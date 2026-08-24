@@ -127,6 +127,15 @@
   .confirm h3{margin:0 0 6px;font-size:17px}
   .confirm p{margin:0;color:var(--muted);font-size:13.5px;line-height:1.5}
 
+  .phien-bar{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin:-8px 0 16px}
+  .phien-bar b{color:var(--ink)}
+  .phien-bar a{color:var(--accent-d);text-decoration:none;font-weight:600;cursor:pointer}
+  .phien-bar a:hover{text-decoration:underline}
+  .phien-bar .dot{color:var(--line)}
+  .modal-ok{display:none;background:var(--ok-bg);color:var(--ok);font-size:13px;
+    border:1px solid #cdeadd;border-radius:10px;padding:10px 12px;margin-top:4px}
+  .modal-ok.show{display:block}
+
   @media (max-width:640px){
     .grid,.info{grid-template-columns:1fr}
     .who .r{display:none}
@@ -142,6 +151,12 @@
   <div class="head">
     <h1>Sổ ý kiến, kiến nghị</h1>
     <span class="count" id="soLuong"></span>
+  </div>
+
+  <div class="phien-bar" id="thanhPhien" style="display:none">
+    Đang đăng nhập: <b id="phienTen"></b>
+    <span class="dot">·</span><a id="lienKetDoiMK">Đổi mật khẩu</a>
+    <span class="dot">·</span><a id="lienKetDangXuat">Đăng xuất</a>
   </div>
 
   <div class="toolbar">
@@ -183,6 +198,56 @@
   </div>
 </div>
 
+<!-- MODAL ĐĂNG NHẬP ATVSV -->
+<div class="overlay" id="modalDangNhap">
+  <div class="modal" style="max-width:400px">
+    <div class="modal-h"><h3>Đăng nhập ATVSV</h3><button class="x" data-dong-dn>×</button></div>
+    <div class="modal-b">
+      <p style="margin:0 0 14px;color:var(--muted);font-size:13px">Cần đăng nhập bằng tài khoản ATVSV để gửi kiến nghị.</p>
+      <div class="fld full" style="margin-bottom:14px">
+        <label>Họ và tên <span class="req">*</span></label>
+        <select id="dn_atvsv"><option value="">— Chọn tên của bạn —</option></select>
+      </div>
+      <div class="fld full">
+        <label>Mật khẩu <span class="req">*</span></label>
+        <input id="dn_mat_khau" type="password" placeholder="Mật khẩu được cấp">
+      </div>
+      <div class="modal-err" id="loiDangNhap"></div>
+    </div>
+    <div class="modal-f">
+      <button class="btn btn-ghost" data-dong-dn>Hủy</button>
+      <button class="btn btn-primary" id="nutDangNhapXacNhan">Đăng nhập</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL ĐỔI MẬT KHẨU -->
+<div class="overlay" id="modalDoiMK">
+  <div class="modal" style="max-width:400px">
+    <div class="modal-h"><h3>Đổi mật khẩu</h3><button class="x" data-dong-mk>×</button></div>
+    <div class="modal-b">
+      <div class="fld full" style="margin-bottom:14px">
+        <label>Mật khẩu hiện tại <span class="req">*</span></label>
+        <input id="mk_hien_tai" type="password">
+      </div>
+      <div class="fld full" style="margin-bottom:14px">
+        <label>Mật khẩu mới <span class="req">*</span></label>
+        <input id="mk_moi" type="password">
+      </div>
+      <div class="fld full">
+        <label>Nhập lại mật khẩu mới <span class="req">*</span></label>
+        <input id="mk_moi_2" type="password">
+      </div>
+      <div class="modal-err" id="loiDoiMK"></div>
+      <div class="modal-ok" id="okDoiMK">Đổi mật khẩu thành công!</div>
+    </div>
+    <div class="modal-f">
+      <button class="btn btn-ghost" data-dong-mk>Đóng</button>
+      <button class="btn btn-primary" id="nutDoiMKXacNhan">Đổi mật khẩu</button>
+    </div>
+  </div>
+</div>
+
 <!-- MODAL GỬI KIẾN NGHỊ -->
 <div class="overlay" id="modalThem">
   <div class="modal">
@@ -190,14 +255,12 @@
     <div class="modal-b">
       <div class="grid">
         <div class="fld">
-          <label>Đơn vị <span class="req">*</span></label>
-          <select id="f_don_vi">
-            <option value="VS">Vĩnh Sơn</option><option value="SH">Sông Hinh</option><option value="TKT">Thượng Kon Tum</option><option value="TT_DVTV">TT DVTV</option>
-          </select>
+          <label>Đơn vị</label>
+          <div class="lock" id="f_don_vi_khoa">—</div>
         </div>
         <div class="fld">
-          <label>ATVSV liên quan</label>
-          <select id="f_atvsv"><option value="">— Không chọn —</option></select>
+          <label>Người gửi (ATVSV)</label>
+          <div class="lock" id="f_atvsv_khoa">—</div>
         </div>
         <div class="fld">
           <label>Ngày kiến nghị</label>
@@ -306,6 +369,7 @@ const TEN_MUC_DO = { thap:'Thấp', trung_binh:'Trung bình', cao:'Cao', khan_ca
 const CLASS_MUC_DO = { thap:'m-thap', trung_binh:'m-tb', cao:'m-cao', khan_cap:'m-khan' };
 const TEN_TRANG_THAI = { chua_xu_ly:'Chưa xử lý', dang_xu_ly:'Đang xử lý', da_xu_ly:'Đã xử lý', khong_thuc_hien:'Không thực hiện' };
 const CLASS_TRANG_THAI = { chua_xu_ly:'t-chua', dang_xu_ly:'t-dang', da_xu_ly:'t-xong', khong_thuc_hien:'t-khong' };
+const KHOA_PHIEN = 'atvsv_phien_dangnhap';
 
 let sb = null;
 if (window.supabase && SUPABASE_ANON_KEY.startsWith('eyJ'))
@@ -314,6 +378,68 @@ if (window.supabase && SUPABASE_ANON_KEY.startsWith('eyJ'))
 const $ = id => document.getElementById(id);
 let danhSachGoc=[], mapAtvsv={}, dsAtvsv=[];
 let ctHienTai=null;
+let phien=null;         // {id, ho_ten, don_vi} - ATVSV dang dang nhap (chi luu trong tab nay)
+let hanhDongCho=null;   // ham se chay lai sau khi dang nhap thanh cong
+
+/* ---------- PHIÊN ĐĂNG NHẬP ATVSV (theo tab trình duyệt) ---------- */
+function napPhien(){
+  try{ phien = JSON.parse(sessionStorage.getItem(KHOA_PHIEN)); }catch(e){ phien = null; }
+  apDungPhien();
+}
+function luuPhien(p){ phien=p; sessionStorage.setItem(KHOA_PHIEN, JSON.stringify(p)); apDungPhien(); }
+function xoaPhien(){ phien=null; sessionStorage.removeItem(KHOA_PHIEN); apDungPhien(); }
+function apDungPhien(){
+  if (phien){ $('thanhPhien').style.display=''; $('phienTen').textContent=phien.ho_ten; }
+  else { $('thanhPhien').style.display='none'; }
+}
+
+function moDangNhap(hanhDongTiepTheo){
+  hanhDongCho = hanhDongTiepTheo || null;
+  $('dn_mat_khau').value=''; $('loiDangNhap').classList.remove('show');
+  $('modalDangNhap').classList.add('show');
+}
+function dongDangNhap(){ $('modalDangNhap').classList.remove('show'); hanhDongCho=null; }
+
+async function xuLyDangNhap(){
+  const idChon=$('dn_atvsv').value, mk=$('dn_mat_khau').value;
+  if(!idChon){baoLoi('loiDangNhap','Vui lòng chọn họ tên của bạn.');return}
+  if(!mk){baoLoi('loiDangNhap','Vui lòng nhập mật khẩu.');return}
+  $('nutDangNhapXacNhan').disabled=true;$('nutDangNhapXacNhan').textContent='Đang kiểm tra…';
+  const r=await sb.from('atvsv').select('id,ho_ten,don_vi').eq('id',idChon).eq('mat_khau',mk).maybeSingle();
+  $('nutDangNhapXacNhan').disabled=false;$('nutDangNhapXacNhan').textContent='Đăng nhập';
+  if(r.error || !r.data){
+    baoLoi('loiDangNhap','Mật khẩu không đúng, hoặc tài khoản của bạn chưa được cấp mật khẩu — liên hệ quản trị viên.');
+    return;
+  }
+  luuPhien(r.data);
+  $('modalDangNhap').classList.remove('show');
+  const chay=hanhDongCho; hanhDongCho=null;
+  if(chay) chay();
+}
+
+function moDoiMK(){
+  if(!phien){ moDangNhap(moDoiMK); return; }
+  $('mk_hien_tai').value='';$('mk_moi').value='';$('mk_moi_2').value='';
+  $('loiDoiMK').classList.remove('show');$('okDoiMK').classList.remove('show');
+  $('modalDoiMK').classList.add('show');
+}
+function dongDoiMK(){ $('modalDoiMK').classList.remove('show'); }
+
+async function xuLyDoiMK(){
+  const hienTai=$('mk_hien_tai').value, moi=$('mk_moi').value, moi2=$('mk_moi_2').value;
+  $('loiDoiMK').classList.remove('show');$('okDoiMK').classList.remove('show');
+  if(!hienTai||!moi||!moi2){baoLoi('loiDoiMK','Vui lòng điền đủ các ô.');return}
+  if(moi.length<4){baoLoi('loiDoiMK','Mật khẩu mới phải có ít nhất 4 ký tự.');return}
+  if(moi!==moi2){baoLoi('loiDoiMK','Mật khẩu mới nhập lại không khớp.');return}
+  $('nutDoiMKXacNhan').disabled=true;
+  const kt=await sb.from('atvsv').select('id').eq('id',phien.id).eq('mat_khau',hienTai).maybeSingle();
+  if(kt.error||!kt.data){$('nutDoiMKXacNhan').disabled=false;baoLoi('loiDoiMK','Mật khẩu hiện tại không đúng.');return}
+  const {error}=await sb.from('atvsv').update({mat_khau:moi}).eq('id',phien.id);
+  $('nutDoiMKXacNhan').disabled=false;
+  if(error){baoLoi('loiDoiMK','Không đổi được mật khẩu: '+error.message);return}
+  $('okDoiMK').classList.add('show');
+  $('mk_hien_tai').value='';$('mk_moi').value='';$('mk_moi_2').value='';
+}
 
 function esc(s){return (s??'').toString().replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
 function fmtNgay(d){if(!d)return '—';const[y,m,dd]=d.split('-');return `${dd}/${m}/${y}`}
@@ -324,6 +450,7 @@ function badgeTT(v){return `<span class="badge ${CLASS_TRANG_THAI[v]||''}">${TEN
 async function khoiTao(){
   const cols=['Số','Ngày KN','ATVSV','Đơn vị','Lĩnh vực','Nội dung','Mức độ','Trạng thái'];
   $('hangTieuDe').innerHTML=cols.map(c=>`<th>${c}</th>`).join('');
+  napPhien();
   await Promise.all([napAtvsv(), napDanhSach()]);
 }
 
@@ -331,6 +458,8 @@ async function napAtvsv(){
   const r=await sb.from('atvsv').select('id,ho_ten,don_vi,dang_hoat_dong').order('ho_ten');
   dsAtvsv=r.data||[];
   mapAtvsv={}; dsAtvsv.forEach(a=>mapAtvsv[a.id]=a.ho_ten);
+  $('dn_atvsv').innerHTML='<option value="">— Chọn tên của bạn —</option>'+
+    dsAtvsv.map(a=>`<option value="${a.id}">${esc(a.ho_ten)} (${TEN_DON_VI[a.don_vi]||a.don_vi})</option>`).join('');
 }
 
 async function napDanhSach(){
@@ -381,31 +510,28 @@ function veBang(ds){
 }
 
 /* ---------- GỬI KIẾN NGHỊ ---------- */
-function napDropdownAtvsv(dv){
-  const sel=$('f_atvsv');
-  const ds=dsAtvsv.filter(a=>a.don_vi===dv && a.dang_hoat_dong!==false);
-  sel.innerHTML='<option value="">— Không chọn —</option>'+
-    ds.map(a=>`<option value="${a.id}">${esc(a.ho_ten)}</option>`).join('');
+function ycMoThem(){
+  if(!phien){ moDangNhap(moThem); return; }
+  moThem();
 }
 function moThem(){
   $('loiThem').classList.remove('show');
-  const dv=$('f_don_vi').value || 'VS';
-  $('f_don_vi').value=dv;
-  napDropdownAtvsv(dv);
+  $('f_don_vi_khoa').textContent = TEN_DON_VI[phien.don_vi]||phien.don_vi;
+  $('f_atvsv_khoa').textContent = phien.ho_ten;
   $('f_ngay').value=homNay();
   $('f_muc_do').value='trung_binh';
   $('f_linh_vuc').value=''; $('f_vi_tri').value=''; $('f_noi_dung').value='';
   $('modalThem').classList.add('show');
   $('f_noi_dung').focus();
 }
-$('f_don_vi').onchange=()=>napDropdownAtvsv($('f_don_vi').value);
 
 async function guiKienNghi(){
+  if(!phien){ $('modalThem').classList.remove('show'); moDangNhap(null); return; }
   const nd=$('f_noi_dung').value.trim();
   if(!nd){baoLoi('loiThem','Vui lòng nhập nội dung kiến nghị.');return}
   const ban={
-    don_vi: $('f_don_vi').value,
-    atvsv_id: $('f_atvsv').value||null,
+    don_vi: phien.don_vi,
+    atvsv_id: phien.id,
     ngay_kien_nghi: $('f_ngay').value||homNay(),
     linh_vuc: $('f_linh_vuc').value.trim()||null,
     vi_tri: $('f_vi_tri').value.trim()||null,
@@ -509,7 +635,7 @@ function xuatExcel(){
 function baoLoi(idOh,m){const e=$(idOh);e.textContent=m;e.classList.add('show')}
 
 /* ---------- SỰ KIỆN ---------- */
-$('nutThem').onclick=moThem;
+$('nutThem').onclick=ycMoThem;
 $('nutGui').onclick=guiKienNghi;
 $('nutLuuXuLy').onclick=luuXuLy;
 $('nutXoa').onclick=hoiXoa;
@@ -518,10 +644,17 @@ $('nutXuat').onclick=xuatExcel;
 $('oTimKiem').oninput=loc;
 $('locTrangThai').onchange=loc;
 $('locDonVi').onchange=loc;
+$('nutDangNhapXacNhan').onclick=xuLyDangNhap;
+$('dn_mat_khau').addEventListener('keydown', e=>{ if(e.key==='Enter') xuLyDangNhap(); });
+$('lienKetDoiMK').onclick=e=>{e.preventDefault();moDoiMK();};
+$('lienKetDangXuat').onclick=e=>{e.preventDefault();if(confirm('Đăng xuất khỏi tài khoản ATVSV?'))xoaPhien();};
+$('nutDoiMKXacNhan').onclick=xuLyDoiMK;
 document.querySelectorAll('[data-dong-them]').forEach(b=>b.onclick=()=>$('modalThem').classList.remove('show'));
 document.querySelectorAll('[data-dong-ct]').forEach(b=>b.onclick=()=>$('modalChiTiet').classList.remove('show'));
 document.querySelectorAll('[data-dong-xoa]').forEach(b=>b.onclick=()=>$('modalXoa').classList.remove('show'));
-[$('modalThem'),$('modalChiTiet'),$('modalXoa')].forEach(o=>o.onclick=e=>{if(e.target===o)o.classList.remove('show')});
+document.querySelectorAll('[data-dong-dn]').forEach(b=>b.onclick=dongDangNhap);
+document.querySelectorAll('[data-dong-mk]').forEach(b=>b.onclick=dongDoiMK);
+[$('modalThem'),$('modalChiTiet'),$('modalXoa'),$('modalDangNhap'),$('modalDoiMK')].forEach(o=>o.onclick=e=>{if(e.target===o)o.classList.remove('show')});
 
 khoiTao();
 </script>

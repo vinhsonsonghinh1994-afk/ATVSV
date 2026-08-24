@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Thư viện tài liệu — Mạng lưới ATVSV</title>
+<title>Chấm điểm thông tư — Mạng lưới ATVSV</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -20,34 +20,16 @@
     background:var(--page); -webkit-font-smoothing:antialiased; font-size:14px;
   }
 
-  /* thanh dieu huong */
-  .bar{
-    background:linear-gradient(120deg,var(--deep-1),var(--deep-2)); color:#fff;
-    padding:10px 20px; display:flex; align-items:center; gap:16px;
-    position:sticky; top:0; z-index:10; flex-wrap:wrap;
-  }
-  .bar .mark{width:36px; height:36px; border-radius:9px; background:rgba(255,255,255,.12);
-    display:grid; place-items:center; flex:0 0 36px}
-  .bar .mark svg{width:22px;height:22px}
-  .bar .sys{font-weight:700; font-size:14px; line-height:1.1}
-  .bar .sub{font-size:11px; color:#a7c6d4; margin-top:2px}
-  .nav{display:flex; gap:4px}
-  .nav a{color:#bcd4df; text-decoration:none; font-size:13px; font-weight:600; padding:7px 12px; border-radius:8px}
-  .nav a:hover{background:rgba(255,255,255,.1); color:#fff}
-  .nav a.active{background:rgba(255,255,255,.15); color:#fff}
-  .bar .grow{flex:1}
-  .who{text-align:right; line-height:1.2; margin-right:2px}
-  .who .n{font-size:13px; font-weight:600}
-  .who .r{font-size:11px; color:#a7c6d4; margin-top:2px}
-  .btn-out{border:1px solid rgba(255,255,255,.28); background:transparent; color:#fff;
-    height:34px; padding:0 13px; border-radius:9px; font:inherit; font-size:13px;
-    font-weight:600; cursor:pointer}
-  .btn-out:hover{background:rgba(255,255,255,.12)}
-
   .container{max-width:1160px; margin:0 auto; padding:22px 18px 60px}
-  .head{display:flex; align-items:flex-end; gap:12px; flex-wrap:wrap; margin-bottom:18px}
+  .head{display:flex; align-items:flex-end; gap:12px; flex-wrap:wrap; margin-bottom:6px}
   h1{font-size:22px; font-weight:700; margin:0; letter-spacing:-.01em}
   .count{color:var(--muted); font-size:13px; font-weight:500; padding-bottom:2px}
+
+  .phien-bar{display:flex; align-items:center; gap:6px; flex-wrap:wrap; font-size:13px; color:var(--muted); margin-bottom:16px}
+  .phien-bar b{color:var(--ink)}
+  .phien-bar a{color:var(--accent-d); text-decoration:none; font-weight:600; cursor:pointer}
+  .phien-bar a:hover{text-decoration:underline}
+  .phien-bar .dot{color:var(--line)}
 
   .toolbar{display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:14px}
   .search{position:relative; flex:1; min-width:200px}
@@ -132,6 +114,9 @@
   .modal-err{display:none; background:var(--danger-bg); color:var(--danger); font-size:13px;
     border:1px solid #f2d2cd; border-radius:10px; padding:10px 12px; margin-top:4px}
   .modal-err.show{display:block}
+  .modal-ok{display:none; background:var(--ok-bg); color:var(--ok); font-size:13px;
+    border:1px solid #cdeadd; border-radius:10px; padding:10px 12px; margin-top:4px}
+  .modal-ok.show{display:block}
   .modal-f{padding:16px 22px; border-top:1px solid var(--line); display:flex;
     justify-content:flex-end; gap:10px}
 
@@ -146,11 +131,9 @@
 
   @media (max-width:640px){
     .grid{grid-template-columns:1fr}
-    .who .r{display:none}
     h1{font-size:20px}
     .btn span.lbl{display:none}
     .btn{padding:0 13px}
-    .bar .sub{display:none}
     td.nd{max-width:160px}
   }
 </style>
@@ -158,8 +141,14 @@
 <body>
 <div class="container">
   <div class="head">
-    <h1 id="tieuDeTrang">Thư viện tài liệu</h1>
+    <h1 id="tieuDeTrang">Chấm điểm thông tư</h1>
     <span class="count" id="soLuong"></span>
+  </div>
+
+  <div class="phien-bar" id="thanhPhien" style="display:none">
+    Đang đăng nhập: <b id="phienTen"></b>
+    <span class="dot">·</span><a id="lienKetDoiMK">Đổi mật khẩu</a>
+    <span class="dot">·</span><a id="lienKetDangXuat">Đăng xuất</a>
   </div>
 
   <div class="toolbar">
@@ -186,6 +175,62 @@
         <thead><tr id="hangTieuDe"></tr></thead>
         <tbody id="thanBang"></tbody>
       </table>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL ĐĂNG NHẬP ATVSV -->
+<div class="overlay" id="modalDangNhap">
+  <div class="modal" style="max-width:400px">
+    <div class="modal-h">
+      <h3>Đăng nhập ATVSV</h3>
+      <button class="x" data-dong-dn>×</button>
+    </div>
+    <div class="modal-b">
+      <p style="margin:0 0 14px;color:var(--muted);font-size:13px">Cần đăng nhập bằng tài khoản ATVSV để tiếp tục.</p>
+      <div class="fld full" style="margin-bottom:14px">
+        <label>Họ và tên <span class="req">*</span></label>
+        <select id="dn_atvsv"><option value="">— Chọn tên của bạn —</option></select>
+      </div>
+      <div class="fld full">
+        <label>Mật khẩu <span class="req">*</span></label>
+        <input id="dn_mat_khau" type="password" placeholder="Mật khẩu được cấp">
+      </div>
+      <div class="modal-err" id="loiDangNhap"></div>
+    </div>
+    <div class="modal-f">
+      <button class="btn btn-ghost" data-dong-dn>Hủy</button>
+      <button class="btn btn-primary" id="nutDangNhapXacNhan">Đăng nhập</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL ĐỔI MẬT KHẨU -->
+<div class="overlay" id="modalDoiMK">
+  <div class="modal" style="max-width:400px">
+    <div class="modal-h">
+      <h3>Đổi mật khẩu</h3>
+      <button class="x" data-dong-mk>×</button>
+    </div>
+    <div class="modal-b">
+      <div class="fld full" style="margin-bottom:14px">
+        <label>Mật khẩu hiện tại <span class="req">*</span></label>
+        <input id="mk_hien_tai" type="password">
+      </div>
+      <div class="fld full" style="margin-bottom:14px">
+        <label>Mật khẩu mới <span class="req">*</span></label>
+        <input id="mk_moi" type="password">
+      </div>
+      <div class="fld full">
+        <label>Nhập lại mật khẩu mới <span class="req">*</span></label>
+        <input id="mk_moi_2" type="password">
+      </div>
+      <div class="modal-err" id="loiDoiMK"></div>
+      <div class="modal-ok" id="okDoiMK">Đổi mật khẩu thành công!</div>
+    </div>
+    <div class="modal-f">
+      <button class="btn btn-ghost" data-dong-mk>Đóng</button>
+      <button class="btn btn-primary" id="nutDoiMKXacNhan">Đổi mật khẩu</button>
     </div>
   </div>
 </div>
@@ -222,7 +267,7 @@
         </div>
         <div class="fld">
           <label>Người nộp</label>
-          <input id="f_nguoi_tai" placeholder="Họ tên (không bắt buộc)">
+          <div class="lock" id="f_nguoi_tai_khoa">—</div>
         </div>
       </div>
       <div class="modal-err" id="loiForm"></div>
@@ -251,14 +296,8 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-/* =========================================================================
-   NHÂN BẢN TRANG CHO DANH MỤC KHÁC:
-   chỉ cần đổi 2 hằng số dưới đây (và lưu file với tên khác), phần còn lại
-   của trang tự chạy theo danh mục mới.
-   ========================================================================= */
 const DANH_MUC       = 'cham_diem_thong_tu';
 const TIEU_DE_TRANG  = 'Chấm điểm thông tư';
-/* ========================================================================= */
 
 /* ===== CẤU HÌNH (giống các trang khác) ===== */
 const SUPABASE_URL = 'https://lasbxdhexxczzfrfkexn.supabase.co';
@@ -266,9 +305,9 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 /* ============================================ */
 
 document.title = TIEU_DE_TRANG + ' — Mạng lưới ATVSV';
-document.getElementById('tieuDeTrang').textContent = TIEU_DE_TRANG;
 
 const TEN_DON_VI = { VS:'Vĩnh Sơn', SH:'Sông Hinh', TKT:'Thượng Kon Tum', TT_DVTV:'TT DVTV' };
+const KHOA_PHIEN = 'atvsv_phien_dangnhap';
 
 let sb = null;
 if (window.supabase && SUPABASE_ANON_KEY.startsWith('eyJ'))
@@ -276,7 +315,10 @@ if (window.supabase && SUPABASE_ANON_KEY.startsWith('eyJ'))
 
 const $ = id => document.getElementById(id);
 let danhSachGoc = [];
+let dsAtvsv = [];
 let dangSua = null;         // id dang sua, null = them moi
+let phien = null;           // {id, ho_ten, don_vi} - ATVSV dang dang nhap (chi luu trong tab nay)
+let hanhDongCho = null;     // ham se chay lai sau khi dang nhap thanh cong
 
 function esc(s){ return (s??'').toString().replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
 function fmtNgayGio(iso){
@@ -289,11 +331,95 @@ function fmtNgayGio(iso){
 }
 function linkHopLe(u){ return typeof u==='string' && /^https?:\/\//i.test(u.trim()) ? u.trim() : null; }
 
+/* ---------- PHIÊN ĐĂNG NHẬP ATVSV (theo tab trình duyệt) ---------- */
+function napPhien(){
+  try{ phien = JSON.parse(sessionStorage.getItem(KHOA_PHIEN)); }catch(e){ phien = null; }
+  apDungPhien();
+}
+function luuPhien(p){ phien = p; sessionStorage.setItem(KHOA_PHIEN, JSON.stringify(p)); apDungPhien(); }
+function xoaPhien(){ phien = null; sessionStorage.removeItem(KHOA_PHIEN); apDungPhien(); }
+function apDungPhien(){
+  if (phien){
+    $('thanhPhien').style.display = '';
+    $('phienTen').textContent = phien.ho_ten;
+  } else {
+    $('thanhPhien').style.display = 'none';
+  }
+}
+
+async function napDsAtvsvChoDangNhap(){
+  const r = await sb.from('atvsv').select('id,ho_ten,don_vi').order('ho_ten');
+  dsAtvsv = r.data || [];
+  $('dn_atvsv').innerHTML = '<option value="">— Chọn tên của bạn —</option>' +
+    dsAtvsv.map(a=>`<option value="${a.id}">${esc(a.ho_ten)} (${TEN_DON_VI[a.don_vi]||a.don_vi})</option>`).join('');
+}
+
+function moDangNhap(hanhDongTiepTheo){
+  hanhDongCho = hanhDongTiepTheo || null;
+  $('dn_mat_khau').value = '';
+  $('loiDangNhap').classList.remove('show');
+  $('modalDangNhap').classList.add('show');
+}
+function dongDangNhap(){ $('modalDangNhap').classList.remove('show'); hanhDongCho = null; }
+
+async function xuLyDangNhap(){
+  const idChon = $('dn_atvsv').value;
+  const mk = $('dn_mat_khau').value;
+  if (!idChon){ baoLoi('loiDangNhap','Vui lòng chọn họ tên của bạn.'); return; }
+  if (!mk){ baoLoi('loiDangNhap','Vui lòng nhập mật khẩu.'); return; }
+
+  $('nutDangNhapXacNhan').disabled = true; $('nutDangNhapXacNhan').textContent = 'Đang kiểm tra…';
+  const r = await sb.from('atvsv').select('id,ho_ten,don_vi').eq('id', idChon).eq('mat_khau', mk).maybeSingle();
+  $('nutDangNhapXacNhan').disabled = false; $('nutDangNhapXacNhan').textContent = 'Đăng nhập';
+
+  if (r.error || !r.data){
+    baoLoi('loiDangNhap','Mật khẩu không đúng, hoặc tài khoản của bạn chưa được cấp mật khẩu — liên hệ quản trị viên.');
+    return;
+  }
+  luuPhien(r.data);
+  $('modalDangNhap').classList.remove('show');
+  const chay = hanhDongCho; hanhDongCho = null;
+  if (chay) chay();
+}
+
+function moDoiMK(){
+  if (!phien){ moDangNhap(moDoiMK); return; }
+  $('mk_hien_tai').value=''; $('mk_moi').value=''; $('mk_moi_2').value='';
+  $('loiDoiMK').classList.remove('show'); $('okDoiMK').classList.remove('show');
+  $('modalDoiMK').classList.add('show');
+}
+function dongDoiMK(){ $('modalDoiMK').classList.remove('show'); }
+
+async function xuLyDoiMK(){
+  const hienTai = $('mk_hien_tai').value;
+  const moi = $('mk_moi').value;
+  const moi2 = $('mk_moi_2').value;
+  $('loiDoiMK').classList.remove('show'); $('okDoiMK').classList.remove('show');
+  if (!hienTai || !moi || !moi2){ baoLoi('loiDoiMK','Vui lòng điền đủ các ô.'); return; }
+  if (moi.length < 4){ baoLoi('loiDoiMK','Mật khẩu mới phải có ít nhất 4 ký tự.'); return; }
+  if (moi !== moi2){ baoLoi('loiDoiMK','Mật khẩu mới nhập lại không khớp.'); return; }
+
+  $('nutDoiMKXacNhan').disabled = true;
+  const kt = await sb.from('atvsv').select('id').eq('id', phien.id).eq('mat_khau', hienTai).maybeSingle();
+  if (kt.error || !kt.data){
+    $('nutDoiMKXacNhan').disabled = false;
+    baoLoi('loiDoiMK','Mật khẩu hiện tại không đúng.');
+    return;
+  }
+  const { error } = await sb.from('atvsv').update({ mat_khau: moi }).eq('id', phien.id);
+  $('nutDoiMKXacNhan').disabled = false;
+  if (error){ baoLoi('loiDoiMK','Không đổi được mật khẩu: ' + error.message); return; }
+  $('okDoiMK').classList.add('show');
+  $('mk_hien_tai').value=''; $('mk_moi').value=''; $('mk_moi_2').value='';
+}
+function baoLoi(idOh,m){ const e=$(idOh); e.textContent=m; e.classList.add('show'); }
+
 /* ---------- KHỞI TẠO ---------- */
 async function khoiTao(){
   const cols = ['STT','Tiêu đề','Mô tả','Đơn vị','Người nộp','Ngày tải','Tài liệu',''];
   $('hangTieuDe').innerHTML = cols.map(c=>`<th>${c}</th>`).join('');
-  await napDanhSach();
+  napPhien();
+  await Promise.all([napDsAtvsvChoDangNhap(), napDanhSach()]);
 }
 
 async function napDanhSach(){
@@ -335,6 +461,7 @@ function veBang(ds){
 
   $('thanBang').innerHTML = ds.map((x,i)=>{
     const href = linkHopLe(x.link_file);
+    const laChuDong = phien && x.nguoi_tai_id === phien.id;
     let h = `<tr>`;
     h += `<td class="stt">${i+1}</td>`;
     h += `<td class="ten">${esc(x.tieu_de)}</td>`;
@@ -346,33 +473,45 @@ function veBang(ds){
       ? `<a class="link-btn" href="${esc(href)}" target="_blank" rel="noopener noreferrer">Mở/Tải</a>`
       : '<span class="link-off">Link không hợp lệ</span>'}</td>`;
     h += `<td><div class="acts">`;
-    h += `<button class="icon-btn" data-sua="${x.id}" title="Sửa"><svg viewBox="0 0 24 24" fill="none" stroke="#41525d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></button>`;
-    h += `<button class="icon-btn del" data-xoa="${x.id}" title="Xóa"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2m1 0-1 14a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1L6 6"/></svg></button>`;
+    h += `<button class="icon-btn" data-sua="${x.id}" title="${laChuDong?'Sửa':'Chỉ chủ file mới sửa được'}"${laChuDong?'':' disabled style="opacity:.35;cursor:default"'}><svg viewBox="0 0 24 24" fill="none" stroke="#41525d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></button>`;
+    h += `<button class="icon-btn del" data-xoa="${x.id}" title="${laChuDong?'Xóa':'Chỉ chủ file mới xóa được'}"${laChuDong?'':' disabled style="opacity:.35;cursor:default"'}><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2m1 0-1 14a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1L6 6"/></svg></button>`;
     h += `</div></td>`;
     return h + `</tr>`;
   }).join('');
 
-  $('thanBang').querySelectorAll('[data-sua]').forEach(b=>b.onclick=()=>moForm(b.dataset.sua));
-  $('thanBang').querySelectorAll('[data-xoa]').forEach(b=>b.onclick=()=>hoiXoa(b.dataset.xoa));
+  $('thanBang').querySelectorAll('[data-sua]:not([disabled])').forEach(b=>b.onclick=()=>ycMoForm(b.dataset.sua));
+  $('thanBang').querySelectorAll('[data-xoa]:not([disabled])').forEach(b=>b.onclick=()=>ycHoiXoa(b.dataset.xoa));
+}
+
+/* ---------- YÊU CẦU CÓ ĐĂNG NHẬP TRƯỚC KHI THÊM/SỬA/XÓA ---------- */
+function ycMoForm(id){
+  if (!phien){ moDangNhap(()=>moForm(id)); return; }
+  moForm(id);
+}
+function ycHoiXoa(id){
+  if (!phien){ moDangNhap(()=>hoiXoa(id)); return; }
+  hoiXoa(id);
 }
 
 /* ---------- FORM THÊM / SỬA ---------- */
 function moForm(id){
+  const x = id ? danhSachGoc.find(r=>r.id===id) : null;
+  if (id && (!x || x.nguoi_tai_id !== phien.id)){ alert('Bạn chỉ có thể sửa file chấm điểm của chính mình.'); return; }
   dangSua = id || null;
   $('loiForm').classList.remove('show');
   $('tieuDeForm').textContent = id ? 'Sửa file chấm điểm' : 'Nộp file chấm điểm';
-  const x = id ? danhSachGoc.find(r=>r.id===id) : {};
-  $('f_tieu_de').value = x.tieu_de || '';
-  $('f_mo_ta').value = x.mo_ta || '';
-  $('f_link_file').value = x.link_file || '';
-  $('f_don_vi').value = x.don_vi || 'VS';
-  $('f_nguoi_tai').value = x.nguoi_tai || '';
+  $('f_tieu_de').value = x ? x.tieu_de||'' : '';
+  $('f_mo_ta').value = x ? x.mo_ta||'' : '';
+  $('f_link_file').value = x ? x.link_file||'' : '';
+  $('f_don_vi').value = x ? (x.don_vi||'VS') : (phien.don_vi||'VS');
+  $('f_nguoi_tai_khoa').textContent = phien.ho_ten;
   $('modalForm').classList.add('show');
   $('f_tieu_de').focus();
 }
 function dongForm(){ $('modalForm').classList.remove('show'); }
 
 async function luu(){
+  if (!phien){ dongForm(); moDangNhap(null); return; }
   const tieuDe = $('f_tieu_de').value.trim();
   const link = $('f_link_file').value.trim();
   if (!tieuDe){ baoLoiForm('Vui lòng nhập tiêu đề tài liệu.'); return; }
@@ -383,10 +522,11 @@ async function luu(){
     mo_ta: $('f_mo_ta').value.trim() || null,
     link_file: link,
     don_vi: $('f_don_vi').value,
-    nguoi_tai: $('f_nguoi_tai').value.trim() || null,
   };
   if (!dangSua){
     ban.danh_muc = DANH_MUC;
+    ban.nguoi_tai = phien.ho_ten;
+    ban.nguoi_tai_id = phien.id;
   }
 
   $('nutLuu').disabled = true; $('nutLuu').textContent = 'Đang lưu…';
@@ -410,8 +550,9 @@ function baoLoiForm(m){ const e=$('loiForm'); e.textContent=m; e.classList.add('
 /* ---------- XÓA ---------- */
 let idXoa = null;
 function hoiXoa(id){
-  idXoa = id;
   const x = danhSachGoc.find(r=>r.id===id);
+  if (!x || x.nguoi_tai_id !== phien.id){ alert('Bạn chỉ có thể xóa file chấm điểm của chính mình.'); return; }
+  idXoa = id;
   $('xoaNoiDung').innerHTML = `Xóa file chấm điểm <b>${esc(x.tieu_de)}</b>? Thao tác này không thể hoàn tác.`;
   $('modalXoa').classList.add('show');
 }
@@ -430,14 +571,21 @@ async function xacNhanXoa(){
 }
 
 /* ---------- SỰ KIỆN ---------- */
-$('nutThem').onclick = ()=>moForm(null);
+$('nutThem').onclick = ()=>ycMoForm(null);
 $('nutLuu').onclick = luu;
 $('nutXacNhanXoa').onclick = xacNhanXoa;
 $('oTimKiem').oninput = loc;
 $('locDonVi').onchange = loc;
+$('nutDangNhapXacNhan').onclick = xuLyDangNhap;
+$('dn_mat_khau').addEventListener('keydown', e=>{ if(e.key==='Enter') xuLyDangNhap(); });
+$('lienKetDoiMK').onclick = e=>{ e.preventDefault(); moDoiMK(); };
+$('lienKetDangXuat').onclick = e=>{ e.preventDefault(); if(confirm('Đăng xuất khỏi tài khoản ATVSV?')) xoaPhien(); };
+$('nutDoiMKXacNhan').onclick = xuLyDoiMK;
 document.querySelectorAll('[data-dong]').forEach(b=>b.onclick=dongForm);
 document.querySelectorAll('[data-dong-xoa]').forEach(b=>b.onclick=()=>$('modalXoa').classList.remove('show'));
-[$('modalForm'),$('modalXoa')].forEach(o=>o.onclick=e=>{ if(e.target===o) o.classList.remove('show'); });
+document.querySelectorAll('[data-dong-dn]').forEach(b=>b.onclick=dongDangNhap);
+document.querySelectorAll('[data-dong-mk]').forEach(b=>b.onclick=dongDoiMK);
+[$('modalForm'),$('modalXoa'),$('modalDangNhap'),$('modalDoiMK')].forEach(o=>o.onclick=e=>{ if(e.target===o) o.classList.remove('show'); });
 
 khoiTao();
 </script>
