@@ -448,7 +448,7 @@ function badgeMD(v){return `<span class="badge ${CLASS_MUC_DO[v]||''}">${TEN_MUC
 function badgeTT(v){return `<span class="badge ${CLASS_TRANG_THAI[v]||''}">${TEN_TRANG_THAI[v]||v}</span>`}
 
 async function khoiTao(){
-  const cols=['Số','Ngày KN','ATVSV','Đơn vị','Lĩnh vực','Nội dung','Mức độ','Trạng thái'];
+  const cols=['Số','Ngày KN','ATVSV','Đơn vị','Lĩnh vực','Nội dung','Mức độ','Trạng thái','Nội dung đã xử lý'];
   $('hangTieuDe').innerHTML=cols.map(c=>`<th>${c}</th>`).join('');
   napPhien();
   await Promise.all([napAtvsv(), napDanhSach()]);
@@ -504,6 +504,7 @@ function veBang(ds){
     h+=`<td class="nd" title="${esc(x.noi_dung)}">${esc(x.noi_dung)}</td>`;
     h+=`<td>${badgeMD(x.muc_do)}</td>`;
     h+=`<td>${badgeTT(x.trang_thai)}</td>`;
+    h+=`<td class="nd" title="${esc(x.noi_dung_xu_ly)}">${esc(x.noi_dung_xu_ly)||'—'}</td>`;
     return h+`</tr>`;
   }).join('');
   $('thanBang').querySelectorAll('tr').forEach(tr=>tr.onclick=()=>moChiTiet(tr.dataset.id));
