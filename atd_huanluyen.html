@@ -167,13 +167,7 @@
       <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3" stroke-linecap="round"/></svg>
       <input id="oTimKiem" placeholder="Tìm theo tiêu đề, mô tả, người tải…">
     </div>
-    <select class="filt" id="locDonVi">
-      <option value="">Tất cả đơn vị</option>
-      <option value="VS">Vĩnh Sơn</option>
-      <option value="SH">Sông Hinh</option>
-      <option value="TKT">Thượng Kon Tum</option><option value="TT_DVTV">TT DVTV</option>
-    </select>
-    <button class="btn btn-primary" id="nutThem">
+    <button class="btn btn-primary" id="nutThem" style="display:none">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
       <span class="lbl">Thêm tài liệu</span>
     </button>
@@ -211,18 +205,6 @@
           <label>Link Google Drive <span class="req">*</span></label>
           <input id="f_link_file" placeholder="https://drive.google.com/...">
           <div class="hint">Dán link chia sẻ từ Google Drive (bắt đầu bằng http:// hoặc https://). Nhớ bật chia sẻ "Bất kỳ ai có link" trước khi dán.</div>
-        </div>
-        <div class="fld">
-          <label>Đơn vị <span class="req">*</span></label>
-          <select id="f_don_vi">
-            <option value="VS">Vĩnh Sơn</option>
-            <option value="SH">Sông Hinh</option>
-            <option value="TKT">Thượng Kon Tum</option><option value="TT_DVTV">TT DVTV</option>
-          </select>
-        </div>
-        <div class="fld">
-          <label>Người tải</label>
-          <input id="f_nguoi_tai" placeholder="Họ tên (không bắt buộc)">
         </div>
       </div>
       <div class="modal-err" id="loiForm"></div>
@@ -268,7 +250,7 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 document.title = TIEU_DE_TRANG + ' — Mạng lưới ATVSV';
 document.getElementById('tieuDeTrang').textContent = TIEU_DE_TRANG;
 
-const TEN_DON_VI = { VS:'Vĩnh Sơn', SH:'Sông Hinh', TKT:'Thượng Kon Tum', TT_DVTV:'TT DVTV' };
+const KHOA_PHIEN = 'phien_dangnhap';
 
 let sb = null;
 if (window.supabase && SUPABASE_ANON_KEY.startsWith('eyJ'))
@@ -277,6 +259,15 @@ if (window.supabase && SUPABASE_ANON_KEY.startsWith('eyJ'))
 const $ = id => document.getElementById(id);
 let danhSachGoc = [];
 let dangSua = null;         // id dang sua, null = them moi
+let phien = null;
+
+/* ---------- PHIÊN ĐĂNG NHẬP (dùng chung, chỉ đọc — đăng nhập ở tab Đăng nhập) ---------- */
+function napPhien(){
+  try{ phien = JSON.parse(sessionStorage.getItem(KHOA_PHIEN)); }catch(e){ phien = null; }
+  $('nutThem').style.display = coKySuAnToan() ? '' : 'none';
+}
+function coKySuAnToan(){ return !!phien && (phien.vai_tro==='ky_su_an_toan' || phien.vai_tro==='quan_tri'); }
+window.lamMoiKhiHienThi = function(){ napPhien(); loc(); };
 
 function esc(s){ return (s??'').toString().replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
 function fmtNgayGio(iso){
@@ -291,8 +282,7 @@ function linkHopLe(u){ return typeof u==='string' && /^https?:\/\//i.test(u.trim
 
 /* ---------- KHỞI TẠO ---------- */
 async function khoiTao(){
-  const cols = ['STT','Tiêu đề','Mô tả','Đơn vị','Người tải','Ngày tải','Tài liệu',''];
-  $('hangTieuDe').innerHTML = cols.map(c=>`<th>${c}</th>`).join('');
+  napPhien();
   await napDanhSach();
 }
 
@@ -310,9 +300,7 @@ async function napDanhSach(){
 /* ---------- LỌC & VẼ BẢNG ---------- */
 function loc(){
   const tu = $('oTimKiem').value.trim().toLowerCase();
-  const dv = $('locDonVi').value;
   let ds = danhSachGoc.filter(x=>{
-    if (dv && x.don_vi !== dv) return false;
     if (!tu) return true;
     return [x.tieu_de,x.mo_ta,x.nguoi_tai].some(v=>(v||'').toLowerCase().includes(tu));
   });
@@ -333,30 +321,45 @@ function veBang(ds){
     return;
   }
 
+  const coQuyen = coKySuAnToan();
+  const cols = ['STT','Tiêu đề','Mô tả','Người tải','Ngày tải','Tài liệu'].concat(coQuyen ? [''] : []);
+  $('hangTieuDe').innerHTML = cols.map(c=>`<th>${c}</th>`).join('');
+
   $('thanBang').innerHTML = ds.map((x,i)=>{
     const href = linkHopLe(x.link_file);
     let h = `<tr>`;
     h += `<td class="stt">${i+1}</td>`;
     h += `<td class="ten">${esc(x.tieu_de)}</td>`;
     h += `<td class="nd" title="${esc(x.mo_ta)}">${esc(x.mo_ta)||'—'}</td>`;
-    h += `<td>${TEN_DON_VI[x.don_vi]||esc(x.don_vi)}</td>`;
     h += `<td>${esc(x.nguoi_tai)||'—'}</td>`;
     h += `<td>${fmtNgayGio(x.ngay_tai)}</td>`;
     h += `<td>${href
       ? `<a class="link-btn" href="${esc(href)}" target="_blank" rel="noopener noreferrer">Mở/Tải</a>`
       : '<span class="link-off">Link không hợp lệ</span>'}</td>`;
-    h += `<td><div class="acts">`;
-    h += `<button class="icon-btn" data-sua="${x.id}" title="Sửa"><svg viewBox="0 0 24 24" fill="none" stroke="#41525d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></button>`;
-    h += `<button class="icon-btn del" data-xoa="${x.id}" title="Xóa"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2m1 0-1 14a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1L6 6"/></svg></button>`;
-    h += `</div></td>`;
+    if (coQuyen){
+      h += `<td><div class="acts">`;
+      h += `<button class="icon-btn" data-sua="${x.id}" title="Sửa"><svg viewBox="0 0 24 24" fill="none" stroke="#41525d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></button>`;
+      h += `<button class="icon-btn del" data-xoa="${x.id}" title="Xóa"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2m1 0-1 14a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1L6 6"/></svg></button>`;
+      h += `</div></td>`;
+    }
     return h + `</tr>`;
   }).join('');
 
-  $('thanBang').querySelectorAll('[data-sua]').forEach(b=>b.onclick=()=>moForm(b.dataset.sua));
-  $('thanBang').querySelectorAll('[data-xoa]').forEach(b=>b.onclick=()=>hoiXoa(b.dataset.xoa));
+  $('thanBang').querySelectorAll('[data-sua]').forEach(b=>b.onclick=()=>ycMoForm(b.dataset.sua));
+  $('thanBang').querySelectorAll('[data-xoa]').forEach(b=>b.onclick=()=>ycHoiXoa(b.dataset.xoa));
 }
 
 /* ---------- FORM THÊM / SỬA ---------- */
+function ycMoForm(id){
+  napPhien();
+  if (!coKySuAnToan()){ alert('Cần đăng nhập với vai trò Kỹ sư an toàn hoặc Quản trị viên ở tab "Đăng nhập" để thực hiện thao tác này.'); return; }
+  moForm(id);
+}
+function ycHoiXoa(id){
+  napPhien();
+  if (!coKySuAnToan()){ alert('Cần đăng nhập với vai trò Kỹ sư an toàn hoặc Quản trị viên ở tab "Đăng nhập" để thực hiện thao tác này.'); return; }
+  hoiXoa(id);
+}
 function moForm(id){
   dangSua = id || null;
   $('loiForm').classList.remove('show');
@@ -365,14 +368,14 @@ function moForm(id){
   $('f_tieu_de').value = x.tieu_de || '';
   $('f_mo_ta').value = x.mo_ta || '';
   $('f_link_file').value = x.link_file || '';
-  $('f_don_vi').value = x.don_vi || 'VS';
-  $('f_nguoi_tai').value = x.nguoi_tai || '';
   $('modalForm').classList.add('show');
   $('f_tieu_de').focus();
 }
 function dongForm(){ $('modalForm').classList.remove('show'); }
 
 async function luu(){
+  napPhien();
+  if (!coKySuAnToan()){ dongForm(); return; }
   const tieuDe = $('f_tieu_de').value.trim();
   const link = $('f_link_file').value.trim();
   if (!tieuDe){ baoLoiForm('Vui lòng nhập tiêu đề tài liệu.'); return; }
@@ -382,8 +385,7 @@ async function luu(){
     tieu_de: tieuDe,
     mo_ta: $('f_mo_ta').value.trim() || null,
     link_file: link,
-    don_vi: $('f_don_vi').value,
-    nguoi_tai: $('f_nguoi_tai').value.trim() || null,
+    nguoi_tai: phien.ho_ten,
   };
   if (!dangSua){
     ban.danh_muc = DANH_MUC;
@@ -410,6 +412,7 @@ function baoLoiForm(m){ const e=$('loiForm'); e.textContent=m; e.classList.add('
 /* ---------- XÓA ---------- */
 let idXoa = null;
 function hoiXoa(id){
+  if (!coKySuAnToan()) return;
   idXoa = id;
   const x = danhSachGoc.find(r=>r.id===Number(id));
   $('xoaNoiDung').innerHTML = `Xóa tài liệu <b>${esc(x.tieu_de)}</b>? Thao tác này không thể hoàn tác.`;
@@ -430,11 +433,10 @@ async function xacNhanXoa(){
 }
 
 /* ---------- SỰ KIỆN ---------- */
-$('nutThem').onclick = ()=>moForm(null);
+$('nutThem').onclick = ()=>ycMoForm(null);
 $('nutLuu').onclick = luu;
 $('nutXacNhanXoa').onclick = xacNhanXoa;
 $('oTimKiem').oninput = loc;
-$('locDonVi').onchange = loc;
 document.querySelectorAll('[data-dong]').forEach(b=>b.onclick=dongForm);
 document.querySelectorAll('[data-dong-xoa]').forEach(b=>b.onclick=()=>$('modalXoa').classList.remove('show'));
 [$('modalForm'),$('modalXoa')].forEach(o=>o.onclick=e=>{ if(e.target===o) o.classList.remove('show'); });
