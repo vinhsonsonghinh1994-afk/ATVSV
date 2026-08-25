@@ -568,18 +568,35 @@ function moChiTiet(id){
   html+=`<div class="full"><div class="k">Nội dung kiến nghị</div><div class="v">${esc(x.noi_dung)}</div></div>`;
   $('ctThongTin').innerHTML=html;
 
-  $('ctXuLySua').style.display='';
-  $('x_trang_thai').value=x.trang_thai||'chua_xu_ly';
-  $('x_han').value=x.han_xu_ly||'';
-  $('x_noi_dung').value=x.noi_dung_xu_ly||'';
-  $('loiXuLy').classList.remove('show');
-  $('nutLuuXuLy').style.display='';
-  $('nutXoa').style.display='';
+  napPhien(); // doc lai phien phong khi da dang nhap o tab Dang nhap sau khi trang nay da tai
+  const coTheXuLy = !!phien && (phien.vai_tro==='ky_su_an_toan' || phien.vai_tro==='quan_tri');
+  const coTheXoa = !!phien && phien.vai_tro==='quan_tri';
+
+  if (coTheXuLy){
+    $('ctXuLySua').style.display='';
+    $('ctXuLyXem').style.display='none';
+    $('x_trang_thai').value=x.trang_thai||'chua_xu_ly';
+    $('x_han').value=x.han_xu_ly||'';
+    $('x_noi_dung').value=x.noi_dung_xu_ly||'';
+    $('loiXuLy').classList.remove('show');
+    $('nutLuuXuLy').style.display='';
+  } else {
+    $('ctXuLySua').style.display='none';
+    $('ctXuLyXem').style.display='';
+    $('ctTrangThaiXem').innerHTML=badgeTT(x.trang_thai);
+    $('ctNoiDungXuLy').textContent=x.noi_dung_xu_ly||'Chưa có nội dung xử lý.';
+    $('nutLuuXuLy').style.display='none';
+  }
+  $('nutXoa').style.display = coTheXoa ? '' : 'none';
   $('modalChiTiet').classList.add('show');
 }
 
 async function luuXuLy(){
   if(!ctHienTai)return;
+  napPhien();
+  if(!(phien && (phien.vai_tro==='ky_su_an_toan' || phien.vai_tro==='quan_tri'))){
+    alert('Chỉ Kỹ sư an toàn hoặc Quản trị viên mới được xử lý kiến nghị.'); return;
+  }
   const tt=$('x_trang_thai').value;
   const ban={
     trang_thai: tt,
@@ -601,7 +618,13 @@ async function luuXuLy(){
 }
 
 /* ---------- XÓA ---------- */
-function hoiXoa(){ if(ctHienTai) $('modalXoa').classList.add('show'); }
+function hoiXoa(){
+  napPhien();
+  if(!(phien && phien.vai_tro==='quan_tri')){
+    alert('Chỉ Quản trị viên mới được xóa kiến nghị.'); return;
+  }
+  if(ctHienTai) $('modalXoa').classList.add('show');
+}
 async function xacNhanXoa(){
   if(!ctHienTai)return;
   $('nutXacNhanXoa').disabled=true;$('nutXacNhanXoa').textContent='Đang xóa…';
