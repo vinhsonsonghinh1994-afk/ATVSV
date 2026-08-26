@@ -316,9 +316,7 @@ nav{background:#1e3a8a;display:flex;justify-content:center}
     <div class="nav-item">
       <button class="nav-tab" id="tab-pccc">🧯 Phòng cháy chữa cháy <span class="nav-arrow">▾</span></button>
       <div class="dropdown">
-        <div class="dd-group">Danh mục thiết bị</div>
-        <div class="dd-item" onclick="showSub('pccc','pccc-thietbi-vs')">NM Vĩnh Sơn</div>
-        <div class="dd-item" onclick="showSub('pccc','pccc-thietbi-sh')">NM Sông Hinh</div>
+        <div class="dd-item" onclick="showSub('pccc','pccc-thietbi')">Hồ sơ thiết bị</div>
         <div class="dd-item" onclick="showSub('pccc','pccc-phuongan')">Phương án - Kết quả diễn tập</div>
         <div class="dd-item" onclick="showSub('pccc','pccc-baocao')">Báo cáo định kỳ</div>
       </div>
@@ -375,8 +373,7 @@ nav{background:#1e3a8a;display:flex;justify-content:center}
     <div class="mobile-dd-item" onclick="showSub('atd','atd-tintuc');closeMobileMenu()">Tin tức - Tài liệu</div>
     <div class="mobile-dd-item" onclick="showSub('atd','atd-huanluyen');closeMobileMenu()">Huấn luyện ATĐ</div>
     <div class="mobile-section-title">🧯 Phòng cháy chữa cháy</div>
-    <div class="mobile-dd-item" onclick="showSub('pccc','pccc-thietbi-vs');closeMobileMenu()">Danh mục thiết bị: NM Vĩnh Sơn</div>
-    <div class="mobile-dd-item" onclick="showSub('pccc','pccc-thietbi-sh');closeMobileMenu()">Danh mục thiết bị: NM Sông Hinh</div>
+    <div class="mobile-dd-item" onclick="showSub('pccc','pccc-thietbi');closeMobileMenu()">Hồ sơ thiết bị</div>
     <div class="mobile-dd-item" onclick="showSub('pccc','pccc-phuongan');closeMobileMenu()">Phương án - Kết quả diễn tập</div>
     <div class="mobile-dd-item" onclick="showSub('pccc','pccc-baocao');closeMobileMenu()">Báo cáo định kỳ</div>
     <div class="mobile-section-title">🔧 Kiểm định an toàn</div>
@@ -511,8 +508,7 @@ nav{background:#1e3a8a;display:flex;justify-content:center}
 
   <!-- PHÒNG CHÁY CHỮA CHÁY -->
   <div class="tab-panel" id="panel-pccc">
-    <div id="sub-pccc-thietbi-vs" class="iframe-container" style="display:none"><iframe data-src="pccc_thietbi.html?dv=VS" title="Danh mục thiết bị PCCC - NM Vĩnh Sơn"></iframe></div>
-    <div id="sub-pccc-thietbi-sh" class="iframe-container" style="display:none"><iframe data-src="pccc_thietbi.html?dv=SH" title="Danh mục thiết bị PCCC - NM Sông Hinh"></iframe></div>
+    <div id="sub-pccc-thietbi" class="iframe-container" style="display:none"><iframe data-src="pccc_thietbi.html" title="Hồ sơ thiết bị PCCC"></iframe></div>
     <div id="sub-pccc-phuongan" class="iframe-container" style="display:none"><iframe data-src="pccc_phuongan.html" title="Phương án - Kết quả diễn tập PCCC"></iframe></div>
     <div id="sub-pccc-baocao" class="iframe-container" style="display:none"><iframe data-src="pccc_baocao.html" title="Báo cáo định kỳ PCCC"></iframe></div>
   </div>
@@ -674,7 +670,7 @@ const SUBS = {
   dangnhap: ['dn-main'],
   atvsv:    ['av-danhsach','av-chamdiem','av-kiennghi'],
   atd:      ['atd-tintuc','atd-huanluyen'],
-  pccc:     ['pccc-thietbi-vs','pccc-thietbi-sh','pccc-phuongan','pccc-baocao'],
+  pccc:     ['pccc-thietbi','pccc-phuongan','pccc-baocao'],
   kiemdinh: ['kd-dungcu','kd-thietbi','kd-kehoach','kd-bienban'],
   tailieu:  ['tl-welcome','tl-atgt','tl-pccc','tl-atvsv','tl-ktatld','tl-ktvsld','tl-vbqc','tl-pl'],
   luyenthi: ['lt-welcome','lt-de1','lt-de2','lt-de3','lt-de4','lt-de5','lt-de6','lt-de7','lt-de8'],

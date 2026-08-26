@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Danh mục thiết bị PCCC — Mạng lưới ATVSV</title>
+<title>Hồ sơ thiết bị PCCC — Mạng lưới ATVSV</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -32,6 +32,9 @@
   .search input:focus{outline:none; border-color:var(--accent);
     box-shadow:0 0 0 3px rgba(14,125,138,.14)}
   .search svg{position:absolute; left:13px; top:12px; width:18px; height:18px; stroke:var(--muted)}
+  select.filt{height:42px; border:1px solid var(--line); background:#fff; border-radius:10px;
+    padding:0 12px; font:inherit; font-size:14px; color:var(--ink); cursor:pointer}
+  select.filt:focus{outline:none; border-color:var(--accent)}
 
   .btn{height:42px; padding:0 16px; border-radius:10px; font:inherit; font-size:14px;
     font-weight:600; cursor:pointer; border:1px solid transparent; display:inline-flex;
@@ -47,7 +50,7 @@
   /* bang */
   .panel{background:var(--card); border:1px solid var(--line); border-radius:14px; overflow:hidden}
   .scroll{overflow-x:auto}
-  table{width:100%; border-collapse:collapse; min-width:760px}
+  table{width:100%; border-collapse:collapse; min-width:820px}
   thead th{background:#f4f8f9; text-align:left; font-size:12px; font-weight:700;
     color:#41525d; text-transform:uppercase; letter-spacing:.03em; padding:12px 14px;
     border-bottom:1px solid var(--line); white-space:nowrap}
@@ -94,12 +97,14 @@
   .fld.full{grid-column:1/-1}
   .fld label{font-size:12.5px; font-weight:600; margin-bottom:6px; color:#2b3a45}
   .fld label .req{color:var(--danger)}
-  .fld input, .fld textarea{height:42px; border:1px solid var(--line);
+  .fld input, .fld select, .fld textarea{height:42px; border:1px solid var(--line);
     background:var(--field); border-radius:10px; padding:0 12px; font:inherit; font-size:14px; color:var(--ink)}
   .fld textarea{height:auto; min-height:64px; padding:10px 12px; resize:vertical}
-  .fld input:focus, .fld textarea:focus{outline:none;
+  .fld input:focus, .fld select:focus, .fld textarea:focus{outline:none;
     border-color:var(--accent); background:#fff; box-shadow:0 0 0 3px rgba(14,125,138,.14)}
   .hint{font-size:11.5px; color:var(--muted); margin-top:5px}
+  .lock{height:42px; display:flex; align-items:center; padding:0 12px; border-radius:10px;
+    background:#eef2f4; color:#41525d; font-weight:600; font-size:14px}
   .modal-err{display:none; background:var(--danger-bg); color:var(--danger); font-size:13px;
     border:1px solid #f2d2cd; border-radius:10px; padding:10px 12px; margin-top:4px}
   .modal-err.show{display:block}
@@ -127,7 +132,7 @@
 <body>
 <div class="container">
   <div class="head">
-    <h1 id="tieuDeTrang">Danh mục thiết bị PCCC</h1>
+    <h1 id="tieuDeTrang">Hồ sơ thiết bị PCCC</h1>
     <span class="count" id="soLuong"></span>
   </div>
 
@@ -136,9 +141,15 @@
       <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3" stroke-linecap="round"/></svg>
       <input id="oTimKiem" placeholder="Tìm theo tiêu đề, mô tả, người tải…">
     </div>
+    <select class="filt" id="locDonVi">
+      <option value="">Tất cả đơn vị</option>
+      <option value="VS">Vĩnh Sơn</option>
+      <option value="SH">Sông Hinh</option>
+      <option value="TKT">Thượng Kon Tum</option>
+    </select>
     <button class="btn btn-primary" id="nutThem" style="display:none">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
-      <span class="lbl">Thêm thiết bị</span>
+      <span class="lbl">Thêm hồ sơ</span>
     </button>
   </div>
 
@@ -157,7 +168,7 @@
 <div class="overlay" id="modalForm">
   <div class="modal">
     <div class="modal-h">
-      <h3 id="tieuDeForm">Thêm thiết bị</h3>
+      <h3 id="tieuDeForm">Thêm hồ sơ</h3>
       <button class="x" data-dong>×</button>
     </div>
     <div class="modal-b">
@@ -175,6 +186,15 @@
           <input id="f_link_file" placeholder="https://drive.google.com/...">
           <div class="hint">Dán link chia sẻ từ Google Drive (bắt đầu bằng http:// hoặc https://). Nhớ bật chia sẻ "Bất kỳ ai có link" trước khi dán.</div>
         </div>
+        <div class="fld">
+          <label>Đơn vị <span class="req">*</span></label>
+          <select id="f_don_vi">
+            <option value="VS">Vĩnh Sơn</option>
+            <option value="SH">Sông Hinh</option>
+            <option value="TKT">Thượng Kon Tum</option>
+          </select>
+          <div class="lock" id="f_don_vi_khoa" style="display:none"></div>
+        </div>
       </div>
       <div class="modal-err" id="loiForm"></div>
     </div>
@@ -190,7 +210,7 @@
   <div class="modal confirm">
     <div class="modal-b">
       <div class="warn"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4m0 4h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg></div>
-      <h3>Xóa thiết bị</h3>
+      <h3>Xóa hồ sơ</h3>
       <p id="xoaNoiDung">Bạn có chắc muốn xóa?</p>
     </div>
     <div class="modal-f" style="justify-content:center">
@@ -203,11 +223,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 const DANH_MUC = 'pccc_thiet_bi';
-// Nha may hien tai lay tu ?dv=VS hoac ?dv=SH tren URL cua chinh iframe nay.
-const DV_HOP_LE = ['VS','SH'];
-const DV_TRANG = (new URLSearchParams(location.search).get('dv')||'').toUpperCase();
-const TEN_NHA_MAY = { VS:'NM Vĩnh Sơn', SH:'NM Sông Hinh' };
-const TIEU_DE_TRANG = 'Danh mục thiết bị PCCC — ' + (TEN_NHA_MAY[DV_TRANG] || 'Không xác định nhà máy');
+const TIEU_DE_TRANG = 'Hồ sơ thiết bị PCCC';
 
 /* ===== CẤU HÌNH (giống các trang khác) ===== */
 const SUPABASE_URL = 'https://lasbxdhexxczzfrfkexn.supabase.co';
@@ -217,6 +233,7 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 document.title = TIEU_DE_TRANG + ' — Mạng lưới ATVSV';
 document.getElementById('tieuDeTrang').textContent = TIEU_DE_TRANG;
 
+const TEN_DON_VI = { VS:'Vĩnh Sơn', SH:'Sông Hinh', TKT:'Thượng Kon Tum', TT_DVTV:'TT DVTV' };
 const KHOA_PHIEN = 'phien_dangnhap';
 
 let sb = null;
@@ -242,29 +259,31 @@ function linkHopLe(u){ return typeof u==='string' && /^https?:\/\//i.test(u.trim
 /* ---------- PHIÊN ĐĂNG NHẬP (dùng chung, chỉ đọc — đăng nhập ở tab Đăng nhập) ---------- */
 function napPhien(){
   try{ phien = JSON.parse(sessionStorage.getItem(KHOA_PHIEN)); }catch(e){ phien = null; }
-  $('nutThem').style.display = coQuyenQuanLy() ? '' : 'none';
+  $('nutThem').style.display = coTheThem() ? '' : 'none';
 }
-function coQuyenQuanLy(){
+function coTheThem(){
+  return !!phien && (phien.vai_tro==='quan_tri' || phien.vai_tro==='ky_su_an_toan' || phien.vai_tro==='phu_trach_nha_may');
+}
+function coTheXoa(){
+  return !!phien && (phien.vai_tro==='quan_tri' || phien.vai_tro==='ky_su_an_toan');
+}
+function coTheSuaDong(x){
   if (!phien) return false;
   if (phien.vai_tro==='quan_tri' || phien.vai_tro==='ky_su_an_toan') return true;
-  if (phien.vai_tro==='phu_trach_nha_may' && phien.don_vi===DV_TRANG) return true;
+  if (phien.vai_tro==='phu_trach_nha_may') return x.don_vi===phien.don_vi;
   return false;
 }
 window.lamMoiKhiHienThi = function(){ napPhien(); loc(); };
 
 /* ---------- KHỞI TẠO ---------- */
 async function khoiTao(){
-  if (!DV_HOP_LE.includes(DV_TRANG)){
-    $('trangThai').innerHTML = 'Thiếu hoặc sai tham số nhà máy (?dv=VS hoặc ?dv=SH) trên đường dẫn.';
-    return;
-  }
   napPhien();
   await napDanhSach();
 }
 
 async function napDanhSach(){
   const r = await sb.from('tai_lieu').select('*')
-    .eq('danh_muc', DANH_MUC).eq('don_vi', DV_TRANG).order('ngay_tai', {ascending:false});
+    .eq('danh_muc', DANH_MUC).order('ngay_tai', {ascending:false});
   if (r.error){
     $('trangThai').innerHTML = 'Không tải được danh sách. Thử tải lại trang.';
     return;
@@ -276,7 +295,9 @@ async function napDanhSach(){
 /* ---------- LỌC & VẼ BẢNG ---------- */
 function loc(){
   const tu = $('oTimKiem').value.trim().toLowerCase();
+  const dv = $('locDonVi').value;
   let ds = danhSachGoc.filter(x=>{
+    if (dv && x.don_vi !== dv) return false;
     if (!tu) return true;
     return [x.tieu_de,x.mo_ta,x.nguoi_tai].some(v=>(v||'').toLowerCase().includes(tu));
   });
@@ -284,7 +305,7 @@ function loc(){
 }
 
 function veBang(ds){
-  $('soLuong').textContent = danhSachGoc.length ? `${ds.length} thiết bị` : '';
+  $('soLuong').textContent = danhSachGoc.length ? `${ds.length} hồ sơ` : '';
   $('trangThai').style.display = 'none';
   $('khungBang').style.display = '';
 
@@ -292,30 +313,33 @@ function veBang(ds){
     $('khungBang').style.display = 'none';
     $('trangThai').style.display = '';
     $('trangThai').innerHTML = danhSachGoc.length
-      ? '<div class="big">Không tìm thấy</div>Không có thiết bị nào khớp bộ lọc.'
-      : '<div class="big">Chưa có thiết bị</div>Bấm “Thêm thiết bị” để đăng thiết bị đầu tiên.';
+      ? '<div class="big">Không tìm thấy</div>Không có hồ sơ nào khớp bộ lọc.'
+      : '<div class="big">Chưa có hồ sơ</div>Bấm “Thêm hồ sơ” để đăng đầu tiên.';
     return;
   }
 
-  const coQuyen = coQuyenQuanLy();
-  const cols = ['STT','Tên thiết bị','Mô tả','Người tải','Ngày tải','Tài liệu'].concat(coQuyen ? [''] : []);
+  const hienAct = coTheThem();
+  const cols = ['STT','Tên thiết bị','Mô tả','Đơn vị','Người tải','Ngày tải','Tài liệu'].concat(hienAct ? [''] : []);
   $('hangTieuDe').innerHTML = cols.map(c=>`<th>${c}</th>`).join('');
 
   $('thanBang').innerHTML = ds.map((x,i)=>{
     const href = linkHopLe(x.link_file);
+    const suaDuoc = coTheSuaDong(x);
+    const xoaDuoc = coTheXoa();
     let h = `<tr>`;
     h += `<td class="stt">${i+1}</td>`;
     h += `<td class="ten">${esc(x.tieu_de)}</td>`;
     h += `<td class="nd" title="${esc(x.mo_ta)}">${esc(x.mo_ta)||'—'}</td>`;
+    h += `<td>${TEN_DON_VI[x.don_vi]||esc(x.don_vi)}</td>`;
     h += `<td>${esc(x.nguoi_tai)||'—'}</td>`;
     h += `<td>${fmtNgayGio(x.ngay_tai)}</td>`;
     h += `<td>${href
       ? `<a class="link-btn" href="${esc(href)}" target="_blank" rel="noopener noreferrer">Mở/Tải</a>`
       : '<span class="link-off">Link không hợp lệ</span>'}</td>`;
-    if (coQuyen){
+    if (hienAct){
       h += `<td><div class="acts">`;
-      h += `<button class="icon-btn" data-sua="${x.id}" title="Sửa"><svg viewBox="0 0 24 24" fill="none" stroke="#41525d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></button>`;
-      h += `<button class="icon-btn del" data-xoa="${x.id}" title="Xóa"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2m1 0-1 14a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1L6 6"/></svg></button>`;
+      if (suaDuoc) h += `<button class="icon-btn" data-sua="${x.id}" title="Sửa"><svg viewBox="0 0 24 24" fill="none" stroke="#41525d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></button>`;
+      if (xoaDuoc) h += `<button class="icon-btn del" data-xoa="${x.id}" title="Xóa"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2m1 0-1 14a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1L6 6"/></svg></button>`;
       h += `</div></td>`;
     }
     return h + `</tr>`;
@@ -328,22 +352,35 @@ function veBang(ds){
 /* ---------- FORM THÊM / SỬA ---------- */
 function ycMoForm(id){
   napPhien();
-  if (!coQuyenQuanLy()){ alert('Cần đăng nhập với vai trò Phụ trách nhà máy này (hoặc Kỹ sư an toàn/Quản trị viên) ở tab "Đăng nhập" để thực hiện thao tác này.'); return; }
+  const x = id ? danhSachGoc.find(r=>r.id===Number(id)) : null;
+  const coQuyen = id ? (x && coTheSuaDong(x)) : coTheThem();
+  if (!coQuyen){ alert('Bạn không có quyền thực hiện thao tác này. Cần đăng nhập đúng vai trò ở tab "Đăng nhập".'); return; }
   moForm(id);
 }
 function ycHoiXoa(id){
   napPhien();
-  if (!coQuyenQuanLy()){ alert('Cần đăng nhập với vai trò Phụ trách nhà máy này (hoặc Kỹ sư an toàn/Quản trị viên) ở tab "Đăng nhập" để thực hiện thao tác này.'); return; }
+  if (!coTheXoa()){ alert('Chỉ Kỹ sư an toàn hoặc Quản trị viên mới được xóa hồ sơ này.'); return; }
   hoiXoa(id);
 }
 function moForm(id){
   dangSua = id || null;
   $('loiForm').classList.remove('show');
-  $('tieuDeForm').textContent = id ? 'Sửa thiết bị' : 'Thêm thiết bị';
+  $('tieuDeForm').textContent = id ? 'Sửa hồ sơ' : 'Thêm hồ sơ';
   const x = id ? danhSachGoc.find(r=>r.id===Number(id)) : {};
   $('f_tieu_de').value = x.tieu_de || '';
   $('f_mo_ta').value = x.mo_ta || '';
   $('f_link_file').value = x.link_file || '';
+
+  const khoaDonVi = phien && phien.vai_tro==='phu_trach_nha_may';
+  if (khoaDonVi){
+    $('f_don_vi').style.display = 'none';
+    $('f_don_vi_khoa').style.display = '';
+    $('f_don_vi_khoa').textContent = TEN_DON_VI[phien.don_vi] || phien.don_vi;
+  } else {
+    $('f_don_vi').style.display = '';
+    $('f_don_vi_khoa').style.display = 'none';
+    $('f_don_vi').value = x.don_vi || 'VS';
+  }
   $('modalForm').classList.add('show');
   $('f_tieu_de').focus();
 }
@@ -351,7 +388,11 @@ function dongForm(){ $('modalForm').classList.remove('show'); }
 
 async function luu(){
   napPhien();
-  if (!coQuyenQuanLy()){ dongForm(); return; }
+  const khoaDonVi = phien && phien.vai_tro==='phu_trach_nha_may';
+  const donVi = khoaDonVi ? phien.don_vi : $('f_don_vi').value;
+  const coQuyen = dangSua ? coTheSuaDong({don_vi: donVi}) : coTheThem();
+  if (!coQuyen){ dongForm(); return; }
+
   const tieuDe = $('f_tieu_de').value.trim();
   const link = $('f_link_file').value.trim();
   if (!tieuDe){ baoLoiForm('Vui lòng nhập tên thiết bị.'); return; }
@@ -361,11 +402,11 @@ async function luu(){
     tieu_de: tieuDe,
     mo_ta: $('f_mo_ta').value.trim() || null,
     link_file: link,
-    nguoi_tai: phien.ho_ten,
+    don_vi: donVi,
   };
   if (!dangSua){
     ban.danh_muc = DANH_MUC;
-    ban.don_vi = DV_TRANG;
+    ban.nguoi_tai = phien.ho_ten;
   }
 
   $('nutLuu').disabled = true; $('nutLuu').textContent = 'Đang lưu…';
@@ -389,10 +430,10 @@ function baoLoiForm(m){ const e=$('loiForm'); e.textContent=m; e.classList.add('
 /* ---------- XÓA ---------- */
 let idXoa = null;
 function hoiXoa(id){
-  if (!coQuyenQuanLy()) return;
+  if (!coTheXoa()) return;
   idXoa = id;
   const x = danhSachGoc.find(r=>r.id===Number(id));
-  $('xoaNoiDung').innerHTML = `Xóa thiết bị <b>${esc(x.tieu_de)}</b>? Thao tác này không thể hoàn tác.`;
+  $('xoaNoiDung').innerHTML = `Xóa hồ sơ <b>${esc(x.tieu_de)}</b>? Thao tác này không thể hoàn tác.`;
   $('modalXoa').classList.add('show');
 }
 async function xacNhanXoa(){
@@ -414,6 +455,7 @@ $('nutThem').onclick = ()=>ycMoForm(null);
 $('nutLuu').onclick = luu;
 $('nutXacNhanXoa').onclick = xacNhanXoa;
 $('oTimKiem').oninput = loc;
+$('locDonVi').onchange = loc;
 document.querySelectorAll('[data-dong]').forEach(b=>b.onclick=dongForm);
 document.querySelectorAll('[data-dong-xoa]').forEach(b=>b.onclick=()=>$('modalXoa').classList.remove('show'));
 [$('modalForm'),$('modalXoa')].forEach(o=>o.onclick=e=>{ if(e.target===o) o.classList.remove('show'); });
