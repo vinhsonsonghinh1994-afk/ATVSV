@@ -324,10 +324,13 @@ nav{background:#1e3a8a;display:flex;justify-content:center}
     <div class="nav-item">
       <button class="nav-tab" id="tab-kiemdinh">🔧 Kiểm định an toàn <span class="nav-arrow">▾</span></button>
       <div class="dropdown">
-        <div class="dd-item" onclick="showSub('kiemdinh','kd-dungcu')">Dụng cụ an toàn</div>
-        <div class="dd-item" onclick="showSub('kiemdinh','kd-thietbi')">Thiết bị cần kiểm định</div>
-        <div class="dd-item" onclick="showSub('kiemdinh','kd-kehoach')">Kế hoạch kiểm định</div>
-        <div class="dd-item" onclick="showSub('kiemdinh','kd-bienban')">Biên bản kiểm định</div>
+        <div class="dd-item" onclick="showSub('kiemdinh','kd-kehoach')">Kế hoạch - Biên bản kiểm định</div>
+        <div class="dd-item" onclick="showSub('kiemdinh','kd-thietbi')">Hồ sơ thiết bị yêu cầu nghiêm ngặt</div>
+        <div class="dd-group">Dụng cụ an toàn đơn vị</div>
+        <div class="dd-item" onclick="showSub('kiemdinh','kd-dungcu-vs')">NM Vĩnh Sơn</div>
+        <div class="dd-item" onclick="showSub('kiemdinh','kd-dungcu-sh')">NM Sông Hinh</div>
+        <div class="dd-item" onclick="showSub('kiemdinh','kd-dungcu-tkt')">Thượng Kon Tum</div>
+        <div class="dd-item" onclick="showSub('kiemdinh','kd-dungcu-ttdvtv')">TT DVTV</div>
       </div>
     </div>
     <div class="nav-item">
@@ -377,10 +380,12 @@ nav{background:#1e3a8a;display:flex;justify-content:center}
     <div class="mobile-dd-item" onclick="showSub('pccc','pccc-phuongan');closeMobileMenu()">Phương án - Kết quả diễn tập</div>
     <div class="mobile-dd-item" onclick="showSub('pccc','pccc-baocao');closeMobileMenu()">Báo cáo định kỳ</div>
     <div class="mobile-section-title">🔧 Kiểm định an toàn</div>
-    <div class="mobile-dd-item" onclick="showSub('kiemdinh','kd-dungcu');closeMobileMenu()">Dụng cụ an toàn</div>
-    <div class="mobile-dd-item" onclick="showSub('kiemdinh','kd-thietbi');closeMobileMenu()">Thiết bị cần kiểm định</div>
-    <div class="mobile-dd-item" onclick="showSub('kiemdinh','kd-kehoach');closeMobileMenu()">Kế hoạch kiểm định</div>
-    <div class="mobile-dd-item" onclick="showSub('kiemdinh','kd-bienban');closeMobileMenu()">Biên bản kiểm định</div>
+    <div class="mobile-dd-item" onclick="showSub('kiemdinh','kd-kehoach');closeMobileMenu()">Kế hoạch - Biên bản kiểm định</div>
+    <div class="mobile-dd-item" onclick="showSub('kiemdinh','kd-thietbi');closeMobileMenu()">Hồ sơ thiết bị yêu cầu nghiêm ngặt</div>
+    <div class="mobile-dd-item" onclick="showSub('kiemdinh','kd-dungcu-vs');closeMobileMenu()">Dụng cụ an toàn: NM Vĩnh Sơn</div>
+    <div class="mobile-dd-item" onclick="showSub('kiemdinh','kd-dungcu-sh');closeMobileMenu()">Dụng cụ an toàn: NM Sông Hinh</div>
+    <div class="mobile-dd-item" onclick="showSub('kiemdinh','kd-dungcu-tkt');closeMobileMenu()">Dụng cụ an toàn: Thượng Kon Tum</div>
+    <div class="mobile-dd-item" onclick="showSub('kiemdinh','kd-dungcu-ttdvtv');closeMobileMenu()">Dụng cụ an toàn: TT DVTV</div>
     <div class="mobile-section-title">📄 Tài liệu</div>
     <div class="mobile-dd-item" onclick="showSub('tailieu','tl-atgt');closeMobileMenu()">An toàn giao thông</div>
     <div class="mobile-dd-item" onclick="showSub('tailieu','tl-pccc');closeMobileMenu()">Phòng cháy chữa cháy</div>
@@ -515,10 +520,12 @@ nav{background:#1e3a8a;display:flex;justify-content:center}
 
   <!-- KIỂM ĐỊNH AN TOÀN -->
   <div class="tab-panel" id="panel-kiemdinh">
-    <div id="sub-kd-dungcu" class="iframe-container" style="display:none"><iframe data-src="kiemdinh_dungcu.html" title="Dụng cụ an toàn"></iframe></div>
-    <div id="sub-kd-thietbi" class="iframe-container" style="display:none"><iframe data-src="kiemdinh_thietbi.html" title="Thiết bị cần kiểm định"></iframe></div>
-    <div id="sub-kd-kehoach" class="iframe-container" style="display:none"><iframe data-src="kiemdinh_kehoach.html" title="Kế hoạch kiểm định"></iframe></div>
-    <div id="sub-kd-bienban" class="iframe-container" style="display:none"><iframe data-src="kiemdinh_bienban.html" title="Biên bản kiểm định"></iframe></div>
+    <div id="sub-kd-kehoach" class="iframe-container" style="display:none"><iframe data-src="kiemdinh_kehoach.html" title="Kế hoạch - Biên bản kiểm định"></iframe></div>
+    <div id="sub-kd-thietbi" class="iframe-container" style="display:none"><iframe data-src="kiemdinh_thietbi.html" title="Hồ sơ thiết bị yêu cầu nghiêm ngặt"></iframe></div>
+    <div id="sub-kd-dungcu-vs" class="iframe-container" style="display:none"><iframe data-src="kiemdinh_dungcu.html?dv=VS" title="Dụng cụ an toàn - NM Vĩnh Sơn"></iframe></div>
+    <div id="sub-kd-dungcu-sh" class="iframe-container" style="display:none"><iframe data-src="kiemdinh_dungcu.html?dv=SH" title="Dụng cụ an toàn - NM Sông Hinh"></iframe></div>
+    <div id="sub-kd-dungcu-tkt" class="iframe-container" style="display:none"><iframe data-src="kiemdinh_dungcu.html?dv=TKT" title="Dụng cụ an toàn - Thượng Kon Tum"></iframe></div>
+    <div id="sub-kd-dungcu-ttdvtv" class="iframe-container" style="display:none"><iframe data-src="kiemdinh_dungcu.html?dv=TT_DVTV" title="Dụng cụ an toàn - TT DVTV"></iframe></div>
   </div>
 
   <!-- TÀI LIỆU -->
@@ -671,7 +678,7 @@ const SUBS = {
   atvsv:    ['av-danhsach','av-chamdiem','av-kiennghi'],
   atd:      ['atd-tintuc','atd-huanluyen'],
   pccc:     ['pccc-thietbi','pccc-phuongan','pccc-baocao'],
-  kiemdinh: ['kd-dungcu','kd-thietbi','kd-kehoach','kd-bienban'],
+  kiemdinh: ['kd-kehoach','kd-thietbi','kd-dungcu-vs','kd-dungcu-sh','kd-dungcu-tkt','kd-dungcu-ttdvtv'],
   tailieu:  ['tl-welcome','tl-atgt','tl-pccc','tl-atvsv','tl-ktatld','tl-ktvsld','tl-vbqc','tl-pl'],
   luyenthi: ['lt-welcome','lt-de1','lt-de2','lt-de3','lt-de4','lt-de5','lt-de6','lt-de7','lt-de8'],
   kythi:    ['kt-main'],
