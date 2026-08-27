@@ -324,8 +324,12 @@ nav{background:#1e3a8a;display:flex;justify-content:center}
       </div>
     </div>
     <div class="nav-item">
-      <button class="nav-tab" id="tab-tailieu">📄 Tài liệu thi <span class="nav-arrow">▾</span></button>
+      <button class="nav-tab" id="tab-quantri">⚙️ Tổ chức thi <span class="nav-arrow">▾</span></button>
       <div class="dropdown">
+        <div class="dd-item" onclick="showSub('quantri','qt-thisinh')">👥 Quản lý thí sinh thi</div>
+        <div class="dd-item" onclick="showSub('quantri','qt-ketqua')">🏅 Quản lý kết quả thi</div>
+        <div class="dd-item" onclick="showSub('kythi','kt-main')">Kỳ thi chính thức</div>
+        <div class="dd-group">Tài liệu ôn thi</div>
         <div class="dd-item" onclick="showSub('tailieu','tl-atgt')">An toàn giao thông</div>
         <div class="dd-item" onclick="showSub('tailieu','tl-pccc')">Phòng cháy chữa cháy</div>
         <div class="dd-item" onclick="showSub('tailieu','tl-atvsv')">An toàn vệ sinh viên</div>
@@ -334,14 +338,6 @@ nav{background:#1e3a8a;display:flex;justify-content:center}
         <div class="dd-item" onclick="showSub('tailieu','tl-vbqc')">Văn bản – Quy chế – Hướng dẫn</div>
         <div class="dd-item" onclick="showSub('tailieu','tl-pl')">Pháp luật ATVSLĐ</div>
         <div class="dd-item" onclick="showSub('tailieu','tl-khac')">Tài liệu khác</div>
-      </div>
-    </div>
-    <div class="nav-item">
-      <button class="nav-tab" id="tab-quantri">⚙️ Tổ chức thi <span class="nav-arrow">▾</span></button>
-      <div class="dropdown">
-        <div class="dd-item" onclick="showSub('kythi','kt-main')">Vào kỳ thi chính thức</div>
-        <div class="dd-item" onclick="showSub('quantri','qt-thisinh')">👥 Quản lý thí sinh kỳ thi</div>
-        <div class="dd-item" onclick="showSub('quantri','qt-ketqua')">🏅 Quản lý kết quả thi</div>
       </div>
     </div>
     <div class="nav-item">
@@ -376,19 +372,18 @@ nav{background:#1e3a8a;display:flex;justify-content:center}
     <div class="mobile-dd-item" onclick="showSub('pccc','pccc-thietbi');closeMobileMenu()">Hồ sơ PCCC</div>
     <div class="mobile-dd-item" onclick="showSub('pccc','pccc-phuongan');closeMobileMenu()">Phương án - Kết quả diễn tập</div>
     <div class="mobile-dd-item" onclick="showSub('pccc','pccc-baocao');closeMobileMenu()">Báo cáo định kỳ</div>
-    <div class="mobile-section-title">📄 Tài liệu thi</div>
-    <div class="mobile-dd-item" onclick="showSub('tailieu','tl-atgt');closeMobileMenu()">An toàn giao thông</div>
-    <div class="mobile-dd-item" onclick="showSub('tailieu','tl-pccc');closeMobileMenu()">Phòng cháy chữa cháy</div>
-    <div class="mobile-dd-item" onclick="showSub('tailieu','tl-atvsv');closeMobileMenu()">An toàn vệ sinh viên</div>
-    <div class="mobile-dd-item" onclick="showSub('tailieu','tl-ktatld');closeMobileMenu()">Kỹ thuật an toàn lao động</div>
-    <div class="mobile-dd-item" onclick="showSub('tailieu','tl-ktvsld');closeMobileMenu()">Kỹ thuật vệ sinh lao động</div>
-    <div class="mobile-dd-item" onclick="showSub('tailieu','tl-vbqc');closeMobileMenu()">Văn bản – Quy chế – Hướng dẫn</div>
-    <div class="mobile-dd-item" onclick="showSub('tailieu','tl-pl');closeMobileMenu()">Pháp luật ATVSLĐ</div>
-    <div class="mobile-dd-item" onclick="showSub('tailieu','tl-khac');closeMobileMenu()">Tài liệu khác</div>
     <div class="mobile-section-title">⚙️ Tổ chức thi</div>
-    <div class="mobile-dd-item" onclick="showSub('kythi','kt-main');closeMobileMenu()">Vào kỳ thi chính thức</div>
-    <div class="mobile-dd-item" onclick="showSub('quantri','qt-thisinh');closeMobileMenu()">👥 Quản lý thí sinh kỳ thi</div>
+    <div class="mobile-dd-item" onclick="showSub('quantri','qt-thisinh');closeMobileMenu()">👥 Quản lý thí sinh thi</div>
     <div class="mobile-dd-item" onclick="showSub('quantri','qt-ketqua');closeMobileMenu()">🏅 Quản lý kết quả thi</div>
+    <div class="mobile-dd-item" onclick="showSub('kythi','kt-main');closeMobileMenu()">Kỳ thi chính thức</div>
+    <div class="mobile-dd-item" onclick="showSub('tailieu','tl-atgt');closeMobileMenu()">Tài liệu ôn thi: An toàn giao thông</div>
+    <div class="mobile-dd-item" onclick="showSub('tailieu','tl-pccc');closeMobileMenu()">Tài liệu ôn thi: Phòng cháy chữa cháy</div>
+    <div class="mobile-dd-item" onclick="showSub('tailieu','tl-atvsv');closeMobileMenu()">Tài liệu ôn thi: An toàn vệ sinh viên</div>
+    <div class="mobile-dd-item" onclick="showSub('tailieu','tl-ktatld');closeMobileMenu()">Tài liệu ôn thi: Kỹ thuật an toàn lao động</div>
+    <div class="mobile-dd-item" onclick="showSub('tailieu','tl-ktvsld');closeMobileMenu()">Tài liệu ôn thi: Kỹ thuật vệ sinh lao động</div>
+    <div class="mobile-dd-item" onclick="showSub('tailieu','tl-vbqc');closeMobileMenu()">Tài liệu ôn thi: Văn bản – Quy chế – Hướng dẫn</div>
+    <div class="mobile-dd-item" onclick="showSub('tailieu','tl-pl');closeMobileMenu()">Tài liệu ôn thi: Pháp luật ATVSLĐ</div>
+    <div class="mobile-dd-item" onclick="showSub('tailieu','tl-khac');closeMobileMenu()">Tài liệu ôn thi: Tài liệu khác</div>
     <div class="mobile-section-title" onclick="showSub('dangnhap','dn-main');closeMobileMenu()" style="cursor:pointer">🔐 Đăng nhập</div>
   </div>
 </header>
@@ -525,7 +520,7 @@ nav{background:#1e3a8a;display:flex;justify-content:center}
     <div id="sub-tl-welcome" class="welcome-panel">
       <div class="icon">📚</div>
       <h2>Chọn chủ đề tài liệu</h2>
-      <p>Di chuột vào <b>Tài liệu thi</b> trên thanh điều hướng và chọn chủ đề để xem nội dung ôn tập.</p>
+      <p>Di chuột vào <b>Tổ chức thi</b> trên thanh điều hướng, chọn nhóm <b>Tài liệu ôn thi</b> và chọn chủ đề để xem nội dung ôn tập.</p>
     </div>
     <div id="sub-tl-atgt" class="iframe-container" style="display:none"><iframe src="tl1.html" title="An toàn giao thông"></iframe></div>
     <div id="sub-tl-pccc" class="iframe-container" style="display:none"><iframe src="tl2.html" title="Phòng cháy chữa cháy"></iframe></div>
@@ -680,10 +675,11 @@ const SUBS = {
 // Tab nao dung iframe lazy-load (chi gan src khi mo lan dau, tranh 13 iframe
 // dang nhap Supabase Auth tu dong chay ngay khi tai index.html).
 const TABS_LAZY = ['dangnhap','atvsv','atd','pccc','kiemdinh','tailieu'];
-// Luyen thi nam trong dropdown "An toan ve sinh vien", Ky thi nam trong dropdown
-// "Quan tri", Kiem dinh an toan nam trong dropdown "An toan dien" - ca 3 khong
-// con nut nav rieng, nen khi dang o cac tab nay thi to sang nut cha thay the.
-const NHOM_NAV = { luyenthi:'atvsv', kythi:'quantri', kiemdinh:'atd' };
+// Luyen thi nam trong dropdown "An toan ve sinh vien", Ky thi va Tai lieu on thi
+// nam trong dropdown "To chuc thi", Kiem dinh an toan nam trong dropdown "An
+// toan dien" - ca 4 khong con nut nav rieng, nen khi dang o cac tab nay thi to
+// sang nut cha thay the.
+const NHOM_NAV = { luyenthi:'atvsv', kythi:'quantri', kiemdinh:'atd', tailieu:'quantri' };
 
 // Khai báo sớm để showSub có thể dùng
 let adminLoggedIn = false;
