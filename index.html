@@ -316,9 +316,16 @@ nav{background:#1e3a8a;display:flex;justify-content:center}
       </div>
     </div>
     <div class="nav-item">
-      <button class="nav-tab" id="tab-pccc">🧯 Phòng cháy chữa cháy <span class="nav-arrow">▾</span></button>
+      <button class="nav-tab" id="tab-atvsld">⚠️ An toàn VSLĐ <span class="nav-arrow">▾</span></button>
       <div class="dropdown">
-        <div class="dd-item" onclick="showSub('pccc','pccc-thietbi')">Hồ sơ PCCC</div>
+        <div class="dd-item" onclick="showSub('atvsld','avsld-hoso')">Hồ sơ AT-VSLĐ</div>
+        <div class="dd-item" onclick="showSub('atvsld','avsld-vanban')">Văn bản – Tài liệu</div>
+      </div>
+    </div>
+    <div class="nav-item">
+      <button class="nav-tab" id="tab-pccc">🧯 PCCC-CNCH <span class="nav-arrow">▾</span></button>
+      <div class="dropdown">
+        <div class="dd-item" onclick="showSub('pccc','pccc-thietbi')">Hồ sơ PCCC-CNCH</div>
         <div class="dd-item" onclick="showSub('pccc','pccc-phuongan')">Phương án - Kết quả diễn tập</div>
         <div class="dd-item" onclick="showSub('pccc','pccc-baocao')">Báo cáo định kỳ</div>
       </div>
@@ -368,8 +375,11 @@ nav{background:#1e3a8a;display:flex;justify-content:center}
     <div class="mobile-dd-item" onclick="showSub('kiemdinh','kd-dungcu-sh');closeMobileMenu()">Dụng cụ an toàn: NM Sông Hinh</div>
     <div class="mobile-dd-item" onclick="showSub('kiemdinh','kd-dungcu-tkt');closeMobileMenu()">Dụng cụ an toàn: NM Thượng Kon Tum</div>
     <div class="mobile-dd-item" onclick="showSub('kiemdinh','kd-dungcu-ttdvtv');closeMobileMenu()">Dụng cụ an toàn: Trung tâm DVTV</div>
-    <div class="mobile-section-title">🧯 Phòng cháy chữa cháy</div>
-    <div class="mobile-dd-item" onclick="showSub('pccc','pccc-thietbi');closeMobileMenu()">Hồ sơ PCCC</div>
+    <div class="mobile-section-title">⚠️ An toàn VSLĐ</div>
+    <div class="mobile-dd-item" onclick="showSub('atvsld','avsld-hoso');closeMobileMenu()">Hồ sơ AT-VSLĐ</div>
+    <div class="mobile-dd-item" onclick="showSub('atvsld','avsld-vanban');closeMobileMenu()">Văn bản – Tài liệu</div>
+    <div class="mobile-section-title">🧯 PCCC-CNCH</div>
+    <div class="mobile-dd-item" onclick="showSub('pccc','pccc-thietbi');closeMobileMenu()">Hồ sơ PCCC-CNCH</div>
     <div class="mobile-dd-item" onclick="showSub('pccc','pccc-phuongan');closeMobileMenu()">Phương án - Kết quả diễn tập</div>
     <div class="mobile-dd-item" onclick="showSub('pccc','pccc-baocao');closeMobileMenu()">Báo cáo định kỳ</div>
     <div class="mobile-section-title">⚙️ Tổ chức thi</div>
@@ -498,9 +508,15 @@ nav{background:#1e3a8a;display:flex;justify-content:center}
     <div id="sub-atd-huanluyen" class="iframe-container" style="display:none"><iframe data-src="atd_huanluyen.html" title="Huấn luyện an toàn điện"></iframe></div>
   </div>
 
-  <!-- PHÒNG CHÁY CHỮA CHÁY -->
+  <!-- AN TOÀN VSLĐ -->
+  <div class="tab-panel" id="panel-atvsld">
+    <div id="sub-avsld-hoso" class="iframe-container" style="display:none"><iframe data-src="atvsld_hoso.html" title="Hồ sơ AT-VSLĐ"></iframe></div>
+    <div id="sub-avsld-vanban" class="iframe-container" style="display:none"><iframe data-src="atvsld_vanban.html" title="Văn bản – Tài liệu AT-VSLĐ"></iframe></div>
+  </div>
+
+  <!-- PCCC-CNCH -->
   <div class="tab-panel" id="panel-pccc">
-    <div id="sub-pccc-thietbi" class="iframe-container" style="display:none"><iframe data-src="pccc_thietbi.html" title="Hồ sơ PCCC"></iframe></div>
+    <div id="sub-pccc-thietbi" class="iframe-container" style="display:none"><iframe data-src="pccc_thietbi.html" title="Hồ sơ PCCC-CNCH"></iframe></div>
     <div id="sub-pccc-phuongan" class="iframe-container" style="display:none"><iframe data-src="pccc_phuongan.html" title="Phương án - Kết quả diễn tập PCCC"></iframe></div>
     <div id="sub-pccc-baocao" class="iframe-container" style="display:none"><iframe data-src="pccc_baocao.html" title="Báo cáo định kỳ PCCC"></iframe></div>
   </div>
@@ -659,12 +675,13 @@ nav{background:#1e3a8a;display:flex;justify-content:center}
 const SUPABASE_URL = 'https://lasbxdhexxczzfrfkexn.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_eRMAip0BXZYzWQ98gwvqrA_udyYHxkR';
 
-const TABS = ['trangchu','dangnhap','atvsv','atd','pccc','kiemdinh','tailieu','luyenthi','kythi','quantri'];
+const TABS = ['trangchu','dangnhap','atvsv','atd','atvsld','pccc','kiemdinh','tailieu','luyenthi','kythi','quantri'];
 const SUBS = {
   trangchu: ['tc-main'],
   dangnhap: ['dn-main'],
   atvsv:    ['av-danhsach','av-chamdiem','av-kiennghi'],
   atd:      ['atd-tintuc','atd-huanluyen'],
+  atvsld:   ['avsld-hoso','avsld-vanban'],
   pccc:     ['pccc-thietbi','pccc-phuongan','pccc-baocao'],
   kiemdinh: ['kd-kehoach','kd-thietbi','kd-dungcu-vs','kd-dungcu-sh','kd-dungcu-tkt','kd-dungcu-ttdvtv'],
   tailieu:  ['tl-welcome','tl-atgt','tl-pccc','tl-atvsv','tl-ktatld','tl-ktvsld','tl-vbqc','tl-pl','tl-khac'],
@@ -674,7 +691,7 @@ const SUBS = {
 };
 // Tab nao dung iframe lazy-load (chi gan src khi mo lan dau, tranh 13 iframe
 // dang nhap Supabase Auth tu dong chay ngay khi tai index.html).
-const TABS_LAZY = ['dangnhap','atvsv','atd','pccc','kiemdinh','tailieu'];
+const TABS_LAZY = ['dangnhap','atvsv','atd','atvsld','pccc','kiemdinh','tailieu'];
 // Luyen thi nam trong dropdown "An toan ve sinh vien", Ky thi va Tai lieu on thi
 // nam trong dropdown "To chuc thi", Kiem dinh an toan nam trong dropdown "An
 // toan dien" - ca 4 khong con nut nav rieng, nen khi dang o cac tab nay thi to
