@@ -302,8 +302,6 @@ nav{background:#1e3a8a;display:flex;justify-content:center}
         <div class="dd-item" onclick="showSub('luyenthi','lt-de6')">Văn bản – Quy chế – Hướng dẫn</div>
         <div class="dd-item" onclick="showSub('luyenthi','lt-de7')">Pháp luật ATVSLĐ</div>
         <div class="dd-item" onclick="showSub('luyenthi','lt-de8')">Luyện thi tổng hợp các chủ đề</div>
-        <div class="dd-group">Kỳ thi</div>
-        <div class="dd-item" onclick="showSub('kythi','kt-main')">Vào kỳ thi chính thức</div>
       </div>
     </div>
     <div class="nav-item">
@@ -334,7 +332,7 @@ nav{background:#1e3a8a;display:flex;justify-content:center}
       </div>
     </div>
     <div class="nav-item">
-      <button class="nav-tab" id="tab-tailieu">📄 Tài liệu <span class="nav-arrow">▾</span></button>
+      <button class="nav-tab" id="tab-tailieu">📄 Tài liệu thi <span class="nav-arrow">▾</span></button>
       <div class="dropdown">
         <div class="dd-item" onclick="showSub('tailieu','tl-atgt')">An toàn giao thông</div>
         <div class="dd-item" onclick="showSub('tailieu','tl-pccc')">Phòng cháy chữa cháy</div>
@@ -343,11 +341,13 @@ nav{background:#1e3a8a;display:flex;justify-content:center}
         <div class="dd-item" onclick="showSub('tailieu','tl-ktvsld')">Kỹ thuật vệ sinh lao động</div>
         <div class="dd-item" onclick="showSub('tailieu','tl-vbqc')">Văn bản – Quy chế – Hướng dẫn</div>
         <div class="dd-item" onclick="showSub('tailieu','tl-pl')">Pháp luật ATVSLĐ</div>
+        <div class="dd-item" onclick="showSub('tailieu','tl-khac')">Tài liệu khác</div>
       </div>
     </div>
     <div class="nav-item">
       <button class="nav-tab" id="tab-quantri">⚙️ Quản trị <span class="nav-arrow">▾</span></button>
       <div class="dropdown">
+        <div class="dd-item" onclick="showSub('kythi','kt-main')">Vào kỳ thi chính thức</div>
         <div class="dd-item" onclick="showSub('quantri','qt-thisinh')">👥 Quản lý thí sinh kỳ thi</div>
         <div class="dd-item" onclick="showSub('quantri','qt-ketqua')">🏅 Quản lý kết quả thi</div>
       </div>
@@ -371,7 +371,6 @@ nav{background:#1e3a8a;display:flex;justify-content:center}
     <div class="mobile-dd-item" onclick="showSub('luyenthi','lt-de6');closeMobileMenu()">Luyện thi: Văn bản – Quy chế – Hướng dẫn</div>
     <div class="mobile-dd-item" onclick="showSub('luyenthi','lt-de7');closeMobileMenu()">Luyện thi: Pháp luật ATVSLĐ</div>
     <div class="mobile-dd-item" onclick="showSub('luyenthi','lt-de8');closeMobileMenu()">Luyện thi: Tổng hợp các chủ đề</div>
-    <div class="mobile-dd-item" onclick="showSub('kythi','kt-main');closeMobileMenu()">Vào kỳ thi chính thức</div>
     <div class="mobile-section-title">⚡ An toàn điện</div>
     <div class="mobile-dd-item" onclick="showSub('atd','atd-tintuc');closeMobileMenu()">Tin tức - Tài liệu</div>
     <div class="mobile-dd-item" onclick="showSub('atd','atd-huanluyen');closeMobileMenu()">Huấn luyện ATĐ</div>
@@ -386,7 +385,7 @@ nav{background:#1e3a8a;display:flex;justify-content:center}
     <div class="mobile-dd-item" onclick="showSub('kiemdinh','kd-dungcu-sh');closeMobileMenu()">Dụng cụ an toàn: NM Sông Hinh</div>
     <div class="mobile-dd-item" onclick="showSub('kiemdinh','kd-dungcu-tkt');closeMobileMenu()">Dụng cụ an toàn: Thượng Kon Tum</div>
     <div class="mobile-dd-item" onclick="showSub('kiemdinh','kd-dungcu-ttdvtv');closeMobileMenu()">Dụng cụ an toàn: TT DVTV</div>
-    <div class="mobile-section-title">📄 Tài liệu</div>
+    <div class="mobile-section-title">📄 Tài liệu thi</div>
     <div class="mobile-dd-item" onclick="showSub('tailieu','tl-atgt');closeMobileMenu()">An toàn giao thông</div>
     <div class="mobile-dd-item" onclick="showSub('tailieu','tl-pccc');closeMobileMenu()">Phòng cháy chữa cháy</div>
     <div class="mobile-dd-item" onclick="showSub('tailieu','tl-atvsv');closeMobileMenu()">An toàn vệ sinh viên</div>
@@ -394,7 +393,9 @@ nav{background:#1e3a8a;display:flex;justify-content:center}
     <div class="mobile-dd-item" onclick="showSub('tailieu','tl-ktvsld');closeMobileMenu()">Kỹ thuật vệ sinh lao động</div>
     <div class="mobile-dd-item" onclick="showSub('tailieu','tl-vbqc');closeMobileMenu()">Văn bản – Quy chế – Hướng dẫn</div>
     <div class="mobile-dd-item" onclick="showSub('tailieu','tl-pl');closeMobileMenu()">Pháp luật ATVSLĐ</div>
+    <div class="mobile-dd-item" onclick="showSub('tailieu','tl-khac');closeMobileMenu()">Tài liệu khác</div>
     <div class="mobile-section-title">⚙️ Quản trị</div>
+    <div class="mobile-dd-item" onclick="showSub('kythi','kt-main');closeMobileMenu()">Vào kỳ thi chính thức</div>
     <div class="mobile-dd-item" onclick="showSub('quantri','qt-thisinh');closeMobileMenu()">👥 Quản lý thí sinh kỳ thi</div>
     <div class="mobile-dd-item" onclick="showSub('quantri','qt-ketqua');closeMobileMenu()">🏅 Quản lý kết quả thi</div>
     <div class="mobile-section-title" onclick="showSub('dangnhap','dn-main');closeMobileMenu()" style="cursor:pointer">🔐 Đăng nhập</div>
@@ -533,7 +534,7 @@ nav{background:#1e3a8a;display:flex;justify-content:center}
     <div id="sub-tl-welcome" class="welcome-panel">
       <div class="icon">📚</div>
       <h2>Chọn chủ đề tài liệu</h2>
-      <p>Di chuột vào <b>Tài liệu</b> trên thanh điều hướng và chọn chủ đề để xem nội dung ôn tập.</p>
+      <p>Di chuột vào <b>Tài liệu thi</b> trên thanh điều hướng và chọn chủ đề để xem nội dung ôn tập.</p>
     </div>
     <div id="sub-tl-atgt" class="iframe-container" style="display:none"><iframe src="tl1.html" title="An toàn giao thông"></iframe></div>
     <div id="sub-tl-pccc" class="iframe-container" style="display:none"><iframe src="tl2.html" title="Phòng cháy chữa cháy"></iframe></div>
@@ -542,6 +543,7 @@ nav{background:#1e3a8a;display:flex;justify-content:center}
     <div id="sub-tl-ktvsld" class="iframe-container" style="display:none"><iframe src="tl5.html" title="Kỹ thuật vệ sinh lao động"></iframe></div>
     <div id="sub-tl-vbqc" class="iframe-container" style="display:none"><iframe src="tl6.html" title="Văn bản – Quy chế – Hướng dẫn"></iframe></div>
     <div id="sub-tl-pl" class="iframe-container" style="display:none"><iframe src="tl7.html" title="Pháp luật ATVSLĐ"></iframe></div>
+    <div id="sub-tl-khac" class="iframe-container" style="display:none"><iframe data-src="tailieu_khac.html" title="Tài liệu khác"></iframe></div>
   </div>
 
   <!-- LUYỆN THI -->
@@ -679,17 +681,18 @@ const SUBS = {
   atd:      ['atd-tintuc','atd-huanluyen'],
   pccc:     ['pccc-thietbi','pccc-phuongan','pccc-baocao'],
   kiemdinh: ['kd-kehoach','kd-thietbi','kd-dungcu-vs','kd-dungcu-sh','kd-dungcu-tkt','kd-dungcu-ttdvtv'],
-  tailieu:  ['tl-welcome','tl-atgt','tl-pccc','tl-atvsv','tl-ktatld','tl-ktvsld','tl-vbqc','tl-pl'],
+  tailieu:  ['tl-welcome','tl-atgt','tl-pccc','tl-atvsv','tl-ktatld','tl-ktvsld','tl-vbqc','tl-pl','tl-khac'],
   luyenthi: ['lt-welcome','lt-de1','lt-de2','lt-de3','lt-de4','lt-de5','lt-de6','lt-de7','lt-de8'],
   kythi:    ['kt-main'],
   quantri:  ['qt-login','qt-thisinh','qt-ketqua']
 };
 // Tab nao dung iframe lazy-load (chi gan src khi mo lan dau, tranh 13 iframe
 // dang nhap Supabase Auth tu dong chay ngay khi tai index.html).
-const TABS_LAZY = ['dangnhap','atvsv','atd','pccc','kiemdinh'];
-// Luyen thi va Ky thi gio nam trong dropdown "An toan ve sinh vien" - khong con
-// nut nav rieng, nen khi dang o 2 tab nay thi to sang nut atvsv thay the.
-const NHOM_NAV = { luyenthi:'atvsv', kythi:'atvsv' };
+const TABS_LAZY = ['dangnhap','atvsv','atd','pccc','kiemdinh','tailieu'];
+// Luyen thi nam trong dropdown "An toan ve sinh vien", Ky thi nam trong dropdown
+// "Quan tri" - ca 2 khong co nut nav rieng, nen khi dang o 2 tab nay thi to sang
+// nut cha thay the.
+const NHOM_NAV = { luyenthi:'atvsv', kythi:'quantri' };
 
 // Khai báo sớm để showSub có thể dùng
 let adminLoggedIn = false;
